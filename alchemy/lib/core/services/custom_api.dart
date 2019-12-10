@@ -22,7 +22,6 @@ class CustomAPI extends API {
   // Get all brands from WS
   Future<dynamic> getIngredientsFromJson() async {
     try {
-      print("oi");
       var response = await client.get("$BASE_URL/ingredientes");
       if (response.statusCode == 200) {
         return ingredientesFromJson(response.body);

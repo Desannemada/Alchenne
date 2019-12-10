@@ -1,7 +1,7 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
-import 'package:alchemy/ui/widgets/effects_tab.dart';
-import 'package:alchemy/ui/widgets/ingredients_tab.dart';
-import 'package:alchemy/ui/widgets/potion_tab.dart';
+import 'package:alchemy/ui/screens/effects.dart';
+import 'package:alchemy/ui/screens/ingredients.dart';
+import 'package:alchemy/ui/screens/potions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

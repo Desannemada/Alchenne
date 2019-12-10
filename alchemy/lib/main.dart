@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
             body1: TextStyle(color: Color(0xFFfddfc0), fontSize: 20),
             body2: TextStyle(color: Color(0xFFfdf2de)),
           ),
+          accentColor: Color(0xFF262b2f),
         ),
         home: HomeScreen(),
       ),

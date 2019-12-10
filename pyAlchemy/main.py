@@ -27,7 +27,7 @@ def getIngredientes():
         listaDogis = dogTable[i].findAll("td")
 
         listaRetorno.append({
-            "title": listaDogis[0].a["title"].replace(" (Skyrim)", ""),
+            "title": listaDogis[0].a["title"].replace(" (Skyrim)", "").replace(" (Dragonborn)", ""),
             "primaryEffect": {"title": listaDogis[1].a["title"], "url": listaDogis[1].a["href"]},
             "secondaryEffect": {"title": listaDogis[2].a["title"], "url": listaDogis[1].a["href"]},
             "tertiaryEffect": {"title": listaDogis[3].a["title"], "url": listaDogis[1].a["href"]},
