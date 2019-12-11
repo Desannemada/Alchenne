@@ -84,7 +84,8 @@ class _IngredientsTabState extends State<IngredientsTab> {
                                 i++) {
                               if (homeViewModel.ingredientes[i].title[0] ==
                                   String.fromCharCode(65 + index)) {
-                                controller.jumpTo((i ~/ 2).toDouble() * 239.5);
+                                print(controller.offset);
+                                controller.jumpTo((i ~/ 2).toDouble() * 219.5);
                                 hasIndex = 1;
                                 break;
                               }
@@ -97,7 +98,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                                 if (hasIndex ==
                                     homeViewModel.ingredientes.length) {
                                   controller.jumpTo(
-                                      (hasIndex ~/ 2).toDouble() * 239.5);
+                                      (hasIndex ~/ 2).toDouble() * 219.5);
                                   hasIndex = -1;
                                 } else {
                                   for (var i = 0;
@@ -107,7 +108,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                                             .ingredientes[i].title[0] ==
                                         String.fromCharCode(65 + hasIndex)) {
                                       controller
-                                          .jumpTo((i ~/ 2).toDouble() * 239.5);
+                                          .jumpTo((i ~/ 2).toDouble() * 219.5);
                                       hasIndex = -1;
                                       break;
                                     }
@@ -136,7 +137,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       backgroundColor: Theme.of(context).textTheme.body1.color,
                       controller: controller,
                       child: GridView.count(
-                        childAspectRatio: 0.95,
+                        childAspectRatio: 0.99,
                         controller: controller,
                         padding: EdgeInsets.symmetric(vertical: 20),
                         mainAxisSpacing: 20,
