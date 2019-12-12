@@ -19,6 +19,8 @@ class HomeViewModel extends BaseViewModel {
   List currentBackground = [0];
   int errorResponse = 0;
 
+  Ingredientes currentIngredient;
+
   List<Ingredientes> ingredientes = List();
 
   HomeViewModel() {
@@ -82,6 +84,11 @@ class HomeViewModel extends BaseViewModel {
   void refresh() {
     errorResponse = 0;
     getIngredients();
+    notifyListeners();
+  }
+
+  void changeItem(Ingredientes item) {
+    currentIngredient = item;
     notifyListeners();
   }
 }

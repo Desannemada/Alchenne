@@ -64,6 +64,7 @@ def getEffects():
         listaRetorno2.append({
             "title": listaCatis.a.text,
             "ingredients": [],
+            "icon": "",
             "description": listaCatis2[1].text.replace("<mag>% ", "").replace("<dur> seconds", "a certain amount of time").replace("<mag> points of", "a certain amount of").replace("<mag>", "a certain amount of")
         })
 
@@ -72,9 +73,29 @@ def getEffects():
             if listaCatis3[k].text in ["DB", "", "DG", "HF", "[1]"]:
                 pass
             else:
-
                 tempIn.append(listaCatis3[k].text)
         listaRetorno2[j-1].update(ingredients=tempIn)
+
+    for i in range(len(listaRetorno2)):
+        title = listaRetorno2[i]["title"]
+        if "Fire" in title:
+            listaRetorno2[i].update(icon="assets/effects/Fire.png")
+        elif "Frost" in title or "Slow" in title:
+            listaRetorno2[i].update(icon="assets/effects/Ice.png")
+        elif "Shock" in title:
+            listaRetorno2[i].update(icon="assets/effects/Shock.png")
+        elif "Waterbreathing" in title:
+            listaRetorno2[i].update(icon="assets/effects/Alteration.png")
+        elif "Lingering" in title or "Paralyze" in title:
+            listaRetorno2[i].update(icon="assets/effects/Paralyze.png")
+        elif "Resist" in title or "Weakness" in title or "Fortify" in title:
+            listaRetorno2[i].update(icon="assets/effects/Restoration.png")
+        elif "Invisibility" in title:
+            listaRetorno2[i].update(icon="assets/effects/Illusion.png")
+        elif "Damage" in title or "Ravage" in title or "Fear" in title or "Frenzy" in title:
+            listaRetorno2[i].update(icon="assets/effects/Illusion2.png")
+        else:
+            listaRetorno2[i].update(icon="assets/effects/Heal.png")
 
     for i in listaRetorno2:
         print(i)
