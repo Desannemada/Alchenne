@@ -18,6 +18,7 @@ class HomeViewModel extends BaseViewModel {
   List backgrounds = List();
   List currentBackground = [0];
   int errorResponse = 0;
+  int currentPositionOnAlphabetScroll = -1;
 
   Ingredientes currentIngredient;
 
@@ -89,6 +90,11 @@ class HomeViewModel extends BaseViewModel {
 
   void changeItem(Ingredientes item) {
     currentIngredient = item;
+    notifyListeners();
+  }
+
+  void updatePosition(int i) {
+    currentPositionOnAlphabetScroll = i;
     notifyListeners();
   }
 }

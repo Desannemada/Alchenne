@@ -12,6 +12,8 @@ class IngredientsTab extends StatefulWidget {
 
 class _IngredientsTabState extends State<IngredientsTab> {
   ScrollController controller = new ScrollController();
+  GlobalKey size = GlobalKey();
+  GlobalKey position = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,46 @@ class _IngredientsTabState extends State<IngredientsTab> {
       });
     }
 
+    void getPosition(int index) {
+      if (index > 21) {
+        controller.jumpTo((107 ~/ 2).toDouble() * 219.5);
+      } else {
+        int hasIndex = 0;
+        for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
+          if (homeViewModel.ingredientes[i].title[0] ==
+              String.fromCharCode(65 + index)) {
+            //print(String.fromCharCode(65 + index));
+            print(i);
+            controller.jumpTo((i ~/ 2).toDouble() * 219.5);
+            hasIndex = 1;
+            break;
+          }
+        }
+        if (hasIndex == 0) {
+          hasIndex = index;
+          while (hasIndex != -1) {
+            hasIndex = hasIndex + 1;
+            //print(hasIndex);
+            if (hasIndex == homeViewModel.ingredientes.length) {
+              controller.jumpTo((hasIndex ~/ 2).toDouble() * 219.5);
+              //print(String.fromCharCode(65 + index));
+              hasIndex = -1;
+            } else {
+              for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
+                if (homeViewModel.ingredientes[i].title[0] ==
+                    String.fromCharCode(65 + hasIndex)) {
+                  //print(String.fromCharCode(65 + index));
+                  controller.jumpTo((i ~/ 2).toDouble() * 219.5);
+                  hasIndex = -1;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
     return Stack(
       children: <Widget>[
         Opacity(
@@ -71,6 +113,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
             : Row(
                 children: <Widget>[
                   Container(
+                    key: size,
                     color: Colors.black54,
                     width: MediaQuery.of(context).size.width * 0.04,
                     child: ListView.builder(
@@ -78,41 +121,21 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTap: () {
-                            int hasIndex = 0;
-                            for (var i = 0;
-                                i < homeViewModel.ingredientes.length;
-                                i++) {
-                              if (homeViewModel.ingredientes[i].title[0] ==
-                                  String.fromCharCode(65 + index)) {
-                                print(controller.offset);
-                                controller.jumpTo((i ~/ 2).toDouble() * 219.5);
-                                hasIndex = 1;
-                                break;
-                              }
-                            }
-                            if (hasIndex == 0) {
-                              hasIndex = index;
-                              while (hasIndex != -1) {
-                                hasIndex = hasIndex + 1;
-                                print(hasIndex);
-                                if (hasIndex ==
-                                    homeViewModel.ingredientes.length) {
-                                  controller.jumpTo(
-                                      (hasIndex ~/ 2).toDouble() * 219.5);
-                                  hasIndex = -1;
-                                } else {
-                                  for (var i = 0;
-                                      i < homeViewModel.ingredientes.length;
-                                      i++) {
-                                    if (homeViewModel
-                                            .ingredientes[i].title[0] ==
-                                        String.fromCharCode(65 + hasIndex)) {
-                                      controller
-                                          .jumpTo((i ~/ 2).toDouble() * 219.5);
-                                      hasIndex = -1;
-                                      break;
-                                    }
-                                  }
+                            getPosition(index);
+                            homeViewModel.updatePosition(index);
+                          },
+                          onVerticalDragUpdate: (DragUpdateDetails detail) {
+                            var pos = detail.globalPosition.dy.toInt();
+                            for (var i = 0; i < 26; i++) {
+                              var start = 128 + (i * 23);
+                              var end = start + 23;
+                              if (pos >= start && pos <= end) {
+                                print(String.fromCharCode(65 + i));
+                                if (homeViewModel
+                                        .currentPositionOnAlphabetScroll !=
+                                    i) {
+                                  getPosition(i);
+                                  homeViewModel.updatePosition(i);
                                 }
                               }
                             }
@@ -150,7 +173,13 @@ class _IngredientsTabState extends State<IngredientsTab> {
                     ),
                   ),
                 ],
-              )
+              ),
+        Center(
+          child: Card(
+            color: Colors.transparent,
+            child: Text("oi"),
+          ),
+        )
       ],
     );
   }
