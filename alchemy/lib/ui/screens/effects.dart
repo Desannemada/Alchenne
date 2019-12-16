@@ -1,23 +1,169 @@
-import 'package:alchemy/core/view_models/home_view_model.dart';
+import 'package:alchemy/ui/widgets/draggable_scrollbar.dart';
+import 'package:alchemy/ui/widgets/item_efeito.dart';
 import 'package:flutter/material.dart';
+
+import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:provider/provider.dart';
 
-class EffectsTab extends StatelessWidget {
-  const EffectsTab({Key key}) : super(key: key);
+class EffectsTab extends StatefulWidget {
+  @override
+  _EffectsTabState createState() => _EffectsTabState();
+}
+
+class _EffectsTabState extends State<EffectsTab> {
+  ScrollController controller = new ScrollController();
+  GlobalKey size = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
-    return Container(
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: homeViewModel.currentBackground[0][1],
-          alignment: Alignment.center,
-          fit: BoxFit.fitWidth,
+    void getPosition(int index) {
+      if (index > 21) {
+        controller.jumpTo((107 ~/ 2).toDouble() * 219.5);
+        homeViewModel.updatePosition(index);
+        homeViewModel.changeBubble(String.fromCharCode(65 + index));
+      } else {
+        int hasIndex = 0;
+        for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
+          if (homeViewModel.ingredientes[i].title[0] ==
+              String.fromCharCode(65 + index)) {
+            controller.jumpTo((i ~/ 2).toDouble() * 219.5);
+            homeViewModel.updatePosition(index);
+            homeViewModel.changeBubble(String.fromCharCode(65 + index));
+            hasIndex = 1;
+            break;
+          }
+        }
+        if (hasIndex == 0) {
+          hasIndex = index;
+          while (hasIndex != -1) {
+            hasIndex = hasIndex - 1;
+            for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
+              if (homeViewModel.ingredientes[i].title[0] ==
+                  String.fromCharCode(65 + hasIndex)) {
+                controller.jumpTo((i ~/ 2).toDouble() * 219.5);
+                homeViewModel.updatePosition(index);
+                homeViewModel.changeBubble(String.fromCharCode(65 + index));
+                hasIndex = -1;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return Stack(
+      children: <Widget>[
+        Opacity(
+          opacity: 1.0,
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: homeViewModel.currentBackground[0][1],
+                  alignment: Alignment.centerLeft,
+                  fit: BoxFit.fitWidth),
+            ),
+          ),
         ),
-      ),
-      child: Text(""),
+        Row(
+          children: <Widget>[
+            Container(
+              key: size,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Colors.black54,
+              ),
+              width: MediaQuery.of(context).size.width * 0.04,
+              child: ListView.builder(
+                itemCount: 26,
+                itemBuilder: (BuildContext context, int index) {
+                  return GestureDetector(
+                    onTapDown: (TapDownDetails detail) {
+                      getPosition(index);
+                    },
+                    onTapUp: (TapUpDetails detail) {
+                      homeViewModel.changeBubble("");
+                    },
+                    onVerticalDragUpdate: (DragUpdateDetails detail) {
+                      var pos = detail.globalPosition.dy.toInt();
+                      for (var i = 0; i < 26; i++) {
+                        var start = 128 + (i * 23);
+                        var end = start + 23;
+                        if (pos >= start && pos <= end) {
+                          if (homeViewModel.currentPositionOnAlphabetScroll !=
+                              i) {
+                            getPosition(i);
+                          }
+                        }
+                      }
+                    },
+                    onLongPress: () {
+                      getPosition(index);
+                    },
+                    onLongPressEnd: (LongPressEndDetails detail) {
+                      homeViewModel.changeBubble("");
+                    },
+                    onVerticalDragEnd: (DragEndDetails detail) {
+                      homeViewModel.changeBubble("");
+                    },
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.0028),
+                      child: Text(
+                        String.fromCharCode(65 + index),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.96,
+                  child: DraggableScrollbar.arrows(
+                    backgroundColor: Theme.of(context).textTheme.body1.color,
+                    controller: controller,
+                    child: GridView.count(
+                      childAspectRatio: 0.99,
+                      controller: controller,
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      mainAxisSpacing: 20,
+                      crossAxisCount: 2,
+                      children: List.generate(homeViewModel.efeitos.length,
+                          (int index) {
+                        return EffectItem(index: index);
+                      }),
+                    ),
+                  ),
+                ),
+                homeViewModel.alphabetBubble == ""
+                    ? Text("")
+                    : Container(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: MediaQuery.of(context).size.width * 0.2,
+                          child: Card(
+                            elevation: 1.5,
+                            color: Colors.black38,
+                            child: Center(
+                                child: Text(
+                              homeViewModel.alphabetBubble,
+                              style: TextStyle(fontSize: 40),
+                            )),
+                          ),
+                        ),
+                      )
+              ],
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

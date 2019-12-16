@@ -65,7 +65,17 @@ def getEffects():
             "title": listaCatis.a.text,
             "ingredients": [],
             "icon": "",
-            "description": listaCatis2[1].text.replace("<mag>% ", "").replace("<dur> seconds", "a certain amount of time").replace("<mag> points of", "a certain amount of").replace("<mag>", "a certain amount of")
+            "description": listaCatis2[1].text.replace("<mag> points of poison damage for <dur>", "x points of poison damage for y")
+                                              .replace("<mag> will attack anything nearby for <dur>", "x will attack anything nearby for y")
+                                              .replace("<mag> points for <dur>", "x points for y")
+                                              .replace("by <mag>% for <dur>", "by x% for y")
+                                              .replace("<mag> for <dur>", "x for y")
+                                              .replace("<mag> flee from combat for <dur>", "x flee from combat for y")
+                                              .replace("<mag> points per second for <dur>", "x points per second for y")
+                                              .replace("<mag>% of", "y% of")
+                                              .replace("<mag>% ", "")
+                                              .replace("<dur>", "x")
+                                              .replace("<mag>", "x")
         })
 
         tempIn = []
@@ -75,7 +85,6 @@ def getEffects():
             else:
                 tempIn.append(listaCatis3[k].text)
         listaRetorno2[j-1].update(ingredients=tempIn)
-
     for i in range(len(listaRetorno2)):
         title = listaRetorno2[i]["title"]
         if "Fire" in title:
@@ -100,6 +109,7 @@ def getEffects():
     for i in listaRetorno2:
         print(i)
         print("\n")
+    return jsonify(listaRetorno2)
 
 
 # Inicializando servidor

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alchemy/core/models/efeitos.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
 import 'package:alchemy/core/services/custom_api.dart';
 import 'package:alchemy/core/view_models/base_view_model.dart';
@@ -16,16 +17,21 @@ class HomeViewModel extends BaseViewModel {
   }
 
   List backgrounds = List();
-  List currentBackground = [0];
-  int errorResponse = 0;
-  int currentPositionOnAlphabetScroll = -1;
-
-  Ingredientes currentIngredient;
-
   List<Ingredientes> ingredientes = List();
+  List<Efeitos> efeitos = List();
+
+  List currentBackground = [0];
+  Ingredientes currentIngredient;
+  Efeitos currentEffect;
+
+  int errorResponse = 0;
+
+  int currentPositionOnAlphabetScroll = -1;
+  String alphabetBubble = "";
 
   HomeViewModel() {
     getIngredients();
+    getEffects();
     backgrounds = [
       [
         AssetImage("assets/bg/b1_1.jpg"),
@@ -76,6 +82,21 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void getEffects() async {
+    try {
+      var response = await api.getEffectsFromJson();
+      if (response is List<Efeitos>) {
+        efeitos = response;
+      } else if (response is int) {
+        errorResponse = -1;
+      }
+    } catch (e) {
+      errorResponse = -1;
+      throw e;
+    }
+    notifyListeners();
+  }
+
   void chooseBackground() {
     var chosen = new Random();
     int c = 1 + chosen.nextInt(6);
@@ -93,8 +114,19 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void changeItem2(Efeitos item) {
+    currentEffect = item;
+    notifyListeners();
+  }
+
   void updatePosition(int i) {
     currentPositionOnAlphabetScroll = i;
+    notifyListeners();
+  }
+
+  void changeBubble(String b) {
+    alphabetBubble = b;
+    print("a " + b);
     notifyListeners();
   }
 }

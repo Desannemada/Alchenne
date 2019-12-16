@@ -13,7 +13,6 @@ class IngredientsTab extends StatefulWidget {
 class _IngredientsTabState extends State<IngredientsTab> {
   ScrollController controller = new ScrollController();
   GlobalKey size = GlobalKey();
-  GlobalKey position = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +49,16 @@ class _IngredientsTabState extends State<IngredientsTab> {
     void getPosition(int index) {
       if (index > 21) {
         controller.jumpTo((107 ~/ 2).toDouble() * 219.5);
+        homeViewModel.updatePosition(index);
+        homeViewModel.changeBubble(String.fromCharCode(65 + index));
       } else {
         int hasIndex = 0;
         for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
           if (homeViewModel.ingredientes[i].title[0] ==
               String.fromCharCode(65 + index)) {
-            //print(String.fromCharCode(65 + index));
-            print(i);
             controller.jumpTo((i ~/ 2).toDouble() * 219.5);
+            homeViewModel.updatePosition(index);
+            homeViewModel.changeBubble(String.fromCharCode(65 + index));
             hasIndex = 1;
             break;
           }
@@ -65,21 +66,15 @@ class _IngredientsTabState extends State<IngredientsTab> {
         if (hasIndex == 0) {
           hasIndex = index;
           while (hasIndex != -1) {
-            hasIndex = hasIndex + 1;
-            //print(hasIndex);
-            if (hasIndex == homeViewModel.ingredientes.length) {
-              controller.jumpTo((hasIndex ~/ 2).toDouble() * 219.5);
-              //print(String.fromCharCode(65 + index));
-              hasIndex = -1;
-            } else {
-              for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
-                if (homeViewModel.ingredientes[i].title[0] ==
-                    String.fromCharCode(65 + hasIndex)) {
-                  //print(String.fromCharCode(65 + index));
-                  controller.jumpTo((i ~/ 2).toDouble() * 219.5);
-                  hasIndex = -1;
-                  break;
-                }
+            hasIndex = hasIndex - 1;
+            for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
+              if (homeViewModel.ingredientes[i].title[0] ==
+                  String.fromCharCode(65 + hasIndex)) {
+                controller.jumpTo((i ~/ 2).toDouble() * 219.5);
+                homeViewModel.updatePosition(index);
+                homeViewModel.changeBubble(String.fromCharCode(65 + index));
+                hasIndex = -1;
+                break;
               }
             }
           }
@@ -114,15 +109,20 @@ class _IngredientsTabState extends State<IngredientsTab> {
                 children: <Widget>[
                   Container(
                     key: size,
-                    color: Colors.black54,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.black54,
+                    ),
                     width: MediaQuery.of(context).size.width * 0.04,
                     child: ListView.builder(
                       itemCount: 26,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          onTap: () {
+                          onTapDown: (TapDownDetails detail) {
                             getPosition(index);
-                            homeViewModel.updatePosition(index);
+                          },
+                          onTapUp: (TapUpDetails detail) {
+                            homeViewModel.changeBubble("");
                           },
                           onVerticalDragUpdate: (DragUpdateDetails detail) {
                             var pos = detail.globalPosition.dy.toInt();
@@ -130,15 +130,22 @@ class _IngredientsTabState extends State<IngredientsTab> {
                               var start = 128 + (i * 23);
                               var end = start + 23;
                               if (pos >= start && pos <= end) {
-                                print(String.fromCharCode(65 + i));
                                 if (homeViewModel
                                         .currentPositionOnAlphabetScroll !=
                                     i) {
                                   getPosition(i);
-                                  homeViewModel.updatePosition(i);
                                 }
                               }
                             }
+                          },
+                          onLongPress: () {
+                            getPosition(index);
+                          },
+                          onLongPressEnd: (LongPressEndDetails detail) {
+                            homeViewModel.changeBubble("");
+                          },
+                          onVerticalDragEnd: (DragEndDetails detail) {
+                            homeViewModel.changeBubble("");
                           },
                           child: Container(
                             padding: EdgeInsets.only(
@@ -154,32 +161,49 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       },
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.96,
-                    child: DraggableScrollbar.arrows(
-                      backgroundColor: Theme.of(context).textTheme.body1.color,
-                      controller: controller,
-                      child: GridView.count(
-                        childAspectRatio: 0.99,
-                        controller: controller,
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        mainAxisSpacing: 20,
-                        crossAxisCount: 2,
-                        children: List.generate(
-                            homeViewModel.ingredientes.length, (int index) {
-                          return IngredientItem(index: index);
-                        }),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.96,
+                        child: DraggableScrollbar.arrows(
+                          backgroundColor:
+                              Theme.of(context).textTheme.body1.color,
+                          controller: controller,
+                          child: GridView.count(
+                            childAspectRatio: 0.99,
+                            controller: controller,
+                            padding: EdgeInsets.symmetric(vertical: 20),
+                            mainAxisSpacing: 20,
+                            crossAxisCount: 2,
+                            children: List.generate(
+                                homeViewModel.ingredientes.length, (int index) {
+                              return IngredientItem(index: index);
+                            }),
+                          ),
+                        ),
                       ),
-                    ),
+                      homeViewModel.alphabetBubble == ""
+                          ? Text("")
+                          : Container(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.2,
+                                height: MediaQuery.of(context).size.width * 0.2,
+                                child: Card(
+                                  elevation: 1.5,
+                                  color: Colors.black38,
+                                  child: Center(
+                                      child: Text(
+                                    homeViewModel.alphabetBubble,
+                                    style: TextStyle(fontSize: 40),
+                                  )),
+                                ),
+                              ),
+                            )
+                    ],
                   ),
                 ],
               ),
-        Center(
-          child: Card(
-            color: Colors.transparent,
-            child: Text("oi"),
-          ),
-        )
       ],
     );
   }
