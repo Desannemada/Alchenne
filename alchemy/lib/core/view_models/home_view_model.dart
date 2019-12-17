@@ -27,6 +27,8 @@ class HomeViewModel extends BaseViewModel {
   int errorResponse = 0;
 
   int currentPositionOnAlphabetScroll = -1;
+  int currentPositionOnAlphabetScroll2 = -1;
+
   String alphabetBubble = "";
 
   HomeViewModel() {
@@ -36,32 +38,38 @@ class HomeViewModel extends BaseViewModel {
       [
         AssetImage("assets/bg/b1_1.jpg"),
         AssetImage("assets/bg/b1_2.jpg"),
-        AssetImage("assets/bg/b1_3.jpg")
+        AssetImage("assets/bg/b1_3.jpg"),
+        "assets/bg/background1.jpg"
       ],
       [
         AssetImage("assets/bg/b2_1.jpg"),
         AssetImage("assets/bg/b2_2.jpg"),
-        AssetImage("assets/bg/b2_3.jpg")
+        AssetImage("assets/bg/b2_3.jpg"),
+        "assets/bg/background2.jpg"
       ],
       [
         AssetImage("assets/bg/b3_1.jpg"),
         AssetImage("assets/bg/b3_2.jpg"),
-        AssetImage("assets/bg/b3_3.jpg")
+        AssetImage("assets/bg/b3_3.jpg"),
+        "assets/bg/background3.jpg"
       ],
       [
         AssetImage("assets/bg/b4_1.jpg"),
         AssetImage("assets/bg/b4_2.jpg"),
-        AssetImage("assets/bg/b4_3.jpg")
+        AssetImage("assets/bg/b4_3.jpg"),
+        "assets/bg/background4.jpg"
       ],
       [
         AssetImage("assets/bg/b5_1.jpg"),
         AssetImage("assets/bg/b5_2.jpg"),
-        AssetImage("assets/bg/b5_3.jpg")
+        AssetImage("assets/bg/b5_3.jpg"),
+        "assets/bg/background5.jpg"
       ],
       [
         AssetImage("assets/bg/b6_1.jpg"),
         AssetImage("assets/bg/b6_2.jpg"),
-        AssetImage("assets/bg/b6_3.jpg")
+        AssetImage("assets/bg/b6_3.jpg"),
+        "assets/bg/background6.jpg"
       ]
     ];
     chooseBackground();
@@ -124,9 +132,82 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void updatePosition2(int i) {
+    currentPositionOnAlphabetScroll2 = i;
+    notifyListeners();
+  }
+
   void changeBubble(String b) {
     alphabetBubble = b;
-    print("a " + b);
     notifyListeners();
+  }
+
+  String getEfeitoImage(String nomeEfeito) {
+    for (var item in efeitos) {
+      if (item.title == nomeEfeito) {
+        return item.icon;
+      }
+    }
+  }
+
+  List<AryEffect> getIngredientsEffects() {
+    List<AryEffect> temp = List<AryEffect>();
+    temp.add(currentIngredient.primaryEffect);
+    temp.add(currentIngredient.secondaryEffect);
+    temp.add(currentIngredient.tertiaryEffect);
+    temp.add(currentIngredient.quaternaryEffect);
+    return temp;
+  }
+
+  bool isLetter(String letter, String tab) {
+    if (tab == "ingrediente") {
+      for (var i = 0; i < ingredientes.length; i++) {
+        if (ingredientes[i].title[0] == letter) {
+          return true;
+        }
+      }
+      return false;
+    } else if (tab == "efeito") {
+      for (var i = 0; i < efeitos.length; i++) {
+        if (efeitos[i].title[0] == letter) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
+  void getPosition(int index, String tab, ScrollController c) {
+    if (tab == "ingrediente") {
+      if (index > 21 && String.fromCharCode(65 + index) == "Y") {
+        c.jumpTo(c.position.maxScrollExtent);
+        updatePosition(index);
+        changeBubble(String.fromCharCode(65 + index));
+      } else {
+        for (var i = 0; i < ingredientes.length; i++) {
+          if (ingredientes[i].title[0] == String.fromCharCode(65 + index)) {
+            c.jumpTo((i ~/ 2).toDouble() * 219.5);
+            updatePosition(index);
+            changeBubble(String.fromCharCode(65 + index));
+            break;
+          }
+        }
+      }
+    } else if (tab == "efeito") {
+      if (index > 20 && String.fromCharCode(65 + index) == "W") {
+        c.jumpTo((48 ~/ 2).toDouble() * 219.5);
+        updatePosition2(index);
+        changeBubble(String.fromCharCode(65 + index));
+      } else {
+        for (var i = 0; i < efeitos.length; i++) {
+          if (efeitos[i].title[0] == String.fromCharCode(65 + index)) {
+            c.jumpTo((i ~/ 2).toDouble() * 219.5);
+            updatePosition2(index);
+            changeBubble(String.fromCharCode(65 + index));
+            break;
+          }
+        }
+      }
+    }
   }
 }

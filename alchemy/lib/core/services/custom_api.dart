@@ -2,8 +2,11 @@
 * Operações de integração com WS (API)
 */
 
+import 'dart:convert';
+
 import 'package:alchemy/core/models/efeitos.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
+import 'package:alchemy/core/models/url.dart';
 import 'package:alchemy/core/services/api.dart';
 import 'package:alchemy/ui/values/strings.dart';
 
@@ -37,6 +40,24 @@ class CustomAPI extends API {
   Future<dynamic> getEffectsFromJson() async {
     try {
       var response = await client.get("$BASE_URL/efeitos");
+      if (response.statusCode == 200) {
+        return efeitosFromJson(response.body);
+      } else {
+        return response.statusCode;
+      }
+    } catch (exception, _) {
+      return 400;
+    }
+  }
+
+  Future<dynamic> getURLFromJson(String url) async {
+    try {
+      var response = await client.post(
+        "$BASE_URL/ingredienteInfo",
+        headers: {"Content-Type": "application/json"},
+        body: urlToJson(Url(url: url)),
+        encoding: Encoding.getByName("UTF-8"),
+      );
       if (response.statusCode == 200) {
         return efeitosFromJson(response.body);
       } else {

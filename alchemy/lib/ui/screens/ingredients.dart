@@ -46,42 +46,6 @@ class _IngredientsTabState extends State<IngredientsTab> {
       });
     }
 
-    void getPosition(int index) {
-      if (index > 21) {
-        controller.jumpTo((107 ~/ 2).toDouble() * 219.5);
-        homeViewModel.updatePosition(index);
-        homeViewModel.changeBubble(String.fromCharCode(65 + index));
-      } else {
-        int hasIndex = 0;
-        for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
-          if (homeViewModel.ingredientes[i].title[0] ==
-              String.fromCharCode(65 + index)) {
-            controller.jumpTo((i ~/ 2).toDouble() * 219.5);
-            homeViewModel.updatePosition(index);
-            homeViewModel.changeBubble(String.fromCharCode(65 + index));
-            hasIndex = 1;
-            break;
-          }
-        }
-        if (hasIndex == 0) {
-          hasIndex = index;
-          while (hasIndex != -1) {
-            hasIndex = hasIndex - 1;
-            for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
-              if (homeViewModel.ingredientes[i].title[0] ==
-                  String.fromCharCode(65 + hasIndex)) {
-                controller.jumpTo((i ~/ 2).toDouble() * 219.5);
-                homeViewModel.updatePosition(index);
-                homeViewModel.changeBubble(String.fromCharCode(65 + index));
-                hasIndex = -1;
-                break;
-              }
-            }
-          }
-        }
-      }
-    }
-
     return Stack(
       children: <Widget>[
         Opacity(
@@ -119,7 +83,8 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                           onTapDown: (TapDownDetails detail) {
-                            getPosition(index);
+                            homeViewModel.getPosition(
+                                index, "ingrediente", controller);
                           },
                           onTapUp: (TapUpDetails detail) {
                             homeViewModel.changeBubble("");
@@ -133,13 +98,15 @@ class _IngredientsTabState extends State<IngredientsTab> {
                                 if (homeViewModel
                                         .currentPositionOnAlphabetScroll !=
                                     i) {
-                                  getPosition(i);
+                                  homeViewModel.getPosition(
+                                      i, "ingrediente", controller);
                                 }
                               }
                             }
                           },
                           onLongPress: () {
-                            getPosition(index);
+                            homeViewModel.getPosition(
+                                index, "ingrediente", controller);
                           },
                           onLongPressEnd: (LongPressEndDetails detail) {
                             homeViewModel.changeBubble("");
@@ -152,7 +119,11 @@ class _IngredientsTabState extends State<IngredientsTab> {
                                 top: MediaQuery.of(context).size.height *
                                     0.0028),
                             child: Text(
-                              String.fromCharCode(65 + index),
+                              homeViewModel.isLetter(
+                                      String.fromCharCode(65 + index),
+                                      "ingrediente")
+                                  ? String.fromCharCode(65 + index)
+                                  : "-",
                               textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 18),
                             ),

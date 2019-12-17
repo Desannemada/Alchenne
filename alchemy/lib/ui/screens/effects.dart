@@ -1,3 +1,4 @@
+import 'package:alchemy/core/models/efeitos.dart';
 import 'package:alchemy/ui/widgets/draggable_scrollbar.dart';
 import 'package:alchemy/ui/widgets/item_efeito.dart';
 import 'package:flutter/material.dart';
@@ -17,42 +18,6 @@ class _EffectsTabState extends State<EffectsTab> {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
-
-    void getPosition(int index) {
-      if (index > 21) {
-        controller.jumpTo((107 ~/ 2).toDouble() * 219.5);
-        homeViewModel.updatePosition(index);
-        homeViewModel.changeBubble(String.fromCharCode(65 + index));
-      } else {
-        int hasIndex = 0;
-        for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
-          if (homeViewModel.ingredientes[i].title[0] ==
-              String.fromCharCode(65 + index)) {
-            controller.jumpTo((i ~/ 2).toDouble() * 219.5);
-            homeViewModel.updatePosition(index);
-            homeViewModel.changeBubble(String.fromCharCode(65 + index));
-            hasIndex = 1;
-            break;
-          }
-        }
-        if (hasIndex == 0) {
-          hasIndex = index;
-          while (hasIndex != -1) {
-            hasIndex = hasIndex - 1;
-            for (var i = 0; i < homeViewModel.ingredientes.length; i++) {
-              if (homeViewModel.ingredientes[i].title[0] ==
-                  String.fromCharCode(65 + hasIndex)) {
-                controller.jumpTo((i ~/ 2).toDouble() * 219.5);
-                homeViewModel.updatePosition(index);
-                homeViewModel.changeBubble(String.fromCharCode(65 + index));
-                hasIndex = -1;
-                break;
-              }
-            }
-          }
-        }
-      }
-    }
 
     return Stack(
       children: <Widget>[
@@ -81,7 +46,7 @@ class _EffectsTabState extends State<EffectsTab> {
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTapDown: (TapDownDetails detail) {
-                      getPosition(index);
+                      homeViewModel.getPosition(index, "efeito", controller);
                     },
                     onTapUp: (TapUpDetails detail) {
                       homeViewModel.changeBubble("");
@@ -92,15 +57,15 @@ class _EffectsTabState extends State<EffectsTab> {
                         var start = 128 + (i * 23);
                         var end = start + 23;
                         if (pos >= start && pos <= end) {
-                          if (homeViewModel.currentPositionOnAlphabetScroll !=
+                          if (homeViewModel.currentPositionOnAlphabetScroll2 !=
                               i) {
-                            getPosition(i);
+                            homeViewModel.getPosition(i, "efeito", controller);
                           }
                         }
                       }
                     },
                     onLongPress: () {
-                      getPosition(index);
+                      homeViewModel.getPosition(index, "efeito", controller);
                     },
                     onLongPressEnd: (LongPressEndDetails detail) {
                       homeViewModel.changeBubble("");
@@ -112,7 +77,10 @@ class _EffectsTabState extends State<EffectsTab> {
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.0028),
                       child: Text(
-                        String.fromCharCode(65 + index),
+                        homeViewModel.isLetter(
+                                String.fromCharCode(65 + index), "efeito")
+                            ? String.fromCharCode(65 + index)
+                            : "-",
                         textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 18),
                       ),
