@@ -120,10 +120,36 @@ def getIngredienteInfo():
 
     ratDiv = rat.find(
         "div", attrs={"id": "mw-content-text"})
-    ratPs = ratDiv.findAll(
-        "p")
+    ratUl = ratDiv.find("ul")
+    ratLis = ratUl.findAll("li")
 
-    print(ratPs)
+    info = {
+        "titleLocation": "",
+        "locations": [],
+        "background": ""
+    }
+
+    # for i in ratLis:
+    #     info["locations"].append(str(i))
+
+    ratDiv = list(ratDiv)
+    for i in range(len(ratDiv)):
+        if '"Background"' in str(ratDiv[i]):
+            info["background"] = str(ratDiv[i+2])
+
+        if '"Locations"' in str(ratDiv[i]):
+            if "<p>" in str(ratDiv[i+2]):
+                info["titleLocation"] = str(ratDiv[i+2])
+                if "<ul>" in str(ratDiv[i+4]):
+                    for i in ratLis:
+                        info["locations"].append(str(i))
+            else:
+                for i in ratLis:
+                    info["locations"].append(str(i))
+
+            break
+
+    return jsonify(info)
 
 
 # Inicializando servidor
