@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:alchemy/core/models/efeitos.dart';
+import 'package:alchemy/core/models/infoI.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
 import 'package:alchemy/core/models/url.dart';
 import 'package:alchemy/core/services/api.dart';
@@ -59,7 +60,7 @@ class CustomAPI extends API {
         encoding: Encoding.getByName("UTF-8"),
       );
       if (response.statusCode == 200) {
-        return efeitosFromJson(response.body);
+        return ingredienteInfoFromJson(response.body);
       } else {
         return response.statusCode;
       }

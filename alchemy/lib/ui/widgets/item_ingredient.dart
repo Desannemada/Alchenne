@@ -1,4 +1,5 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
+import 'package:alchemy/ui/values/strings.dart';
 import 'package:alchemy/ui/widgets/ingred_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,6 +91,8 @@ class IngredientItem extends StatelessWidget {
             ),
             onPressed: () {
               homeViewModel.changeItem(homeViewModel.ingredientes[index]);
+              homeViewModel.getInfoI(
+                  INGREDIENT_URL + homeViewModel.currentIngredient.url);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => IngredientInfo()));
             },

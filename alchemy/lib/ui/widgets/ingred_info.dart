@@ -1,6 +1,10 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
+import 'package:alchemy/ui/values/strings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
+import 'package:html2md/html2md.dart' as html2md;
+import 'package:url_launcher/url_launcher.dart';
 
 class IngredientInfo extends StatelessWidget {
   @override
@@ -120,6 +124,92 @@ class IngredientInfo extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.all(10),
+            child: homeViewModel.currentIInfo == null
+                ? Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.1),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).textTheme.body1.color),
+                      ),
+                    ),
+                  )
+                : Column(
+                    children: <Widget>[
+                      MarkdownBody(
+                        data: html2md
+                            .convert(homeViewModel.currentIInfo.titleLocation),
+                        styleSheet: MarkdownStyleSheet(
+                          textAlign: WrapAlignment.spaceBetween,
+                          a: TextStyle(
+                            color: Colors.blue,
+                            fontSize: 18,
+                          ),
+                          p: TextStyle(
+                            color: Theme.of(context).textTheme.body1.color,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      homeViewModel.currentIInfo.locations.isEmpty
+                          ? Container()
+                          : Column(
+                              children: <Widget>[
+                                SizedBox(height: 10),
+                                Text("Locations:"),
+                                ListView.builder(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  shrinkWrap: true,
+                                  itemCount: homeViewModel
+                                      .currentIInfo.locations.length,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemBuilder: (BuildContext bc, int index) {
+                                    return Container(
+                                      width: 100,
+                                      color: Colors.red,
+                                      child: ListView(
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.horizontal,
+                                        children: <Widget>[
+                                          Text("- "),
+                                          MarkdownBody(
+                                            onTapLink: (String url) {
+                                              print(INGREDIENT_URL + url);
+                                              launch(INGREDIENT_URL + url);
+                                            },
+                                            data: html2md.convert(
+                                              homeViewModel.currentIInfo
+                                                  .locations[index],
+                                            ),
+                                            styleSheet: MarkdownStyleSheet(
+                                              unorderedListAlign:
+                                                  WrapAlignment.spaceBetween,
+                                              a: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 18,
+                                              ),
+                                              p: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .body1
+                                                    .color,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                    ],
+                  ),
+          )
         ],
       ),
     );

@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from bs4 import BeautifulSoup
 import requests
+import re
 
 # Configurando servidor
 app = Flask("alchemy")
@@ -139,13 +140,25 @@ def getIngredienteInfo():
 
         if '"Locations"' in str(ratDiv[i]):
             if "<p>" in str(ratDiv[i+2]):
-                info["titleLocation"] = str(ratDiv[i+2])
+                info["titleLocation"] = str(
+                    ratDiv[i+2])
                 if "<ul>" in str(ratDiv[i+4]):
                     for i in ratLis:
-                        info["locations"].append(str(i))
+                        m = re.findall('(title=\\\".+?\\\")', str(i))
+                        k = str(i)
+                        for j in m:
+                            k = k.replace(str(j), str(j.replace(" ", "")))
+
+                        info["locations"].append(str(k).replace("<li>","").replace("</li>",""))
             else:
                 for i in ratLis:
-                    info["locations"].append(str(i))
+                    m = re.findall('(title=\\\".+?\\\")', str(i))
+                    k = str(i)
+                    for j in m:
+                        k = k.replace(str(j), str(j.replace(" ", "")))
+
+                    info["locations"].append(str(k).replace("<li>","").replace("</li>",""))
+                    print(k)
 
             break
 

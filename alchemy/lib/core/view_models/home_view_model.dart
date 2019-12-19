@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:alchemy/core/models/efeitos.dart';
+import 'package:alchemy/core/models/infoI.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
 import 'package:alchemy/core/services/custom_api.dart';
 import 'package:alchemy/core/view_models/base_view_model.dart';
@@ -19,6 +20,7 @@ class HomeViewModel extends BaseViewModel {
   List backgrounds = List();
   List<Ingredientes> ingredientes = List();
   List<Efeitos> efeitos = List();
+  IngredienteInfo currentIInfo;
 
   List currentBackground = [0];
   Ingredientes currentIngredient;
@@ -95,6 +97,23 @@ class HomeViewModel extends BaseViewModel {
       var response = await api.getEffectsFromJson();
       if (response is List<Efeitos>) {
         efeitos = response;
+      } else if (response is int) {
+        errorResponse = -1;
+      }
+    } catch (e) {
+      errorResponse = -1;
+      throw e;
+    }
+    notifyListeners();
+  }
+
+  void getInfoI(String url) async {
+    currentIInfo = null;
+    notifyListeners();
+    try {
+      var response = await api.getURLFromJson(url);
+      if (response is IngredienteInfo) {
+        currentIInfo = response;
       } else if (response is int) {
         errorResponse = -1;
       }
