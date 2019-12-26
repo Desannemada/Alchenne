@@ -91,6 +91,7 @@ class IngredientItem extends StatelessWidget {
             ),
             onPressed: () {
               homeViewModel.changeItem(homeViewModel.ingredientes[index]);
+              homeViewModel.nulifyCurrentInfo();
               homeViewModel.getInfoI(
                   INGREDIENT_URL + homeViewModel.currentIngredient.url);
               Navigator.push(context,

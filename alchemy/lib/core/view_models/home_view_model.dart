@@ -107,9 +107,12 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void getInfoI(String url) async {
+  void nulifyCurrentInfo() {
     currentIInfo = null;
     notifyListeners();
+  }
+
+  void getInfoI(String url) async {
     try {
       var response = await api.getURLFromJson(url);
       if (response is IngredienteInfo) {
@@ -162,7 +165,12 @@ class HomeViewModel extends BaseViewModel {
   }
 
   String getEfeitoImage(String nomeEfeito) {
+    print("nome: " + nomeEfeito + "\n");
     for (var item in efeitos) {
+      print(item.title);
+      if (nomeEfeito == "Paralyze" && item.title == "Paralysis") {
+        return item.icon;
+      }
       if (item.title == nomeEfeito) {
         return item.icon;
       }

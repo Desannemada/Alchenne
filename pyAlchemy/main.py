@@ -29,10 +29,10 @@ def getIngredientes():
 
         listaRetorno.append({
             "title": listaDogis[0].a["title"].replace(" (Skyrim)", "").replace(" (Dragonborn)", ""),
-            "primaryEffect": {"title": listaDogis[1].a["title"].replace(" (Skyrim)", ""), "url": listaDogis[1].a["href"]},
-            "secondaryEffect": {"title": listaDogis[2].a["title"].replace(" (Skyrim)", ""), "url": listaDogis[1].a["href"]},
-            "tertiaryEffect": {"title": listaDogis[3].a["title"].replace(" (Skyrim)", ""), "url": listaDogis[1].a["href"]},
-            "quaternaryEffect": {"title": listaDogis[4].a["title"].replace(" (Skyrim)", ""), "url": listaDogis[1].a["href"]},
+            "primaryEffect": {"title": listaDogis[1].a["title"].replace(" (Skyrim)", "").replace(" Skill", "").replace("-h", "-H").replace("Archery", "Marksman"), "url": listaDogis[1].a["href"]},
+            "secondaryEffect": {"title": listaDogis[2].a["title"].replace(" (Skyrim)", "").replace(" Skill", "").replace("-h", "-H").replace("Archery", "Marksman"), "url": listaDogis[1].a["href"]},
+            "tertiaryEffect": {"title": listaDogis[3].a["title"].replace(" (Skyrim)", "").replace(" Skill", "").replace("-h", "-H").replace("Archery", "Marksman"), "url": listaDogis[1].a["href"]},
+            "quaternaryEffect": {"title": listaDogis[4].a["title"].replace(" (Skyrim)", "").replace(" Skill", "").replace("-h", "-H").replace("Archery", "Marksman"), "url": listaDogis[1].a["href"]},
             "weight": listaDogis[5].text.replace("\n", ""),
             "value": listaDogis[6].text.replace("\n", ""),
             "url": listaDogis[0].a["href"]
@@ -63,7 +63,7 @@ def getEffects():
         listaCatis3 = listaCatis2[0].findAll("a")
 
         listaRetorno2.append({
-            "title": listaCatis.a.text,
+            "title": listaCatis.a.text.replace("-h", "-H").replace("Paralyze", "Paralysis"),
             "ingredients": [],
             "icon": "",
             "description": listaCatis2[1].text.replace("<mag> points of poison damage for <dur>", "x points of poison damage for y")
@@ -121,6 +121,7 @@ def getIngredienteInfo():
 
     ratDiv = rat.find(
         "div", attrs={"id": "mw-content-text"})
+
     ratUl = ratDiv.find("ul")
     ratLis = ratUl.findAll("li")
 
@@ -130,26 +131,91 @@ def getIngredienteInfo():
         "background": ""
     }
 
-    # for i in ratLis:
-    #     info["locations"].append(str(i))
-
     ratDiv = list(ratDiv)
+
     for i in range(len(ratDiv)):
         if '"Background"' in str(ratDiv[i]):
-            info["background"] = str(ratDiv[i+2])
+            m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
+            k = str(ratDiv[i+2])
+            for j in m:
+                k = k.replace(str(j), str(j.replace(" ", "")))
+                info["background"] = str(k).replace("[src]", "")
 
-        if '"Locations"' in str(ratDiv[i]):
+        if '"Locations"' in str(ratDiv[i]) or '"Acquisition"' in str(ratDiv[i]):
             if "<p>" in str(ratDiv[i+2]):
-                info["titleLocation"] = str(
-                    ratDiv[i+2])
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
+                k = str(ratDiv[i+2])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["titleLocation"] = str(k)
+
                 if "<ul>" in str(ratDiv[i+4]):
+                    ratUl = ratDiv[i+4]
+                    ratLis = ratUl.findAll("li")
+                    print(ratLis)
                     for i in ratLis:
                         m = re.findall('(title=\\\".+?\\\")', str(i))
                         k = str(i)
                         for j in m:
                             k = k.replace(str(j), str(j.replace(" ", "")))
 
-                        info["locations"].append(str(k).replace("<li>","").replace("</li>",""))
+                        info["locations"].append(str(k).replace(
+                            "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+            elif "<p>" in str(ratDiv[i+4]):
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+4]))
+                k = str(ratDiv[i+4])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["titleLocation"] = str(k)
+
+                if "<ul>" in str(ratDiv[i+6]):
+                    ratUl = ratDiv[i+6]
+                    ratLis = ratUl.findAll("li")
+                    for i in ratLis:
+                        m = re.findall('(title=\\\".+?\\\")', str(i))
+                        k = str(i)
+                        for j in m:
+                            k = k.replace(str(j), str(j.replace(" ", "")))
+
+                        info["locations"].append(str(k).replace(
+                            "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+
+            # elif "<p>" in str(ratDiv[i+6]):
+            #     m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+6]))
+            #     k = str(ratDiv[i+6])
+            #     for j in m:
+            #         k = k.replace(str(j), str(j.replace(" ", "")))
+            #     info["titleLocation"] = str(k)
+
+            #     if "<ul>" in str(ratDiv[i+10]):
+            #         ratUl = ratDiv[i+10]
+            #         ratLis = ratUl.findAll("li")
+            #         ratUl2 = ratDiv[i+14]
+            #         ratLis2 = ratUl2.findAll("li")
+            #         ratUl3 = ratDiv[i+18]
+            #         ratLis3 = ratUl3.findAll("li")
+            #         for i in ratLis:
+            #             m = re.findall('(title=\\\".+?\\\")', str(i))
+            #             k = str(i)
+            #             for j in m:
+            #                 k = k.replace(str(j), str(j.replace(" ", "")))
+            #             info["locations"].append(str(k).replace(
+            #                 "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+            #         for i in ratLis2:
+            #             m = re.findall('(title=\\\".+?\\\")', str(i))
+            #             k = str(i)
+            #             for j in m:
+            #                 k = k.replace(str(j), str(j.replace(" ", "")))
+            #             info["locations"].append(str(k).replace(
+            #                 "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+            #         for i in ratLis3:
+            #             m = re.findall('(title=\\\".+?\\\")', str(i))
+            #             k = str(i)
+            #             for j in m:
+            #                 k = k.replace(str(j), str(j.replace(" ", "")))
+            #             info["locations"].append(str(k).replace(
+            #                 "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+
             else:
                 for i in ratLis:
                     m = re.findall('(title=\\\".+?\\\")', str(i))
@@ -157,8 +223,8 @@ def getIngredienteInfo():
                     for j in m:
                         k = k.replace(str(j), str(j.replace(" ", "")))
 
-                    info["locations"].append(str(k).replace("<li>","").replace("</li>",""))
-                    print(k)
+                    info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
 
             break
 
