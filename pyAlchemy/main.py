@@ -142,25 +142,148 @@ def getIngredienteInfo():
                 info["background"] = str(k).replace("[src]", "")
 
         if '"Locations"' in str(ratDiv[i]) or '"Acquisition"' in str(ratDiv[i]):
-            if "<p>" in str(ratDiv[i+2]):
+            if "<p>" in str(ratDiv[i+2]) and "<ul>" in str(ratDiv[i+4]) and "<p>" in str(ratDiv[i+6]) and "<ul>" in str(ratDiv[i+8]):
                 m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
                 k = str(ratDiv[i+2])
                 for j in m:
                     k = k.replace(str(j), str(j.replace(" ", "")))
                 info["titleLocation"] = str(k)
 
-                if "<ul>" in str(ratDiv[i+4]):
-                    ratUl = ratDiv[i+4]
-                    ratLis = ratUl.findAll("li")
-                    print(ratLis)
-                    for i in ratLis:
-                        m = re.findall('(title=\\\".+?\\\")', str(i))
-                        k = str(i)
-                        for j in m:
-                            k = k.replace(str(j), str(j.replace(" ", "")))
+                ratUl = ratDiv[i+4]
+                ratLis = ratUl.findAll("li")
+                for item in ratLis:
+                    m = re.findall('(title=\\\".+?\\\")', str(item))
+                    k = str(item)
+                    for j in m:
+                        k = k.replace(str(j), str(j.replace(" ", "")))
 
+                    if "<ul>" in str(k):
                         info["locations"].append(str(k).replace(
-                            "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", "").replace(".",".▫ "))
+                    else:   
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+                
+                temp = str(ratDiv[i+6])
+                info["locations"].append(temp)
+
+                ratUl = ratDiv[i+8]
+                ratLis = ratUl.findAll("li")
+                for item in ratLis:
+                    m = re.findall('(title=\\\".+?\\\")', str(item))
+                    k = str(item)
+                    for j in m:
+                        k = k.replace(str(j), str(j.replace(" ", "")))
+                    
+                    
+                    if "<ul>" in str(k):
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", "").replace(".",".▫ "))
+                    else:   
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+
+            elif "<p>" in str(ratDiv[i+2]) and "Recurring" in str(ratDiv[i+4]) and "<ul>" in str(ratDiv[i+6]):
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
+                k = str(ratDiv[i+2])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["titleLocation"] = str(k)
+
+                ratUl = ratDiv[i+6]
+                ratLis = ratUl.findAll("li")
+                for item in ratLis:
+                    m = re.findall('(title=\\\".+?\\\")', str(item))
+                    k = str(item)
+                    for j in m:
+                        k = k.replace(str(j), str(j.replace(" ", "")))
+
+                    if "<ul>" in str(k):
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", "").replace(".",".▫ "))
+                    else:   
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+            
+            elif "<p>" in str(ratDiv[i+2]) and "<p>" in str(ratDiv[i+3]) and "<ul>" in str(ratDiv[i+5]):
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
+                k = str(ratDiv[i+2])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["titleLocation"] = str(k)+str(ratDiv[i+3])
+
+                ratUl = ratDiv[i+5]
+                ratLis = ratUl.findAll("li")
+                for item in ratLis:
+                    m = re.findall('(title=\\\".+?\\\")', str(item))
+                    k = str(item)
+                    for j in m:
+                        k = k.replace(str(j), str(j.replace(" ", "")))
+
+                    if "<ul>" in str(k):
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", "").replace(".",".▫ "))
+                    else:   
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+            
+            elif "<p>" in str(ratDiv[i+2]) and "<ul>" in str(ratDiv[i+4]) and "<p>" in str(ratDiv[i+6]):
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
+                k = str(ratDiv[i+2])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["titleLocation"] = str(k)
+
+                ratUl = ratDiv[i+4]
+                ratLis = ratUl.findAll("li")
+                for item in ratLis:
+                    m = re.findall('(title=\\\".+?\\\")', str(item))
+                    k = str(item)
+                    for j in m:
+                        k = k.replace(str(j), str(j.replace(" ", "")))
+
+                    if "<ul>" in str(k):
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", "").replace(".",".▫ "))
+                    else:   
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+                
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+6]))
+                k = str(ratDiv[i+6])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["locations"].append(str(k))
+
+            elif "<p>" in str(ratDiv[i+2]) and "<ul>" in str(ratDiv[i+4]):
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
+                k = str(ratDiv[i+2])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["titleLocation"] = str(k)
+
+                ratUl = ratDiv[i+4]
+                ratLis = ratUl.findAll("li")
+                for i in ratLis:
+                    m = re.findall('(title=\\\".+?\\\")', str(i))
+                    k = str(i)
+                    for j in m:
+                        k = k.replace(str(j), str(j.replace(" ", "")))
+
+                    if "<ul>" in str(k):
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", "").replace(".",".▫ "))
+                    else:   
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+            
+            elif "<p>" in str(ratDiv[i+2]):
+                m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+2]))
+                k = str(ratDiv[i+2])
+                for j in m:
+                    k = k.replace(str(j), str(j.replace(" ", "")))
+                info["titleLocation"] = str(k)
+
             elif "<p>" in str(ratDiv[i+4]):
                 m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+4]))
                 k = str(ratDiv[i+4])
@@ -177,54 +300,30 @@ def getIngredienteInfo():
                         for j in m:
                             k = k.replace(str(j), str(j.replace(" ", "")))
 
-                        info["locations"].append(str(k).replace(
+                        if "<ul>" in str(k):
+                            info["locations"].append(str(k).replace(
+                            "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", "").replace(".",".▫ "))
+                        else:   
+                            info["locations"].append(str(k).replace(
                             "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
 
-            # elif "<p>" in str(ratDiv[i+6]):
-            #     m = re.findall('(title=\\\".+?\\\")', str(ratDiv[i+6]))
-            #     k = str(ratDiv[i+6])
-            #     for j in m:
-            #         k = k.replace(str(j), str(j.replace(" ", "")))
-            #     info["titleLocation"] = str(k)
-
-            #     if "<ul>" in str(ratDiv[i+10]):
-            #         ratUl = ratDiv[i+10]
-            #         ratLis = ratUl.findAll("li")
-            #         ratUl2 = ratDiv[i+14]
-            #         ratLis2 = ratUl2.findAll("li")
-            #         ratUl3 = ratDiv[i+18]
-            #         ratLis3 = ratUl3.findAll("li")
-            #         for i in ratLis:
-            #             m = re.findall('(title=\\\".+?\\\")', str(i))
-            #             k = str(i)
-            #             for j in m:
-            #                 k = k.replace(str(j), str(j.replace(" ", "")))
-            #             info["locations"].append(str(k).replace(
-            #                 "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
-            #         for i in ratLis2:
-            #             m = re.findall('(title=\\\".+?\\\")', str(i))
-            #             k = str(i)
-            #             for j in m:
-            #                 k = k.replace(str(j), str(j.replace(" ", "")))
-            #             info["locations"].append(str(k).replace(
-            #                 "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
-            #         for i in ratLis3:
-            #             m = re.findall('(title=\\\".+?\\\")', str(i))
-            #             k = str(i)
-            #             for j in m:
-            #                 k = k.replace(str(j), str(j.replace(" ", "")))
-            #             info["locations"].append(str(k).replace(
-            #                 "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
-
             else:
+                print("hey")
+                aux = 1
                 for i in ratLis:
                     m = re.findall('(title=\\\".+?\\\")', str(i))
                     k = str(i)
                     for j in m:
                         k = k.replace(str(j), str(j.replace(" ", "")))
 
-                    info["locations"].append(str(k).replace(
+                    if "<ul>" in str(k):
+                        print(str(k))
+                        info["locations"].append(str(k).replace("\n<ul><li>","▫").replace("\n</li><li>","▫").replace(
                         "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+                    else:  
+                        info["locations"].append(str(k).replace(
+                        "<li>", "").replace("</li>", "").replace("HF", "").replace("DG", "").replace("DR", ""))
+                
 
             break
 
