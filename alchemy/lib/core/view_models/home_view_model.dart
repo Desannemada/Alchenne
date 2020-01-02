@@ -164,6 +164,14 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  int returnLi(int index) {
+    for (var i = 0; i < currentIInfo.innerLocations.indexes.length; i++) {
+      if (currentIInfo.innerLocations.indexes[i] == index) {
+        return i;
+      }
+    }
+  }
+
   String getEfeitoImage(String nomeEfeito) {
     print("nome: " + nomeEfeito + "\n");
     for (var item in efeitos) {

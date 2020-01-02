@@ -221,39 +221,93 @@ class IngredientInfo extends StatelessWidget {
                                   homeViewModel.currentIInfo.locations.length,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (BuildContext bc, int index) {
-                                return Row(
+                                return Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                    Text("▫ "),
-                                    Expanded(
-                                      child: MarkdownBody(
-                                        shrinkWrap: true,
-                                        // onTapLink: (String url) {
-                                        //   print(INGREDIENT_URL + url);
-                                        //   launch(INGREDIENT_URL + url);
-                                        // },
-                                        data: html2md.convert(
-                                          homeViewModel
-                                              .currentIInfo.locations[index],
-                                        ),
-                                        styleSheet: MarkdownStyleSheet(
-                                          textAlign: WrapAlignment.spaceBetween,
-                                          a: TextStyle(
-                                            color: Colors.blue,
-                                            fontSize: 18,
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text("▫ "),
+                                        Expanded(
+                                          child: MarkdownBody(
+                                            shrinkWrap: true,
+                                            // onTapLink: (String url) {
+                                            //   print(INGREDIENT_URL + url);
+                                            //   launch(INGREDIENT_URL + url);
+                                            // },
+                                            data: html2md.convert(
+                                              homeViewModel.currentIInfo
+                                                  .locations[index],
+                                            ),
+                                            styleSheet: MarkdownStyleSheet(
+                                              textAlign:
+                                                  WrapAlignment.spaceBetween,
+                                              a: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 18,
+                                              ),
+                                              p: TextStyle(
+                                                color: Theme.of(context)
+                                                    .textTheme
+                                                    .body1
+                                                    .color,
+                                                fontSize: 18,
+                                              ),
+                                            ),
                                           ),
-                                          p: TextStyle(
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .body1
-                                                .color,
-                                            fontSize: 18,
-                                          ),
                                         ),
-                                      ),
+                                      ],
                                     ),
+                                    homeViewModel.currentIInfo.innerLocations
+                                            .indexes.isEmpty
+                                        ? Container()
+                                        : homeViewModel.currentIInfo
+                                                .innerLocations.indexes
+                                                .contains(index)
+                                            ? Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: MediaQuery.of(context)
+                                                            .size
+                                                            .width *
+                                                        0.1,
+                                                    top: 5),
+                                                child: MarkdownBody(
+                                                  shrinkWrap: true,
+                                                  // onTapLink: (String url) {
+                                                  //   print(INGREDIENT_URL + url);
+                                                  //   launch(INGREDIENT_URL + url);
+                                                  // },
+                                                  data: html2md.convert(
+                                                    homeViewModel
+                                                            .currentIInfo
+                                                            .innerLocations
+                                                            .inners[
+                                                        homeViewModel
+                                                            .returnLi(index)],
+                                                  ),
+                                                  styleSheet:
+                                                      MarkdownStyleSheet(
+                                                    textAlign: WrapAlignment
+                                                        .spaceBetween,
+                                                    a: TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: 18,
+                                                    ),
+                                                    p: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .textTheme
+                                                          .body1
+                                                          .color,
+                                                      fontSize: 18,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container()
                                   ],
                                 );
                               },
