@@ -38,7 +38,7 @@ class IngredienteInfo {
 
 class InnerLocations {
     List<int> indexes;
-    List<String> inners;
+    List<List<String>> inners;
 
     InnerLocations({
         this.indexes,
@@ -47,11 +47,11 @@ class InnerLocations {
 
     factory InnerLocations.fromJson(Map<String, dynamic> json) => InnerLocations(
         indexes: List<int>.from(json["indexes"].map((x) => x)),
-        inners: List<String>.from(json["inners"].map((x) => x)),
+        inners: List<List<String>>.from(json["inners"].map((x) => List<String>.from(x.map((x) => x)))),
     );
 
     Map<String, dynamic> toJson() => {
         "indexes": List<dynamic>.from(indexes.map((x) => x)),
-        "inners": List<dynamic>.from(inners.map((x) => x)),
+        "inners": List<dynamic>.from(inners.map((x) => List<dynamic>.from(x.map((x) => x)))),
     };
 }

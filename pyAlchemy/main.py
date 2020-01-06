@@ -133,6 +133,7 @@ def getIngredienteInfo():
         "background": ""
     }
 
+    ratDiv2 = ratDiv
     ratDiv = list(ratDiv)
 
     def ratUlLis(currentUL):
@@ -147,16 +148,19 @@ def getIngredienteInfo():
                 k = k.replace(str(j), str(j.replace(" ", "")))
             if "<ul>" in str(k):
                 aux = str(k)
-
                 for p in range(len(aux)):
                     if p < len(aux) - 4:
                         if aux[p] + aux[p+1] + aux[p+2] + aux[p+3] == "<ul>":
-                            print("oi")
+                            # print(aux[p:len(aux)-5])
                             info["locations"].append(aux[:p].replace("<li>", "").replace(
                                 "HF", "").replace("DG", "").replace("DR", ""))
                             info["innerLocations"]["indexes"].append(item)
-                            info["innerLocations"]["inners"].append(
-                                aux[p:].replace("HF", "").replace("DG", "").replace("DR", ""))
+                            n = aux[p:len(aux)-5].replace("HF",
+                                                          "").replace("DG", "").replace("DR", "")
+                            n = re.findall("<li>.+?\n?<.li>", n)
+                            for l in range(len(n)):
+                                n[l] = n[l].replace("<li>","").replace("</li>","").replace("<ul>","")
+                            info["innerLocations"]["inners"].append(n)
                             break
 
                 # info["locations"].append(str(k).replace("\n<ul><li>", "▫").replace("\n</li><li>", "▫").replace(

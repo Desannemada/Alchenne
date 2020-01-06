@@ -82,12 +82,18 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       itemCount: 26,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          onTapDown: (TapDownDetails detail) {
+                          // onTapDown: (TapDownDetails detail) {
+                          //   print("a");
+                          //   homeViewModel.getPosition(
+                          //       index, "ingrediente", controller);
+                          // },
+                          // onTapUp: (TapUpDetails detail) {
+                          //   print("b");
+                          //   homeViewModel.changeBubble("");
+                          // },
+                          onTap: () {
                             homeViewModel.getPosition(
                                 index, "ingrediente", controller);
-                          },
-                          onTapUp: (TapUpDetails detail) {
-                            homeViewModel.changeBubble("");
                           },
                           onVerticalDragUpdate: (DragUpdateDetails detail) {
                             var pos = detail.globalPosition.dy.toInt();
@@ -108,12 +114,14 @@ class _IngredientsTabState extends State<IngredientsTab> {
                             homeViewModel.getPosition(
                                 index, "ingrediente", controller);
                           },
-                          onLongPressEnd: (LongPressEndDetails detail) {
-                            homeViewModel.changeBubble("");
-                          },
-                          onVerticalDragEnd: (DragEndDetails detail) {
-                            homeViewModel.changeBubble("");
-                          },
+                          // onLongPressEnd: (LongPressEndDetails detail) {
+                          //   print("e");
+                          //   homeViewModel.changeBubble("");
+                          // },
+                          // onVerticalDragEnd: (DragEndDetails detail) {
+                          //   print("f");
+                          //   homeViewModel.changeBubble("");
+                          // },
                           child: Container(
                             padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height *
@@ -154,23 +162,41 @@ class _IngredientsTabState extends State<IngredientsTab> {
                           ),
                         ),
                       ),
-                      homeViewModel.alphabetBubble == ""
-                          ? Text("")
-                          : Container(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                height: MediaQuery.of(context).size.width * 0.2,
-                                child: Card(
-                                  elevation: 1.5,
-                                  color: Colors.black38,
-                                  child: Center(
-                                      child: Text(
-                                    homeViewModel.alphabetBubble,
-                                    style: TextStyle(fontSize: 40),
-                                  )),
-                                ),
-                              ),
-                            )
+                      AnimatedOpacity(
+                        opacity: homeViewModel.alphabetBubble == "" ? 0.0 : 1.0,
+                        duration: Duration(milliseconds: 700),
+                        onEnd: () {
+                          homeViewModel.changeBubble("");
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.2,
+                          height: MediaQuery.of(context).size.width * 0.2,
+                          child: Card(
+                            elevation: 1.5,
+                            color: Colors.black38,
+                            child: Center(
+                                child: Text(
+                              homeViewModel.alphabetBubble,
+                              style: TextStyle(fontSize: 40),
+                            )),
+                          ),
+                        ),
+                      ),
+                      // homeViewModel.alphabetBubble == ""
+                      //     ? Text("")
+                      //     : Container(
+                      //         width: MediaQuery.of(context).size.width * 0.2,
+                      //         height: MediaQuery.of(context).size.width * 0.2,
+                      //         child: Card(
+                      //           elevation: 1.5,
+                      //           color: Colors.black38,
+                      //           child: Center(
+                      //               child: Text(
+                      //             homeViewModel.alphabetBubble,
+                      //             style: TextStyle(fontSize: 40),
+                      //           )),
+                      //         ),
+                      //       )
                     ],
                   ),
                 ],

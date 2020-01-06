@@ -40,7 +40,7 @@ class IngredientItem extends StatelessWidget {
                   CircleAvatar(
                     radius: 40,
                     child: Image.asset(
-                      "assets/ingredients/${homeViewModel.ingredientes[index].title}.png",
+                      "assets/ingredients/${homeViewModel.ingredientes[index].title.replaceAll(" ", "")}.png",
                       fit: BoxFit.contain,
                       scale: 1.5,
                     ),
@@ -92,6 +92,7 @@ class IngredientItem extends StatelessWidget {
             onPressed: () {
               homeViewModel.changeItem(homeViewModel.ingredientes[index]);
               homeViewModel.nulifyCurrentInfo();
+              homeViewModel.fecharInfos();
               homeViewModel.getInfoI(
                   INGREDIENT_URL + homeViewModel.currentIngredient.url);
               Navigator.push(context,

@@ -33,7 +33,12 @@ class HomeViewModel extends BaseViewModel {
 
   String alphabetBubble = "";
 
+  bool mostrarBackground;
+  bool mostrarLocations;
+
   HomeViewModel() {
+    mostrarBackground = false;
+    mostrarLocations = false;
     getIngredients();
     getEffects();
     backgrounds = [
@@ -82,6 +87,7 @@ class HomeViewModel extends BaseViewModel {
       var response = await api.getIngredientsFromJson();
       if (response is List<Ingredientes>) {
         ingredientes = response;
+        print(ingredientes[0].title.replaceAll(" ", ""));
       } else if (response is int) {
         errorResponse = -1;
       }
@@ -172,10 +178,24 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
+  void changeMostrarBackground() {
+    mostrarBackground = !mostrarBackground;
+    notifyListeners();
+  }
+
+  void changeMostrarLocations() {
+    mostrarLocations = !mostrarLocations;
+    notifyListeners();
+  }
+
+  void fecharInfos() {
+    mostrarLocations = false;
+    mostrarBackground = false;
+    notifyListeners();
+  }
+
   String getEfeitoImage(String nomeEfeito) {
-    print("nome: " + nomeEfeito + "\n");
     for (var item in efeitos) {
-      print(item.title);
       if (nomeEfeito == "Paralyze" && item.title == "Paralysis") {
         return item.icon;
       }
