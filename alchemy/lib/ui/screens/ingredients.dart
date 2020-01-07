@@ -182,21 +182,6 @@ class _IngredientsTabState extends State<IngredientsTab> {
                           ),
                         ),
                       ),
-                      // homeViewModel.alphabetBubble == ""
-                      //     ? Text("")
-                      //     : Container(
-                      //         width: MediaQuery.of(context).size.width * 0.2,
-                      //         height: MediaQuery.of(context).size.width * 0.2,
-                      //         child: Card(
-                      //           elevation: 1.5,
-                      //           color: Colors.black38,
-                      //           child: Center(
-                      //               child: Text(
-                      //             homeViewModel.alphabetBubble,
-                      //             style: TextStyle(fontSize: 40),
-                      //           )),
-                      //         ),
-                      //       )
                     ],
                   ),
                 ],

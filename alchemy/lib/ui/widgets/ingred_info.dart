@@ -59,7 +59,7 @@ class IngredientInfo extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.black.withOpacity(0.7),
                       child: Image.asset(
-                        "assets/ingredients/${homeViewModel.currentIngredient.title}.png",
+                        "assets/ingredients/${homeViewModel.currentIngredient.title.replaceAll(" ", "")}.png",
                         fit: BoxFit.contain,
                         scale: 1.1,
                       ),

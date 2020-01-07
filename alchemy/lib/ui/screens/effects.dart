@@ -45,11 +45,14 @@ class _EffectsTabState extends State<EffectsTab> {
                 itemCount: 26,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTapDown: (TapDownDetails detail) {
+                    // onTapDown: (TapDownDetails detail) {
+                    //   homeViewModel.getPosition(index, "efeito", controller);
+                    // },
+                    // onTapUp: (TapUpDetails detail) {
+                    //   homeViewModel.changeBubble("");
+                    // },
+                    onTap: () {
                       homeViewModel.getPosition(index, "efeito", controller);
-                    },
-                    onTapUp: (TapUpDetails detail) {
-                      homeViewModel.changeBubble("");
                     },
                     onVerticalDragUpdate: (DragUpdateDetails detail) {
                       var pos = detail.globalPosition.dy.toInt();
@@ -67,12 +70,12 @@ class _EffectsTabState extends State<EffectsTab> {
                     onLongPress: () {
                       homeViewModel.getPosition(index, "efeito", controller);
                     },
-                    onLongPressEnd: (LongPressEndDetails detail) {
-                      homeViewModel.changeBubble("");
-                    },
-                    onVerticalDragEnd: (DragEndDetails detail) {
-                      homeViewModel.changeBubble("");
-                    },
+                    // onLongPressEnd: (LongPressEndDetails detail) {
+                    //   homeViewModel.changeBubble("");
+                    // },
+                    // onVerticalDragEnd: (DragEndDetails detail) {
+                    //   homeViewModel.changeBubble("");
+                    // },
                     child: Container(
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.0028),
@@ -110,23 +113,43 @@ class _EffectsTabState extends State<EffectsTab> {
                     ),
                   ),
                 ),
-                homeViewModel.alphabetBubble == ""
-                    ? Text("")
-                    : Container(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.2,
-                          height: MediaQuery.of(context).size.width * 0.2,
-                          child: Card(
-                            elevation: 1.5,
-                            color: Colors.black38,
-                            child: Center(
-                                child: Text(
-                              homeViewModel.alphabetBubble,
-                              style: TextStyle(fontSize: 40),
-                            )),
-                          ),
-                        ),
-                      )
+                AnimatedOpacity(
+                  opacity: homeViewModel.alphabetBubble == "" ? 0.0 : 1.0,
+                  duration: Duration(milliseconds: 700),
+                  onEnd: () {
+                    homeViewModel.changeBubble("");
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.2,
+                    height: MediaQuery.of(context).size.width * 0.2,
+                    child: Card(
+                      elevation: 1.5,
+                      color: Colors.black38,
+                      child: Center(
+                          child: Text(
+                        homeViewModel.alphabetBubble,
+                        style: TextStyle(fontSize: 40),
+                      )),
+                    ),
+                  ),
+                ),
+                // homeViewModel.alphabetBubble == ""
+                //     ? Text("")
+                //     : Container(
+                //         child: Container(
+                //           width: MediaQuery.of(context).size.width * 0.2,
+                //           height: MediaQuery.of(context).size.width * 0.2,
+                //           child: Card(
+                //             elevation: 1.5,
+                //             color: Colors.black38,
+                //             child: Center(
+                //                 child: Text(
+                //               homeViewModel.alphabetBubble,
+                //               style: TextStyle(fontSize: 40),
+                //             )),
+                //           ),
+                //         ),
+                //       )
               ],
             ),
           ],
