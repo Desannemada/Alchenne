@@ -1,4 +1,5 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
+import 'package:alchemy/ui/values/strings.dart';
 import 'package:alchemy/ui/widgets/effect_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,6 +68,10 @@ class EffectItem extends StatelessWidget {
             ),
             onPressed: () {
               homeViewModel.changeItem2(homeViewModel.efeitos[index]);
+              homeViewModel.nulifyCurrentInfo2();
+              print(EFEITO_URL + homeViewModel.currentEffect.url);
+              homeViewModel
+                  .getInfoE(EFEITO_URL + homeViewModel.currentEffect.url);
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => EffectInfo()));
             },

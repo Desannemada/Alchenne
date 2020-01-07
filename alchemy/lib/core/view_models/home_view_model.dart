@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:alchemy/core/models/efeitos.dart';
+import 'package:alchemy/core/models/infoE.dart';
 import 'package:alchemy/core/models/infoI.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
 import 'package:alchemy/core/services/custom_api.dart';
@@ -21,6 +22,7 @@ class HomeViewModel extends BaseViewModel {
   List<Ingredientes> ingredientes = List();
   List<Efeitos> efeitos = List();
   IngredienteInfo currentIInfo;
+  EfeitoInfo currentEInfo;
 
   List currentBackground = [0];
   Ingredientes currentIngredient;
@@ -87,7 +89,6 @@ class HomeViewModel extends BaseViewModel {
       var response = await api.getIngredientsFromJson();
       if (response is List<Ingredientes>) {
         ingredientes = response;
-        print(ingredientes[0].title.replaceAll(" ", ""));
       } else if (response is int) {
         errorResponse = -1;
       }
@@ -118,11 +119,31 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void nulifyCurrentInfo2() {
+    currentEInfo = null;
+    notifyListeners();
+  }
+
   void getInfoI(String url) async {
     try {
       var response = await api.getURLFromJson(url);
       if (response is IngredienteInfo) {
         currentIInfo = response;
+      } else if (response is int) {
+        errorResponse = -1;
+      }
+    } catch (e) {
+      errorResponse = -1;
+      throw e;
+    }
+    notifyListeners();
+  }
+
+  void getInfoE(String url) async {
+    try {
+      var response = await api.getURL2FromJson(url);
+      if (response is EfeitoInfo) {
+        currentEInfo = response;
       } else if (response is int) {
         errorResponse = -1;
       }
@@ -192,6 +213,31 @@ class HomeViewModel extends BaseViewModel {
     mostrarLocations = false;
     mostrarBackground = false;
     notifyListeners();
+  }
+
+  List<String> returnURL(String url) {
+    String aux;
+    String aux2;
+    int aux3 = 0;
+    for (var i = 0; i < url.length; i++) {
+      if (url[i] + url[i + 1] == "i/") {
+        aux = url.substring(i + 2);
+        for (var j = 0; j < aux.length; j++) {
+          if (aux[j] == "_") {
+            aux3 = aux3 + 1;
+          }
+          if (aux[j] == "%") {
+            aux3 = aux3 + 2;
+          }
+        }
+        aux2 = aux
+            .substring(0, (aux.length + aux3) ~/ 2)
+            .replaceAll("_", " ")
+            .replaceAll("%27", "'");
+        aux = url.substring(0, 6) + aux.substring(0, (aux.length + aux3) ~/ 2);
+        return [aux, aux2];
+      }
+    }
   }
 
   String getEfeitoImage(String nomeEfeito) {

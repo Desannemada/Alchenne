@@ -15,12 +15,14 @@ class Efeitos {
   String icon;
   List<String> ingredients;
   String title;
+  String url;
 
   Efeitos({
     this.description,
     this.icon,
     this.ingredients,
     this.title,
+    this.url,
   });
 
   factory Efeitos.fromJson(Map<String, dynamic> json) => Efeitos(
@@ -28,6 +30,7 @@ class Efeitos {
         icon: json["icon"],
         ingredients: List<String>.from(json["ingredients"].map((x) => x)),
         title: json["title"],
+        url: json["url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,5 +38,6 @@ class Efeitos {
         "icon": icon,
         "ingredients": List<dynamic>.from(ingredients.map((x) => x)),
         "title": title,
+        "url": url,
       };
 }

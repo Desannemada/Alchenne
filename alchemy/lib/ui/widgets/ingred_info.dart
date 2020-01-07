@@ -1,10 +1,10 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/values/strings.dart';
+import 'package:alchemy/ui/widgets/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:html2md/html2md.dart' as html2md;
-import 'package:url_launcher/url_launcher.dart';
 
 class IngredientInfo extends StatelessWidget {
   @override
@@ -188,26 +188,9 @@ class IngredientInfo extends StatelessWidget {
                                       ? Padding(
                                           padding:
                                               EdgeInsets.symmetric(vertical: 5),
-                                          child: MarkdownBody(
-                                            shrinkWrap: true,
-                                            data: html2md.convert(homeViewModel
-                                                .currentIInfo.background),
-                                            styleSheet: MarkdownStyleSheet(
-                                              textAlign:
-                                                  WrapAlignment.spaceBetween,
-                                              a: TextStyle(
-                                                color: Colors.blue,
-                                                fontSize: 18,
-                                              ),
-                                              p: TextStyle(
-                                                color: Theme.of(context)
-                                                    .textTheme
-                                                    .body1
-                                                    .color,
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                          ),
+                                          child: InfoTexts(
+                                              info: homeViewModel
+                                                  .currentIInfo.background),
                                         )
                                       : Container(),
                                 ),
@@ -246,25 +229,9 @@ class IngredientInfo extends StatelessWidget {
                               child: homeViewModel.mostrarLocations
                                   ? Padding(
                                       padding: EdgeInsets.only(top: 5),
-                                      child: MarkdownBody(
-                                        shrinkWrap: true,
-                                        data: html2md.convert(homeViewModel
-                                            .currentIInfo.titleLocation),
-                                        styleSheet: MarkdownStyleSheet(
-                                          textAlign: WrapAlignment.spaceBetween,
-                                          a: TextStyle(
-                                            color: Colors.blue,
-                                            fontSize: 18,
-                                          ),
-                                          p: TextStyle(
-                                            color: Theme.of(context)
-                                                .textTheme
-                                                .body1
-                                                .color,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ),
+                                      child: InfoTexts(
+                                          info: homeViewModel
+                                              .currentIInfo.titleLocation),
                                     )
                                   : Container(),
                             ),
@@ -293,32 +260,10 @@ class IngredientInfo extends StatelessWidget {
                                           children: <Widget>[
                                             Text("▫ "),
                                             Expanded(
-                                              child: MarkdownBody(
-                                                shrinkWrap: true,
-                                                // onTapLink: (String url) {
-                                                //   print(INGREDIENT_URL + url);
-                                                //   launch(INGREDIENT_URL + url);
-                                                // },
-                                                data: html2md.convert(
-                                                  homeViewModel.currentIInfo
-                                                      .locations[index],
-                                                ),
-                                                styleSheet: MarkdownStyleSheet(
-                                                  textAlign: WrapAlignment
-                                                      .spaceBetween,
-                                                  a: TextStyle(
-                                                    color: Colors.blue,
-                                                    fontSize: 18,
-                                                  ),
-                                                  p: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .textTheme
-                                                        .body1
-                                                        .color,
-                                                    fontSize: 18,
-                                                  ),
-                                                ),
-                                              ),
+                                              child: InfoTexts(
+                                                  info: homeViewModel
+                                                      .currentIInfo
+                                                      .locations[index]),
                                             ),
                                           ],
                                         ),
@@ -365,41 +310,14 @@ class IngredientInfo extends StatelessWidget {
                                                           child: Text("▫ "),
                                                         ),
                                                         Expanded(
-                                                          child: MarkdownBody(
-                                                            shrinkWrap: true,
-                                                            // onTapLink: (String url) {
-                                                            //   print(INGREDIENT_URL + url);
-                                                            //   launch(INGREDIENT_URL + url);
-                                                            // },
-                                                            data:
-                                                                html2md.convert(
-                                                              homeViewModel
-                                                                      .currentIInfo
-                                                                      .innerLocations
-                                                                      .inners[
-                                                                  homeViewModel
-                                                                      .returnLi(
-                                                                          index)][i],
-                                                            ),
-                                                            styleSheet:
-                                                                MarkdownStyleSheet(
-                                                              textAlign:
-                                                                  WrapAlignment
-                                                                      .spaceBetween,
-                                                              a: TextStyle(
-                                                                color:
-                                                                    Colors.blue,
-                                                                fontSize: 18,
-                                                              ),
-                                                              p: TextStyle(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .textTheme
-                                                                    .body1
-                                                                    .color,
-                                                                fontSize: 18,
-                                                              ),
-                                                            ),
+                                                          child: InfoTexts(
+                                                            info: homeViewModel
+                                                                    .currentIInfo
+                                                                    .innerLocations
+                                                                    .inners[
+                                                                homeViewModel
+                                                                    .returnLi(
+                                                                        index)][i],
                                                           ),
                                                         ),
                                                       ],
@@ -415,6 +333,45 @@ class IngredientInfo extends StatelessWidget {
                   ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class InfoTexts extends StatelessWidget {
+  const InfoTexts({
+    Key key,
+    @required this.info,
+  }) : super(key: key);
+
+  final String info;
+
+  @override
+  Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context);
+    return MarkdownBody(
+      shrinkWrap: true,
+      data: html2md.convert(info),
+      onTapLink: (String url) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => MyWebView(
+              title: homeViewModel.returnURL(url)[1],
+              selectedUrl: INGREDIENT_URL + homeViewModel.returnURL(url)[0],
+            ),
+          ),
+        );
+      },
+      styleSheet: MarkdownStyleSheet(
+        textAlign: WrapAlignment.spaceBetween,
+        a: TextStyle(
+          color: Colors.blue,
+          fontSize: 18,
+        ),
+        p: TextStyle(
+          color: Theme.of(context).textTheme.body1.color,
+          fontSize: 18,
+        ),
       ),
     );
   }

@@ -64,6 +64,7 @@ def getEffects():
 
         listaRetorno2.append({
             "title": listaCatis.a.text.replace("-h", "-H").replace("Paralyze", "Paralysis"),
+            "url": listaCatis.a["href"],
             "ingredients": [],
             "icon": "",
             "description": listaCatis2[1].text.replace("<mag> points of poison damage for <dur>", "x points of poison damage for y")
@@ -133,7 +134,6 @@ def getIngredienteInfo():
         "background": ""
     }
 
-    ratDiv2 = ratDiv
     ratDiv = list(ratDiv)
 
     def ratUlLis(currentUL):
@@ -310,6 +310,28 @@ def getIngredienteInfo():
             break
 
     return jsonify(info)
+
+@cross_origin()
+@app.route("/efeitoInfo", methods=["POST"])
+def getEfeitoInfo():
+    url = request.json["URL"]
+    cow = BeautifulSoup(requests.get(url).content, "html5lib")
+
+    cowTable = cow.find(
+        "table", attrs={"class": "wikitable infobox SRMagicRes"})
+    cowTrs = cowTable.findAll("tr")
+    cowTd1 = cowTrs[1].find("td")
+    cowTd2 = cowTrs[2].find("td")
+
+    info2 = {
+        "School": str(cowTd1).replace("<td>","").replace("</td>",""),
+        "Type": cowTd2.text
+    }
+
+    return jsonify(info2)
+    
+
+    
 
 
 # Inicializando servidor
