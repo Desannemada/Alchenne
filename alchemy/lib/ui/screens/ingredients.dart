@@ -53,7 +53,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: homeViewModel.currentBackground[0][0],
+                  image: homeViewModel.currentBackground[0][1],
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.fitWidth),
             ),
@@ -164,7 +164,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       ),
                       AnimatedOpacity(
                         opacity: homeViewModel.alphabetBubble == "" ? 0.0 : 1.0,
-                        duration: Duration(milliseconds: 700),
+                        duration: Duration(seconds: 1),
                         onEnd: () {
                           homeViewModel.changeBubble("");
                         },

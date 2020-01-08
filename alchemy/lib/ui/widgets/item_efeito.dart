@@ -69,7 +69,6 @@ class EffectItem extends StatelessWidget {
             onPressed: () {
               homeViewModel.changeItem2(homeViewModel.efeitos[index]);
               homeViewModel.nulifyCurrentInfo2();
-              print(EFEITO_URL + homeViewModel.currentEffect.url);
               homeViewModel
                   .getInfoE(EFEITO_URL + homeViewModel.currentEffect.url);
               Navigator.push(context,

@@ -304,7 +304,6 @@ def getIngredienteInfo():
                     ratUlLis(ratUl)
 
             else:
-                print("hey")
                 ratUlLis("")
 
             break
@@ -318,14 +317,15 @@ def getEfeitoInfo():
     cow = BeautifulSoup(requests.get(url).content, "html5lib")
 
     cowTable = cow.find(
-        "table", attrs={"class": "wikitable infobox SRMagicRes"})
+        "table")
     cowTrs = cowTable.findAll("tr")
     cowTd1 = cowTrs[1].find("td")
     cowTd2 = cowTrs[2].find("td")
 
     info2 = {
         "School": str(cowTd1).replace("<td>","").replace("</td>",""),
-        "Type": cowTd2.text
+        "Type": cowTd2.text,
+        "Schoolsize": float(len(cowTd1.text))
     }
 
     return jsonify(info2)

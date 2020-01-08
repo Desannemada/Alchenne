@@ -5,10 +5,17 @@ import 'package:alchemy/ui/screens/potions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
+    TabController tabController =
+        new TabController(length: 3, vsync: this, initialIndex: 1);
 
     return DefaultTabController(
       length: 3,
@@ -29,14 +36,15 @@ class HomeScreen extends StatelessWidget {
             )
           ],
           bottom: TabBar(
+            controller: tabController,
             indicatorColor: Theme.of(context).textTheme.body1.color,
             tabs: <Widget>[
+              Tab(child: Image.asset("assets/efeito.webp")),
               Tab(
                   child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 2),
                 child: Image.asset("assets/ingredient.png"),
               )),
-              Tab(child: Image.asset("assets/efeito.webp")),
               Padding(
                 padding: const EdgeInsets.only(bottom: 2),
                 child: Tab(child: Image.asset("assets/potion.png")),
@@ -45,10 +53,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         body: TabBarView(
+          controller: tabController,
           physics: homeViewModel.errorResponse == -1
               ? NeverScrollableScrollPhysics()
               : AlwaysScrollableScrollPhysics(),
-          children: <Widget>[IngredientsTab(), EffectsTab(), PotionTab()],
+          children: <Widget>[EffectsTab(), IngredientsTab(), PotionTab()],
         ),
       ),
     );

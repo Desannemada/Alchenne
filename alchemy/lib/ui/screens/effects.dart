@@ -26,7 +26,7 @@ class _EffectsTabState extends State<EffectsTab> {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: homeViewModel.currentBackground[0][1],
+                  image: homeViewModel.currentBackground[0][0],
                   alignment: Alignment.centerLeft,
                   fit: BoxFit.fitWidth),
             ),
@@ -115,7 +115,7 @@ class _EffectsTabState extends State<EffectsTab> {
                 ),
                 AnimatedOpacity(
                   opacity: homeViewModel.alphabetBubble == "" ? 0.0 : 1.0,
-                  duration: Duration(milliseconds: 700),
+                  duration: Duration(seconds: 1),
                   onEnd: () {
                     homeViewModel.changeBubble("");
                   },
