@@ -23,6 +23,7 @@ class HomeViewModel extends BaseViewModel {
   List<Efeitos> efeitos = List();
   IngredienteInfo currentIInfo;
   EfeitoInfo currentEInfo;
+  List<String> schools = List();
 
   List currentBackground = [0];
   Ingredientes currentIngredient;
@@ -38,11 +39,17 @@ class HomeViewModel extends BaseViewModel {
   bool mostrarBackground;
   bool mostrarLocations;
 
+  int screensOpen = 0;
+
+  int currentTabBar;
+
   HomeViewModel() {
     mostrarBackground = false;
     mostrarLocations = false;
     getIngredients();
     getEffects();
+    currentTabBar = 1;
+
     backgrounds = [
       [
         AssetImage("assets/bg/b1_1.jpg"),
@@ -82,6 +89,14 @@ class HomeViewModel extends BaseViewModel {
       ]
     ];
     chooseBackground();
+
+    schools = [
+      "All",
+      "Alteration",
+      "Destruction",
+      "Illusion",
+      "Restoration",
+    ];
   }
 
   void getIngredients() async {
@@ -129,6 +144,7 @@ class HomeViewModel extends BaseViewModel {
       var response = await api.getURLFromJson(url);
       if (response is IngredienteInfo) {
         currentIInfo = response;
+        errorResponse = 0;
       } else if (response is int) {
         errorResponse = -1;
       }
@@ -144,6 +160,7 @@ class HomeViewModel extends BaseViewModel {
       var response = await api.getURL2FromJson(url);
       if (response is EfeitoInfo) {
         currentEInfo = response;
+        errorResponse = 0;
       } else if (response is int) {
         errorResponse = -1;
       }
@@ -174,6 +191,26 @@ class HomeViewModel extends BaseViewModel {
   void changeItem2(Efeitos item) {
     currentEffect = item;
     notifyListeners();
+  }
+
+  void changeItem3(String title) {
+    for (var item in efeitos) {
+      if (item.title == title) {
+        currentEffect = item;
+        notifyListeners();
+        break;
+      }
+    }
+  }
+
+  void changeItem4(String title) {
+    for (var item in ingredientes) {
+      if (item.title == title) {
+        currentIngredient = item;
+        notifyListeners();
+        break;
+      }
+    }
   }
 
   void updatePosition(int i) {
@@ -212,6 +249,11 @@ class HomeViewModel extends BaseViewModel {
   void fecharInfos() {
     mostrarLocations = false;
     mostrarBackground = false;
+    notifyListeners();
+  }
+
+  void changeTab(int tab) {
+    currentTabBar = tab;
     notifyListeners();
   }
 

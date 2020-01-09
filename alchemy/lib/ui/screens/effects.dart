@@ -133,23 +133,24 @@ class _EffectsTabState extends State<EffectsTab> {
                     ),
                   ),
                 ),
-                // homeViewModel.alphabetBubble == ""
-                //     ? Text("")
-                //     : Container(
-                //         child: Container(
-                //           width: MediaQuery.of(context).size.width * 0.2,
-                //           height: MediaQuery.of(context).size.width * 0.2,
-                //           child: Card(
-                //             elevation: 1.5,
-                //             color: Colors.black38,
-                //             child: Center(
-                //                 child: Text(
-                //               homeViewModel.alphabetBubble,
-                //               style: TextStyle(fontSize: 40),
-                //             )),
-                //           ),
-                //         ),
-                //       )
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 10),
+                //   child: Align(
+                //     alignment: Alignment.bottomCenter,
+                //     child: FloatingActionButton(
+                //       tooltip: "Choose School",
+                //       child: Icon(
+                //         Icons.filter_list,
+                //         color: Theme.of(context).iconTheme.color,
+                //       ),
+                //       shape: CircleBorder(
+                //         side: BorderSide(
+                //             color: Theme.of(context).iconTheme.color),
+                //       ),
+                //       onPressed: () {},
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ],

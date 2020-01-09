@@ -1,5 +1,6 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/values/strings.dart';
+import 'package:alchemy/ui/widgets/ingred_info.dart';
 import 'package:alchemy/ui/widgets/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -10,6 +11,34 @@ class EffectInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
+
+    if (homeViewModel.errorResponse == -1) {
+      Future.delayed(Duration(seconds: 5), () {
+        showDialog(
+            context: context,
+            builder: (BuildContext bc) => AlertDialog(
+                  elevation: 10,
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "Erro de Conexão >.<",
+                        textAlign: TextAlign.center,
+                      ),
+                      FlatButton(
+                        child: Text("Refresh"),
+                        onPressed: () {
+                          homeViewModel.getInfoE(
+                              EFEITO_URL + homeViewModel.currentEffect.url);
+                          Navigator.of(bc).pop();
+                        },
+                      ),
+                    ],
+                  ),
+                ));
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -25,81 +54,79 @@ class EffectInfo extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).textTheme.body1.color),
         ),
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height / 3,
-            child: Stack(
-              children: <Widget>[
-                Center(
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).textTheme.body1.color),
-                    ),
-                    child: Image.asset(
-                      homeViewModel.currentBackground[0][3],
-                      fit: BoxFit.fitWidth,
-                    ),
-                  ),
+      body: homeViewModel.currentEInfo == null
+          ? Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(
+                  Theme.of(context).textTheme.body1.color,
                 ),
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.height * 0.2,
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Theme.of(context).textTheme.body1.color),
-                      borderRadius: BorderRadius.all(Radius.circular(80)),
-                    ),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.black.withOpacity(0.7),
-                      child: Image.asset(
-                        homeViewModel.currentEffect.icon,
-                        fit: BoxFit.contain,
-                        scale: 1.1,
+              ),
+            )
+          : ListView(
+              children: <Widget>[
+                Container(
+                  height: MediaQuery.of(context).size.height / 3,
+                  child: Stack(
+                    children: <Widget>[
+                      Center(
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).textTheme.body1.color),
+                          ),
+                          child: Image.asset(
+                            homeViewModel.currentBackground[0][3],
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
                       ),
-                    ),
+                      Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.height * 0.2,
+                          height: MediaQuery.of(context).size.height * 0.2,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                color: Theme.of(context).textTheme.body1.color),
+                            borderRadius: BorderRadius.all(Radius.circular(80)),
+                          ),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.black.withOpacity(0.7),
+                            child: Image.asset(
+                              homeViewModel.currentEffect.icon,
+                              fit: BoxFit.contain,
+                              scale: 1.1,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: 10,
+                            top: MediaQuery.of(context).size.height * 0.273,
+                            right: 20,
+                            left: 20),
+                        child: Center(
+                          child: Container(
+                            color: Colors.black.withOpacity(0.5),
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Text(
+                              "\"" +
+                                  homeViewModel.currentEffect.description +
+                                  "\"",
+                              style:
+                                  TextStyle(fontSize: 14, color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                      bottom: 10,
-                      top: MediaQuery.of(context).size.height * 0.27,
-                      right: 20,
-                      left: 20),
-                  child: Center(
-                    child: Container(
-                      color: Colors.black.withOpacity(0.5),
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: Text(
-                        "\"" + homeViewModel.currentEffect.description + "\"",
-                        style: TextStyle(fontSize: 14, color: Colors.white),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: homeViewModel.currentEInfo == null
-                ? Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.2,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).textTheme.body1.color,
-                        ),
-                      ),
-                    ),
-                  )
-                : ListView(
+                  padding: EdgeInsets.all(10),
+                  child: ListView(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     children: <Widget>[
@@ -145,7 +172,7 @@ class EffectInfo extends StatelessWidget {
                       ),
                       SizedBox(height: 3),
                       GridView.count(
-                        padding: EdgeInsets.only(top: 20, bottom: 10),
+                        padding: EdgeInsets.symmetric(vertical: 10),
                         shrinkWrap: true,
                         crossAxisCount: 2,
                         childAspectRatio: 3,
@@ -197,7 +224,20 @@ class EffectInfo extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Container(),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // Navigator.of(context).pop();
+                                    homeViewModel.changeItem4(homeViewModel
+                                        .currentEffect.ingredients[index]);
+                                    homeViewModel.nulifyCurrentInfo();
+                                    homeViewModel.fecharInfos();
+                                    homeViewModel.getInfoI(INGREDIENT_URL +
+                                        homeViewModel.currentIngredient.url);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                IngredientInfo()));
+                                  },
                                 ),
                               ),
                             ],
@@ -206,9 +246,9 @@ class EffectInfo extends StatelessWidget {
                       ),
                     ],
                   ),
-          ),
-        ],
-      ),
+                ),
+              ],
+            ),
     );
   }
 }

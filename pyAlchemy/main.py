@@ -107,10 +107,9 @@ def getEffects():
             listaRetorno2[i].update(icon="assets/effects/Illusion2.png")
         else:
             listaRetorno2[i].update(icon="assets/effects/Heal.png")
+        
+        listaRetorno2[i]["ingredients"].sort()
 
-    # for i in listaRetorno2:
-    #     print(i)
-    #     print("\n")
     return jsonify(listaRetorno2)
 
 

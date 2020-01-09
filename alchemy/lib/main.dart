@@ -31,7 +31,13 @@ class MyApp extends StatelessWidget {
             body1: TextStyle(color: Color(0xFFfddfc0), fontSize: 20),
             body2: TextStyle(color: Color(0xFFfdf2de)),
           ),
+          cursorColor: Colors.white,
           accentColor: Color(0xFF262b2f),
+          tooltipTheme: TooltipThemeData(
+            textStyle: TextStyle(
+              color: Color(0xFFfddfc0),
+            ),
+          ),
         ),
         home: HomeScreen(),
       ),

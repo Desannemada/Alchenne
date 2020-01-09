@@ -48,15 +48,12 @@ class _IngredientsTabState extends State<IngredientsTab> {
 
     return Stack(
       children: <Widget>[
-        Opacity(
-          opacity: 1.0,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: homeViewModel.currentBackground[0][1],
-                  alignment: Alignment.centerLeft,
-                  fit: BoxFit.fitWidth),
-            ),
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: homeViewModel.currentBackground[0][1],
+                alignment: Alignment.centerLeft,
+                fit: BoxFit.fitWidth),
           ),
         ),
         homeViewModel.ingredientes.isEmpty
@@ -82,15 +79,6 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       itemCount: 26,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          // onTapDown: (TapDownDetails detail) {
-                          //   print("a");
-                          //   homeViewModel.getPosition(
-                          //       index, "ingrediente", controller);
-                          // },
-                          // onTapUp: (TapUpDetails detail) {
-                          //   print("b");
-                          //   homeViewModel.changeBubble("");
-                          // },
                           onTap: () {
                             homeViewModel.getPosition(
                                 index, "ingrediente", controller);
@@ -114,14 +102,6 @@ class _IngredientsTabState extends State<IngredientsTab> {
                             homeViewModel.getPosition(
                                 index, "ingrediente", controller);
                           },
-                          // onLongPressEnd: (LongPressEndDetails detail) {
-                          //   print("e");
-                          //   homeViewModel.changeBubble("");
-                          // },
-                          // onVerticalDragEnd: (DragEndDetails detail) {
-                          //   print("f");
-                          //   homeViewModel.changeBubble("");
-                          // },
                           child: Container(
                             padding: EdgeInsets.only(
                                 top: MediaQuery.of(context).size.height *
@@ -182,6 +162,40 @@ class _IngredientsTabState extends State<IngredientsTab> {
                           ),
                         ),
                       ),
+                      // Align(
+                      //   alignment: Alignment.bottomCenter,
+                      //   child: PopupMenuButton(
+                      //     onSelected: (value) {},
+                      //     icon: Icon(Icons.filter_list),
+                      //     initialValue: homeViewModel.schools[0],
+                      //     itemBuilder: (context) => homeViewModel.schools
+                      //         .map(
+                      //           (school) => PopupMenuItem(
+                      //             value: school,
+                      //             child: Text(school),
+                      //           ),
+                      //         )
+                      //         .toList(),
+                      //   ),
+                      // ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(bottom: 10),
+                      //   child: Align(
+                      //     alignment: Alignment.bottomCenter,
+                      //     child: FloatingActionButton(
+                      //       tooltip: "Choose DLC",
+                      //       child: Icon(
+                      //         Icons.filter_list,
+                      //         color: Theme.of(context).iconTheme.color,
+                      //       ),
+                      //       shape: CircleBorder(
+                      //         side: BorderSide(
+                      //             color: Theme.of(context).iconTheme.color),
+                      //       ),
+                      //       onPressed: () {showMenu(position: );},
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ],

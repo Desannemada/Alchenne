@@ -2,6 +2,7 @@ import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/effects.dart';
 import 'package:alchemy/ui/screens/ingredients.dart';
 import 'package:alchemy/ui/screens/potions.dart';
+import 'package:alchemy/ui/widgets/searcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +15,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
-    TabController tabController =
-        new TabController(length: 3, vsync: this, initialIndex: 1);
 
     return DefaultTabController(
+      initialIndex: 1,
       length: 3,
       child: Scaffold(
         appBar: AppBar(
@@ -32,11 +32,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               padding: EdgeInsets.symmetric(horizontal: 15),
               icon: Icon(Icons.search),
               iconSize: MediaQuery.of(context).size.height * 0.04,
-              onPressed: () {},
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchScreen())),
             )
           ],
           bottom: TabBar(
-            controller: tabController,
             indicatorColor: Theme.of(context).textTheme.body1.color,
             tabs: <Widget>[
               Tab(child: Image.asset("assets/efeito.webp")),
@@ -53,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ),
         ),
         body: TabBarView(
-          controller: tabController,
           physics: homeViewModel.errorResponse == -1
               ? NeverScrollableScrollPhysics()
               : AlwaysScrollableScrollPhysics(),
