@@ -95,8 +95,12 @@ class IngredientItem extends StatelessWidget {
               homeViewModel.fecharInfos();
               homeViewModel.getInfoI(
                   INGREDIENT_URL + homeViewModel.currentIngredient.url);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => IngredientInfo()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => IngredientInfo(),
+                ),
+              );
             },
           ),
         )

@@ -2,7 +2,7 @@ import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/effects.dart';
 import 'package:alchemy/ui/screens/ingredients.dart';
 import 'package:alchemy/ui/screens/potions.dart';
-import 'package:alchemy/ui/widgets/searcher.dart';
+import 'package:alchemy/ui/screens/search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,8 +32,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               padding: EdgeInsets.symmetric(horizontal: 15),
               icon: Icon(Icons.search),
               iconSize: MediaQuery.of(context).size.height * 0.04,
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SearchScreen())),
+              onPressed: () => showSearch(
+                context: context,
+                delegate: SearchScreen(),
+              ),
             )
           ],
           bottom: TabBar(

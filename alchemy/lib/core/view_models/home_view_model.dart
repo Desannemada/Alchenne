@@ -21,6 +21,7 @@ class HomeViewModel extends BaseViewModel {
   List backgrounds = List();
   List<Ingredientes> ingredientes = List();
   List<Efeitos> efeitos = List();
+  List ingredients_effects = List();
   IngredienteInfo currentIInfo;
   EfeitoInfo currentEInfo;
   List<String> schools = List();
@@ -104,6 +105,10 @@ class HomeViewModel extends BaseViewModel {
       var response = await api.getIngredientsFromJson();
       if (response is List<Ingredientes>) {
         ingredientes = response;
+        for (var item in ingredientes) {
+          ingredients_effects.add(item);
+          ingredients_effects.sort((a, b) => a.title.compareTo(b.title));
+        }
       } else if (response is int) {
         errorResponse = -1;
       }
@@ -119,6 +124,10 @@ class HomeViewModel extends BaseViewModel {
       var response = await api.getEffectsFromJson();
       if (response is List<Efeitos>) {
         efeitos = response;
+        for (var item in efeitos) {
+          ingredients_effects.add(item);
+          ingredients_effects.sort((a, b) => a.title.compareTo(b.title));
+        }
       } else if (response is int) {
         errorResponse = -1;
       }

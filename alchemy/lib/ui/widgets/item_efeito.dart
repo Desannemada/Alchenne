@@ -71,8 +71,12 @@ class EffectItem extends StatelessWidget {
               homeViewModel.nulifyCurrentInfo2();
               homeViewModel
                   .getInfoE(EFEITO_URL + homeViewModel.currentEffect.url);
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => EffectInfo()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => EffectInfo(),
+                ),
+              );
             },
           ),
         )

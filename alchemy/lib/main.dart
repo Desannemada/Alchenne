@@ -28,10 +28,19 @@ class MyApp extends StatelessWidget {
           canvasColor: Color(0xFF262b2f),
           iconTheme: IconThemeData(color: Color(0xFFfddfc0)),
           textTheme: TextTheme(
-            body1: TextStyle(color: Color(0xFFfddfc0), fontSize: 20),
-            body2: TextStyle(color: Color(0xFFfdf2de)),
+            body1: TextStyle(
+              color: Color(0xFFfddfc0),
+              fontSize: 20,
+            ),
+            body2: TextStyle(
+              color: Color(0xFFfdf2de),
+            ),
+            title: TextStyle(color: Color(0xFFfddfc0)),
           ),
-          cursorColor: Colors.white,
+          inputDecorationTheme: InputDecorationTheme(
+            hintStyle: TextStyle(color: Colors.grey[700]),
+          ),
+          cursorColor: Color(0xFFfddfc0),
           accentColor: Color(0xFF262b2f),
           tooltipTheme: TooltipThemeData(
             textStyle: TextStyle(
