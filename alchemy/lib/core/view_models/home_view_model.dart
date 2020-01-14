@@ -19,37 +19,38 @@ class HomeViewModel extends BaseViewModel {
   }
 
   List backgrounds = List();
+  List currentBackground = [0];
+
   List<Ingredientes> ingredientes = List();
   List<Efeitos> efeitos = List();
   List ingredients_effects = List();
-  IngredienteInfo currentIInfo;
-  EfeitoInfo currentEInfo;
-  List<String> schools = List();
 
-  List currentBackground = [0];
+  List<Ingredientes> potionIngredients = List();
+  List<Efeitos> possiblePotions = List();
+
   Ingredientes currentIngredient;
   Efeitos currentEffect;
+  IngredienteInfo currentIInfo;
+  EfeitoInfo currentEInfo;
+
+  // List<String> schools = List();
 
   int errorResponse = 0;
 
   int currentPositionOnAlphabetScroll = -1;
   int currentPositionOnAlphabetScroll2 = -1;
-
   String alphabetBubble = "";
 
   bool mostrarBackground;
   bool mostrarLocations;
-
-  int screensOpen = 0;
-
-  int currentTabBar;
 
   HomeViewModel() {
     mostrarBackground = false;
     mostrarLocations = false;
     getIngredients();
     getEffects();
-    currentTabBar = 1;
+
+    potionIngredients = [null, null, null];
 
     backgrounds = [
       [
@@ -58,12 +59,12 @@ class HomeViewModel extends BaseViewModel {
         AssetImage("assets/bg/b1_3.jpg"),
         "assets/bg/background1.jpg"
       ],
-      [
-        AssetImage("assets/bg/b2_1.jpg"),
-        AssetImage("assets/bg/b2_2.jpg"),
-        AssetImage("assets/bg/b2_3.jpg"),
-        "assets/bg/background2.jpg"
-      ],
+      // [
+      //   AssetImage("assets/bg/b2_1.jpg"),
+      //   AssetImage("assets/bg/b2_2.jpg"),
+      //   AssetImage("assets/bg/b2_3.jpg"),
+      //   "assets/bg/background2.jpg"
+      // ],
       [
         AssetImage("assets/bg/b3_1.jpg"),
         AssetImage("assets/bg/b3_2.jpg"),
@@ -91,13 +92,13 @@ class HomeViewModel extends BaseViewModel {
     ];
     chooseBackground();
 
-    schools = [
-      "All",
-      "Alteration",
-      "Destruction",
-      "Illusion",
-      "Restoration",
-    ];
+    // schools = [
+    //   "All",
+    //   "Alteration",
+    //   "Destruction",
+    //   "Illusion",
+    //   "Restoration",
+    // ];
   }
 
   void getIngredients() async {
@@ -182,7 +183,7 @@ class HomeViewModel extends BaseViewModel {
 
   void chooseBackground() {
     var chosen = new Random();
-    int c = 1 + chosen.nextInt(6);
+    int c = 1 + chosen.nextInt(5);
     currentBackground[0] = backgrounds[c - 1];
   }
 
@@ -261,8 +262,32 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void changeTab(int tab) {
-    currentTabBar = tab;
+  void updatePotionIngredients(int slot, Ingredientes ingredient) {
+    potionIngredients[slot - 1] = ingredient;
+    notifyListeners();
+
+    String i1 = potionIngredients[0].title;
+    String i2 = potionIngredients[1].title;
+    String i3 = potionIngredients[2].title;
+    if (i1 != null && i2 != null && i3 != null) {
+      for (var item in efeitos) {
+        if ((item.ingredients.contains(i1) &&
+                item.ingredients.contains(i2) &&
+                item.ingredients.contains(i3)) ||
+            (item.ingredients.contains(i1) && item.ingredients.contains(i2)) ||
+            (item.ingredients.contains(i1) && item.ingredients.contains(i3)) ||
+            (item.ingredients.contains(i2) && item.ingredients.contains(i3))) {
+          possiblePotions.add(item);
+        }
+      }
+    } else if (i1 != null && i2 != null) {
+      for (var item in efeitos) {
+        if (item.ingredients.contains(i1) && item.ingredients.contains(i2)) {
+          possiblePotions.add(item);
+        }
+      }
+    }
+    print(possiblePotions.length);
     notifyListeners();
   }
 
