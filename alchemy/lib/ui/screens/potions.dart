@@ -1,5 +1,7 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/potionSearch.dart';
+import 'package:alchemy/ui/values/strings.dart';
+import 'package:alchemy/ui/widgets/effect_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -92,24 +94,76 @@ class PotionTab extends StatelessWidget {
                     ),
                     child: Column(
                       children: <Widget>[
-                        Text(
-                          "Results [${homeViewModel.possiblePotions.length}]",
-                          textAlign: TextAlign.center,
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 3),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            color: Colors.black.withOpacity(0.3),
+                          ),
+                          child: Text(
+                            "Results (${homeViewModel.possiblePotions.length})",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
                         ),
-                        homeViewModel.possiblePotions == null
+                        SizedBox(height: 5),
+                        homeViewModel.possiblePotions.isEmpty
                             ? Container()
-                            : ListView.separated(
-                                shrinkWrap: true,
-                                separatorBuilder:
-                                    (BuildContext context, int index) =>
-                                        Divider(
-                                  color: Colors.black,
+                            : Expanded(
+                                child: ListView.separated(
+                                  shrinkWrap: true,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) =>
+                                          Divider(
+                                    color: Colors.black,
+                                    height: 1,
+                                  ),
+                                  itemCount:
+                                      homeViewModel.possiblePotions.length,
+                                  itemBuilder: (BuildContext context, int i) =>
+                                      FlatButton(
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          homeViewModel
+                                              .possiblePotions[i][0].title,
+                                          style:
+                                              Theme.of(context).textTheme.body1,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.topRight,
+                                          child: Text(
+                                            " " +
+                                                homeViewModel.possiblePotions[i]
+                                                    [1],
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    onPressed: () {
+                                      homeViewModel.changeItem2(
+                                          homeViewModel.possiblePotions[i][0]);
+                                      homeViewModel.nulifyCurrentInfo2();
+                                      homeViewModel.getInfoE(EFEITO_URL +
+                                          homeViewModel.currentEffect.url);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => EffectInfo(),
+                                        ),
+                                      );
+                                    },
+                                  ),
                                 ),
-                                itemCount: homeViewModel.possiblePotions.length,
-                                itemBuilder:
-                                    (BuildContext context, int index) => Text(
-                                        homeViewModel
-                                            .possiblePotions[index].title),
                               ),
                       ],
                     ),
@@ -144,8 +198,10 @@ class RemoveIngredientButton extends StatelessWidget {
             ),
             child: IconButton(
               icon: Icon(Icons.close),
-              onPressed: () =>
-                  homeViewModel.updatePotionIngredients(slot, null),
+              onPressed: () {
+                homeViewModel.updatePotionIngredients(slot, null);
+                homeViewModel.updatePossiblePotions();
+              },
             ),
           );
   }

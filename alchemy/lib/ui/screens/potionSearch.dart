@@ -85,6 +85,7 @@ class PotionSearchScreen extends SearchDelegate {
                     ),
                     onPressed: () {
                       homeViewModel.updatePotionIngredients(slot, results[i]);
+                      homeViewModel.updatePossiblePotions();
                       close(context, null);
                     },
                   ),

@@ -335,4 +335,4 @@ def getEfeitoInfo():
 
 # Inicializando servidor
 if __name__ == "__main__":
-    app.run(host="10.1.2.188", port=5000, debug=True)  # ip da maquina
+    app.run(host="0.0.0.0", port=5000)  # ip da maquina

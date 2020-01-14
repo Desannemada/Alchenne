@@ -26,7 +26,7 @@ class HomeViewModel extends BaseViewModel {
   List ingredients_effects = List();
 
   List<Ingredientes> potionIngredients = List();
-  List<Efeitos> possiblePotions = List();
+  List possiblePotions = List();
 
   Ingredientes currentIngredient;
   Efeitos currentEffect;
@@ -265,29 +265,38 @@ class HomeViewModel extends BaseViewModel {
   void updatePotionIngredients(int slot, Ingredientes ingredient) {
     potionIngredients[slot - 1] = ingredient;
     notifyListeners();
+  }
 
-    String i1 = potionIngredients[0].title;
-    String i2 = potionIngredients[1].title;
-    String i3 = potionIngredients[2].title;
+  void updatePossiblePotions() {
+    Ingredientes i1 = potionIngredients[0];
+    Ingredientes i2 = potionIngredients[1];
+    Ingredientes i3 = potionIngredients[2];
+    possiblePotions = List();
     if (i1 != null && i2 != null && i3 != null) {
       for (var item in efeitos) {
-        if ((item.ingredients.contains(i1) &&
-                item.ingredients.contains(i2) &&
-                item.ingredients.contains(i3)) ||
-            (item.ingredients.contains(i1) && item.ingredients.contains(i2)) ||
-            (item.ingredients.contains(i1) && item.ingredients.contains(i3)) ||
-            (item.ingredients.contains(i2) && item.ingredients.contains(i3))) {
-          possiblePotions.add(item);
+        if (item.ingredients.contains(i1.title) &&
+            item.ingredients.contains(i2.title) &&
+            item.ingredients.contains(i3.title)) {
+          possiblePotions.add([item, "[1] [2] [3]"]);
+        } else if (item.ingredients.contains(i1.title) &&
+            item.ingredients.contains(i2.title)) {
+          possiblePotions.add([item, "[1] [2]"]);
+        } else if (item.ingredients.contains(i1.title) &&
+            item.ingredients.contains(i3.title)) {
+          possiblePotions.add([item, "[1] [3]"]);
+        } else if (item.ingredients.contains(i2.title) &&
+            item.ingredients.contains(i3.title)) {
+          possiblePotions.add([item, "[2] [3]"]);
         }
       }
     } else if (i1 != null && i2 != null) {
       for (var item in efeitos) {
-        if (item.ingredients.contains(i1) && item.ingredients.contains(i2)) {
-          possiblePotions.add(item);
+        if (item.ingredients.contains(i1.title) &&
+            item.ingredients.contains(i2.title)) {
+          possiblePotions.add([item, "[1] [2]"]);
         }
       }
     }
-    print(possiblePotions.length);
     notifyListeners();
   }
 
