@@ -113,7 +113,9 @@ class _IngredientsTabState extends State<IngredientsTab> {
                                   ? String.fromCharCode(65 + index)
                                   : "-",
                               textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 18),
+                              style: TextStyle(
+                                  fontSize: 18 /
+                                      MediaQuery.of(context).textScaleFactor),
                             ),
                           ),
                         );

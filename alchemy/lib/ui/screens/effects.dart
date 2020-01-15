@@ -45,12 +45,6 @@ class _EffectsTabState extends State<EffectsTab> {
                 itemCount: 26,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    // onTapDown: (TapDownDetails detail) {
-                    //   homeViewModel.getPosition(index, "efeito", controller);
-                    // },
-                    // onTapUp: (TapUpDetails detail) {
-                    //   homeViewModel.changeBubble("");
-                    // },
                     onTap: () {
                       homeViewModel.getPosition(index, "efeito", controller);
                     },
@@ -70,12 +64,6 @@ class _EffectsTabState extends State<EffectsTab> {
                     onLongPress: () {
                       homeViewModel.getPosition(index, "efeito", controller);
                     },
-                    // onLongPressEnd: (LongPressEndDetails detail) {
-                    //   homeViewModel.changeBubble("");
-                    // },
-                    // onVerticalDragEnd: (DragEndDetails detail) {
-                    //   homeViewModel.changeBubble("");
-                    // },
                     child: Container(
                       padding: EdgeInsets.only(
                           top: MediaQuery.of(context).size.height * 0.0028),
@@ -85,7 +73,9 @@ class _EffectsTabState extends State<EffectsTab> {
                             ? String.fromCharCode(65 + index)
                             : "-",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18),
+                        style: TextStyle(
+                          fontSize: 18 / MediaQuery.of(context).textScaleFactor,
+                        ),
                       ),
                     ),
                   );
@@ -133,24 +123,6 @@ class _EffectsTabState extends State<EffectsTab> {
                     ),
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(bottom: 10),
-                //   child: Align(
-                //     alignment: Alignment.bottomCenter,
-                //     child: FloatingActionButton(
-                //       tooltip: "Choose School",
-                //       child: Icon(
-                //         Icons.filter_list,
-                //         color: Theme.of(context).iconTheme.color,
-                //       ),
-                //       shape: CircleBorder(
-                //         side: BorderSide(
-                //             color: Theme.of(context).iconTheme.color),
-                //       ),
-                //       onPressed: () {},
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ],

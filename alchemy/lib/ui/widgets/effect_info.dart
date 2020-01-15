@@ -114,8 +114,10 @@ class EffectInfo extends StatelessWidget {
                               "\"" +
                                   homeViewModel.currentEffect.description +
                                   "\"",
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.white),
+                              style: TextStyle(
+                                  fontSize: 14 /
+                                      MediaQuery.of(context).textScaleFactor,
+                                  color: Colors.white),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -206,7 +208,9 @@ class EffectInfo extends StatelessWidget {
                                           softWrap: true,
                                           maxLines: 2,
                                           style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 16 /
+                                                  MediaQuery.of(context)
+                                                      .textScaleFactor,
                                               color: Theme.of(context)
                                                   .textTheme
                                                   .body1

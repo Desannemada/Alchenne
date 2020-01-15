@@ -26,7 +26,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           centerTitle: true,
           title: Text(
             "Skyrim: Alchenne",
-            style: TextStyle(color: Theme.of(context).textTheme.body1.color),
+            style: TextStyle(
+              color: Theme.of(context).textTheme.body1.color,
+              fontSize: Theme.of(context).textTheme.body1.fontSize /
+                  MediaQuery.of(context).textScaleFactor,
+            ),
           ),
           leading: IconButton(
             icon: Icon(Icons.info_outline),

@@ -237,7 +237,9 @@ class ChosenIngredientSquare extends StatelessWidget {
                     ? homeViewModel.potionIngredients[1].title
                     : homeViewModel.potionIngredients[2].title,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 14),
+            style: TextStyle(
+              fontSize: 14 / MediaQuery.of(context).textScaleFactor,
+            ),
           ),
         ],
       ),
@@ -310,7 +312,7 @@ class TLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * (type == "1" ? 0.07 : 0.071),
-      width: MediaQuery.of(context).size.height * (type == "1" ? 0.07 : 0.071),
+      width: MediaQuery.of(context).size.width * 0.1312,
       decoration: BoxDecoration(
         border: type == "1"
             ? Border(

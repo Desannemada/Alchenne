@@ -141,7 +141,9 @@ class IngredientInfo extends StatelessWidget {
                                     softWrap: true,
                                     maxLines: 2,
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 16 /
+                                            MediaQuery.of(context)
+                                                .textScaleFactor,
                                         color: Theme.of(context)
                                             .textTheme
                                             .body1

@@ -44,12 +44,16 @@ class EffectItem extends StatelessWidget {
                   Text(
                     homeViewModel.efeitos[index].title,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 17),
+                    style: TextStyle(
+                      fontSize: 17 / MediaQuery.of(context).textScaleFactor,
+                    ),
                   ),
                   Text(
                     homeViewModel.efeitos[index].description,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 13),
+                    style: TextStyle(
+                      fontSize: 13 / MediaQuery.of(context).textScaleFactor,
+                    ),
                   ),
                 ],
               ),

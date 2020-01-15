@@ -56,14 +56,28 @@ class IngredientItem extends StatelessWidget {
                           children: <Widget>[
                             Image.asset("assets/quill.webp", scale: 15),
                             SizedBox(width: 2),
-                            Text(homeViewModel.ingredientes[index].weight),
+                            Text(
+                              homeViewModel.ingredientes[index].weight,
+                              style: TextStyle(
+                                fontSize:
+                                    Theme.of(context).textTheme.body1.fontSize /
+                                        MediaQuery.of(context).textScaleFactor,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: <Widget>[
                             Image.asset("assets/coin.png", scale: 9),
                             SizedBox(width: 5),
-                            Text(homeViewModel.ingredientes[index].value),
+                            Text(
+                              homeViewModel.ingredientes[index].value,
+                              style: TextStyle(
+                                fontSize:
+                                    Theme.of(context).textTheme.body1.fontSize /
+                                        MediaQuery.of(context).textScaleFactor,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -72,6 +86,10 @@ class IngredientItem extends StatelessWidget {
                   SizedBox(height: 20),
                   Text(
                     homeViewModel.ingredientes[index].title,
+                    style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.body1.fontSize /
+                          MediaQuery.of(context).textScaleFactor,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ],
