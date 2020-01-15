@@ -1,5 +1,6 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/effects.dart';
+import 'package:alchemy/ui/screens/info.dart';
 import 'package:alchemy/ui/screens/ingredients.dart';
 import 'package:alchemy/ui/screens/potions.dart';
 import 'package:alchemy/ui/screens/search.dart';
@@ -26,6 +27,16 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           title: Text(
             "Skyrim: Alchenne",
             style: TextStyle(color: Theme.of(context).textTheme.body1.color),
+          ),
+          leading: IconButton(
+            icon: Icon(Icons.info_outline),
+            iconSize: MediaQuery.of(context).size.height * 0.04,
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InfoScreen(),
+              ),
+            ),
           ),
           actions: <Widget>[
             IconButton(

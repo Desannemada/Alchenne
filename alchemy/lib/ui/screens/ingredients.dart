@@ -162,40 +162,6 @@ class _IngredientsTabState extends State<IngredientsTab> {
                           ),
                         ),
                       ),
-                      // Align(
-                      //   alignment: Alignment.bottomCenter,
-                      //   child: PopupMenuButton(
-                      //     onSelected: (value) {},
-                      //     icon: Icon(Icons.filter_list),
-                      //     initialValue: homeViewModel.schools[0],
-                      //     itemBuilder: (context) => homeViewModel.schools
-                      //         .map(
-                      //           (school) => PopupMenuItem(
-                      //             value: school,
-                      //             child: Text(school),
-                      //           ),
-                      //         )
-                      //         .toList(),
-                      //   ),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(bottom: 10),
-                      //   child: Align(
-                      //     alignment: Alignment.bottomCenter,
-                      //     child: FloatingActionButton(
-                      //       tooltip: "Choose DLC",
-                      //       child: Icon(
-                      //         Icons.filter_list,
-                      //         color: Theme.of(context).iconTheme.color,
-                      //       ),
-                      //       shape: CircleBorder(
-                      //         side: BorderSide(
-                      //             color: Theme.of(context).iconTheme.color),
-                      //       ),
-                      //       onPressed: () {showMenu(position: );},
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ],

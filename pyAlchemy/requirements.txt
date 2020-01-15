@@ -2,3 +2,4 @@ BeautifulSoup4
 flask
 flask_cors
 requests
+html5lib

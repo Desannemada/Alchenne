@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from bs4 import BeautifulSoup
 import requests
-import re
+import re, os
 
 # Configurando servidor
 app = Flask("alchemy")
@@ -335,4 +335,5 @@ def getEfeitoInfo():
 
 # Inicializando servidor
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)  # ip da maquina
+    port = int(os.environ.get("PORT",5000))
+    app.run(host="0.0.0.0", port=port)  # ip da maquina

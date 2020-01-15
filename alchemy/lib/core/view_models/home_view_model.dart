@@ -190,6 +190,7 @@ class HomeViewModel extends BaseViewModel {
   void refresh() {
     errorResponse = 0;
     getIngredients();
+    getEffects();
     notifyListeners();
   }
 
