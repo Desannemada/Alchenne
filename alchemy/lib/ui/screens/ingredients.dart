@@ -12,7 +12,7 @@ class IngredientsTab extends StatefulWidget {
 
 class _IngredientsTabState extends State<IngredientsTab> {
   ScrollController controller = new ScrollController();
-  GlobalKey size = GlobalKey();
+  final sizeContainer = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,13 @@ class _IngredientsTabState extends State<IngredientsTab> {
       });
     }
 
+    Size getSizes() {
+      final RenderBox alphaS = sizeContainer.currentContext.findRenderObject();
+      final alphaSize = alphaS.size;
+      print(alphaSize.toString());
+      return alphaSize;
+    }
+
     return Stack(
       children: <Widget>[
         Container(
@@ -69,11 +76,12 @@ class _IngredientsTabState extends State<IngredientsTab> {
             : Row(
                 children: <Widget>[
                   Container(
-                    key: size,
+                    key: sizeContainer,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.black54,
                     ),
+                    height: double.infinity,
                     width: MediaQuery.of(context).size.width * 0.04,
                     child: ListView.builder(
                       itemCount: 26,
@@ -104,8 +112,8 @@ class _IngredientsTabState extends State<IngredientsTab> {
                           },
                           child: Container(
                             padding: EdgeInsets.only(
-                                top: MediaQuery.of(context).size.height *
-                                    0.0028),
+                              top: MediaQuery.of(context).size.height * 0.0028,
+                            ),
                             child: Text(
                               homeViewModel.isLetter(
                                       String.fromCharCode(65 + index),
@@ -114,7 +122,10 @@ class _IngredientsTabState extends State<IngredientsTab> {
                                   : "-",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  fontSize: 18 /
+                                  fontSize: (MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                          0.025) /
                                       MediaQuery.of(context).textScaleFactor),
                             ),
                           ),

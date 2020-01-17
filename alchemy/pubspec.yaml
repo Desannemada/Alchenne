@@ -36,6 +36,7 @@ dependencies:
         ref: alignment
   html2md: ^0.5.1
   url_launcher: ^5.4.1
+  flutter_widgets: ^0.1.9
   
   
 

@@ -74,8 +74,9 @@ class _EffectsTabState extends State<EffectsTab> {
                             : "-",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 18 / MediaQuery.of(context).textScaleFactor,
-                        ),
+                            fontSize:
+                                (MediaQuery.of(context).size.height * 0.025) /
+                                    MediaQuery.of(context).textScaleFactor),
                       ),
                     ),
                   );
