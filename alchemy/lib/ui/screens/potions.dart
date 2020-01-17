@@ -23,38 +23,42 @@ class PotionTab extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         child: Stack(
           children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                ILine(type: "2"),
+                ILine(type: "3"),
+                ILine(type: "4")
+              ],
+            ),
             Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    TLine(type: "1"),
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.28,
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: Colors.black),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.28,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor.withOpacity(0.9),
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: Colors.black),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      Image.asset(
+                        "assets/flask.png",
+                        scale: 1.9,
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Image.asset(
-                            "assets/flask.png",
-                            scale: 1.9,
-                          ),
-                          Text("Potion Maker")
-                        ],
-                      ),
-                    ),
-                    TLine(type: "2"),
-                  ],
+                      Text("Potion Maker")
+                    ],
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[ILine(), ILine(), ILine()],
+                  children: <Widget>[
+                    ILine(type: "1"),
+                    ILine(type: "1"),
+                    ILine(type: "1")
+                  ],
                 ),
                 Stack(
                   children: <Widget>[
@@ -341,12 +345,65 @@ class TLine extends StatelessWidget {
 }
 
 class ILine extends StatelessWidget {
+  final String type;
+  ILine({@required this.type});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 20,
-      width: 2,
-      color: Theme.of(context).iconTheme.color,
-    );
+    return type == "1"
+        ? Container(
+            height: 20,
+            width: 2,
+            color: Theme.of(context).iconTheme.color,
+          )
+        : Container(
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.15),
+            width: MediaQuery.of(context).size.width * 0.25,
+            height: MediaQuery.of(context).size.width * 0.25,
+            color: Colors.transparent,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      right: BorderSide(
+                        color: type == "3"
+                            ? Colors.transparent
+                            : Theme.of(context).iconTheme.color,
+                        width: 1,
+                      ),
+                      top: BorderSide(
+                        color: type == "3" || type == "2"
+                            ? Colors.transparent
+                            : Theme.of(context).iconTheme.color,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  width: MediaQuery.of(context).size.width * 0.125,
+                  height: MediaQuery.of(context).size.width * 0.25,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                        left: BorderSide(
+                            color: type == "3"
+                                ? Colors.transparent
+                                : Theme.of(context).iconTheme.color,
+                            width: 1),
+                        top: BorderSide(
+                            color: type == "3" || type == "4"
+                                ? Colors.transparent
+                                : Theme.of(context).iconTheme.color,
+                            width: 2)),
+                  ),
+                  width: MediaQuery.of(context).size.width * 0.125,
+                  height: MediaQuery.of(context).size.width * 0.25,
+                ),
+              ],
+            ),
+          );
+    ;
   }
 }
