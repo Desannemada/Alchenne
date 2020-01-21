@@ -50,7 +50,7 @@ class SearchScreen extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
     List results = [""];
-    for (var item in homeViewModel.ingredients_effects) {
+    for (var item in homeViewModel.ingredientsEffects) {
       if (item.title.toUpperCase().contains(query.toUpperCase())) {
         results.add(item);
       }

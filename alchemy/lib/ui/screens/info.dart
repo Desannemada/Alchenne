@@ -5,7 +5,7 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html2md/html2md.dart' as html2md;
 
 class InfoScreen extends StatelessWidget {
-  List<String> urls = [
+  final List<String> urls = [
     '<a href="https://elderscrolls.fandom.com/wiki/Ingredients_(Skyrim)">Skyrim - The Elder Scrolls Wiki - Fandom</a>',
     '<a href="https://en.uesp.net/wiki/Skyrim:Alchemy_Effects">The Unofficial Elder Scrolls Pages (UESP)</a>',
     '<a href="https://skyrim.gamepedia.com/Category:Ingredient_images">Skyrim Wiki - Gamepedia</a>',
@@ -15,7 +15,7 @@ class InfoScreen extends StatelessWidget {
     '<a href="https://wallpapersafari.com/w/Ih8vNM">Wallpaper4</a> found on <a href="https://wallpapersafari.com/">Wallpaper Safari</a>',
     '<a href="https://wallpapersafari.com/w/chEAzt">Wallpaper5</a> found on <a href="https://wallpapersafari.com/">Wallpaper Safari</a>',
   ];
-  List<String> titles = [
+  final List<String> titles = [
     "The Elder Scrolls Fandom Wiki",
     "The Unofficial Elder Scrolls Pages (UESP)",
     "Skyrim Wiki - Gamepedia",
@@ -25,7 +25,7 @@ class InfoScreen extends StatelessWidget {
     "Wallpaper4 - Wallpaper Safari",
     "Wallpaper5 - Wallpaper Safari",
   ];
-  List<String> contentsBy = [
+  final List<String> contentsBy = [
     "ingredient's info by:\n",
     "effect's info and images by:\n",
     "ingredient's images by:\n",

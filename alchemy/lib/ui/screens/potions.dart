@@ -404,6 +404,5 @@ class ILine extends StatelessWidget {
               ],
             ),
           );
-    ;
   }
 }

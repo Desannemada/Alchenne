@@ -46,13 +46,6 @@ class _IngredientsTabState extends State<IngredientsTab> {
       });
     }
 
-    Size getSizes() {
-      final RenderBox alphaS = sizeContainer.currentContext.findRenderObject();
-      final alphaSize = alphaS.size;
-      print(alphaSize.toString());
-      return alphaSize;
-    }
-
     return Stack(
       children: <Widget>[
         Container(

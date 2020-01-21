@@ -23,7 +23,7 @@ class HomeViewModel extends BaseViewModel {
 
   List<Ingredientes> ingredientes = List();
   List<Efeitos> efeitos = List();
-  List ingredients_effects = List();
+  List ingredientsEffects = List();
 
   List<Ingredientes> potionIngredients = List();
   List possiblePotions = List();
@@ -32,8 +32,6 @@ class HomeViewModel extends BaseViewModel {
   Efeitos currentEffect;
   IngredienteInfo currentIInfo;
   EfeitoInfo currentEInfo;
-
-  // List<String> schools = List();
 
   int errorResponse = 0;
 
@@ -59,12 +57,6 @@ class HomeViewModel extends BaseViewModel {
         AssetImage("assets/bg/b1_3.jpg"),
         "assets/bg/background1.jpg"
       ],
-      // [
-      //   AssetImage("assets/bg/b2_1.jpg"),
-      //   AssetImage("assets/bg/b2_2.jpg"),
-      //   AssetImage("assets/bg/b2_3.jpg"),
-      //   "assets/bg/background2.jpg"
-      // ],
       [
         AssetImage("assets/bg/b3_1.jpg"),
         AssetImage("assets/bg/b3_2.jpg"),
@@ -91,14 +83,6 @@ class HomeViewModel extends BaseViewModel {
       ]
     ];
     chooseBackground();
-
-    // schools = [
-    //   "All",
-    //   "Alteration",
-    //   "Destruction",
-    //   "Illusion",
-    //   "Restoration",
-    // ];
   }
 
   void getIngredients() async {
@@ -107,8 +91,8 @@ class HomeViewModel extends BaseViewModel {
       if (response is List<Ingredientes>) {
         ingredientes = response;
         for (var item in ingredientes) {
-          ingredients_effects.add(item);
-          ingredients_effects.sort((a, b) => a.title.compareTo(b.title));
+          ingredientsEffects.add(item);
+          ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
         }
       } else if (response is int) {
         errorResponse = -1;
@@ -126,8 +110,8 @@ class HomeViewModel extends BaseViewModel {
       if (response is List<Efeitos>) {
         efeitos = response;
         for (var item in efeitos) {
-          ingredients_effects.add(item);
-          ingredients_effects.sort((a, b) => a.title.compareTo(b.title));
+          ingredientsEffects.add(item);
+          ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
         }
       } else if (response is int) {
         errorResponse = -1;
@@ -239,7 +223,7 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  int returnLi(int index) {
+  returnLi(int index) {
     for (var i = 0; i < currentIInfo.innerLocations.indexes.length; i++) {
       if (currentIInfo.innerLocations.indexes[i] == index) {
         return i;
@@ -301,7 +285,7 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  List<String> returnURL(String url) {
+  returnURL(String url) {
     String aux;
     String aux2;
     int aux3 = 0;
@@ -326,7 +310,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  String getEfeitoImage(String nomeEfeito) {
+  getEfeitoImage(String nomeEfeito) {
     for (var item in efeitos) {
       if (nomeEfeito == "Paralyze" && item.title == "Paralysis") {
         return item.icon;
@@ -346,7 +330,7 @@ class HomeViewModel extends BaseViewModel {
     return temp;
   }
 
-  bool isLetter(String letter, String tab) {
+  isLetter(String letter, String tab) {
     if (tab == "ingrediente") {
       for (var i = 0; i < ingredientes.length; i++) {
         if (ingredientes[i].title[0] == letter) {

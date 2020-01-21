@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final url = urlFromJson(jsonString);
-
 import 'dart:convert';
 
 Url urlFromJson(String str) => Url.fromJson(json.decode(str));

@@ -1,4 +1,3 @@
-import 'package:alchemy/core/models/efeitos.dart';
 import 'package:alchemy/ui/widgets/draggable_scrollbar.dart';
 import 'package:alchemy/ui/widgets/item_efeito.dart';
 import 'package:flutter/material.dart';

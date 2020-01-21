@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final efeitos = efeitosFromJson(jsonString);
-
 import 'dart:convert';
 
 List<Efeitos> efeitosFromJson(String str) =>
