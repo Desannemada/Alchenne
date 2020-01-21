@@ -42,6 +42,10 @@ class HomeViewModel extends BaseViewModel {
   bool mostrarBackground;
   bool mostrarLocations;
 
+  GlobalKey sizeC = GlobalKey();
+  double heightOfItem;
+  bool aux = false;
+
   HomeViewModel() {
     mostrarBackground = false;
     mostrarLocations = false;
@@ -252,6 +256,11 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void updateContainerHeight(double height) {
+    heightOfItem = height;
+    notifyListeners();
+  }
+
   void updatePossiblePotions() {
     Ingredientes i1 = potionIngredients[0];
     Ingredientes i2 = potionIngredients[1];
@@ -348,18 +357,26 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
+  void getSize() {
+    final RenderBox renderBox = sizeC.currentContext.findRenderObject();
+    updateContainerHeight(renderBox.size.height);
+    aux = true;
+    notifyListeners();
+  }
+
   void getPosition(int index, String tab, ScrollController c) {
+    if (!aux) {
+      getSize();
+    }
     if (tab == "ingrediente") {
-      if (index > 21 && String.fromCharCode(65 + index) == "Y") {
+      if (String.fromCharCode(65 + index) == "Y") {
         c.jumpTo(c.position.maxScrollExtent);
-        print(c.position.maxScrollExtent);
         updatePosition(index);
         changeBubble(String.fromCharCode(65 + index));
       } else {
         for (var i = 0; i < ingredientes.length; i++) {
           if (ingredientes[i].title[0] == String.fromCharCode(65 + index)) {
-            c.jumpTo((i ~/ 2).toDouble() *
-                ((c.position.maxScrollExtent / 56) + 10.5));
+            c.jumpTo((i ~/ 2).toDouble() * (heightOfItem + 20));
             updatePosition(index);
             changeBubble(String.fromCharCode(65 + index));
             break;
@@ -367,20 +384,12 @@ class HomeViewModel extends BaseViewModel {
         }
       }
     } else if (tab == "efeito") {
-      if (index > 20 && String.fromCharCode(65 + index) == "W") {
-        c.jumpTo(
-            (48 ~/ 2).toDouble() * ((c.position.maxScrollExtent / 27) + 13.5));
-        updatePosition2(index);
-        changeBubble(String.fromCharCode(65 + index));
-      } else {
-        for (var i = 0; i < efeitos.length; i++) {
-          if (efeitos[i].title[0] == String.fromCharCode(65 + index)) {
-            c.jumpTo((i ~/ 2).toDouble() *
-                ((c.position.maxScrollExtent / 27) + 13.5));
-            updatePosition2(index);
-            changeBubble(String.fromCharCode(65 + index));
-            break;
-          }
+      for (var i = 0; i < efeitos.length; i++) {
+        if (efeitos[i].title[0] == String.fromCharCode(65 + index)) {
+          c.jumpTo((i ~/ 2).toDouble() * (heightOfItem + 20));
+          updatePosition2(index);
+          changeBubble(String.fromCharCode(65 + index));
+          break;
         }
       }
     }

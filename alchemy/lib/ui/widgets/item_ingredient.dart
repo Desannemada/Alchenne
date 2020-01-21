@@ -17,112 +17,119 @@ class IngredientItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
-    return Stack(
-      children: <Widget>[
-        SizedBox.expand(
-          child: Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black38, width: 2),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(80),
-                topRight: Radius.circular(80),
-              ),
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 14),
-            elevation: 30,
-            color: Theme.of(context).canvasColor.withOpacity(0.78),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 40,
-                    child: Image.asset(
-                      "assets/ingredients/${homeViewModel.ingredientes[index].title.replaceAll(" ", "")}.png",
-                      fit: BoxFit.contain,
-                      scale: 1.5,
-                    ),
-                    backgroundColor: Colors.transparent,
-                  ),
-                  SizedBox(height: 5),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Image.asset("assets/quill.webp", scale: 15),
-                            SizedBox(width: 2),
-                            Text(
-                              homeViewModel.ingredientes[index].weight,
-                              style: TextStyle(
-                                fontSize:
-                                    Theme.of(context).textTheme.body1.fontSize /
-                                        MediaQuery.of(context).textScaleFactor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Image.asset("assets/coin.png", scale: 9),
-                            SizedBox(width: 5),
-                            Text(
-                              homeViewModel.ingredientes[index].value,
-                              style: TextStyle(
-                                fontSize:
-                                    Theme.of(context).textTheme.body1.fontSize /
-                                        MediaQuery.of(context).textScaleFactor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    homeViewModel.ingredientes[index].title,
-                    style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.body1.fontSize /
-                          MediaQuery.of(context).textScaleFactor,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 14),
-          child: FlatButton(
-            child: Container(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(80),
-                topRight: Radius.circular(80),
-              ),
-            ),
-            onPressed: () {
-              homeViewModel.changeItem(homeViewModel.ingredientes[index]);
-              homeViewModel.nulifyCurrentInfo();
-              homeViewModel.fecharInfos();
-              homeViewModel.getInfoI(
-                  INGREDIENT_URL + homeViewModel.currentIngredient.url);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => IngredientInfo(),
+    return Container(
+      key: index == 0 ? homeViewModel.sizeC : null,
+      child: Stack(
+        children: <Widget>[
+          SizedBox.expand(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black38, width: 2),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(80),
+                  topRight: Radius.circular(80),
                 ),
-              );
-            },
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 14),
+              elevation: 30,
+              color: Theme.of(context).canvasColor.withOpacity(0.78),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    CircleAvatar(
+                      radius: 40,
+                      child: Image.asset(
+                        "assets/ingredients/${homeViewModel.ingredientes[index].title.replaceAll(" ", "")}.png",
+                        fit: BoxFit.contain,
+                        scale: 1.5,
+                      ),
+                      backgroundColor: Colors.transparent,
+                    ),
+                    SizedBox(height: 5),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Image.asset("assets/quill.webp", scale: 15),
+                              SizedBox(width: 2),
+                              Text(
+                                homeViewModel.ingredientes[index].weight,
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                          .textTheme
+                                          .body1
+                                          .fontSize /
+                                      MediaQuery.of(context).textScaleFactor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Image.asset("assets/coin.png", scale: 9),
+                              SizedBox(width: 5),
+                              Text(
+                                homeViewModel.ingredientes[index].value,
+                                style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                          .textTheme
+                                          .body1
+                                          .fontSize /
+                                      MediaQuery.of(context).textScaleFactor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      homeViewModel.ingredientes[index].title,
+                      style: TextStyle(
+                        fontSize: Theme.of(context).textTheme.body1.fontSize /
+                            MediaQuery.of(context).textScaleFactor,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        )
-      ],
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 14),
+            child: FlatButton(
+              child: Container(),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(80),
+                  topRight: Radius.circular(80),
+                ),
+              ),
+              onPressed: () {
+                homeViewModel.changeItem(homeViewModel.ingredientes[index]);
+                homeViewModel.nulifyCurrentInfo();
+                homeViewModel.fecharInfos();
+                homeViewModel.getInfoI(
+                    INGREDIENT_URL + homeViewModel.currentIngredient.url);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => IngredientInfo(),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
