@@ -17,74 +17,92 @@ class EffectItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
-    return Stack(
-      children: <Widget>[
-        SizedBox.expand(
-          child: Card(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(color: Colors.black38, width: 2),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(80),
-                topRight: Radius.circular(80),
-              ),
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 14),
-            elevation: 30,
-            color: Theme.of(context).canvasColor.withOpacity(0.78),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Image.asset(
-                    homeViewModel.efeitos[index].icon,
-                    scale: 9,
-                  ),
-                  Text(
-                    homeViewModel.efeitos[index].title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 17 / MediaQuery.of(context).textScaleFactor,
-                    ),
-                  ),
-                  Text(
-                    homeViewModel.efeitos[index].description,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 13 / MediaQuery.of(context).textScaleFactor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 14),
-          child: FlatButton(
-            child: Container(),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(80),
-                topRight: Radius.circular(80),
-              ),
-            ),
-            onPressed: () {
-              homeViewModel.changeItem2(homeViewModel.efeitos[index]);
-              homeViewModel.nulifyCurrentInfo2();
-              homeViewModel
-                  .getInfoE(EFEITO_URL + homeViewModel.currentEffect.url);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EffectInfo(),
+    return Container(
+      key: index == 0 ? homeViewModel.sizeC2 : null,
+      child: Stack(
+        children: <Widget>[
+          SizedBox.expand(
+            child: Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.black38, width: 2),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(80),
+                  topRight: Radius.circular(80),
                 ),
-              );
-            },
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 14),
+              elevation: 30,
+              color: Theme.of(context).canvasColor.withOpacity(0.78),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Expanded(
+                      flex: 4,
+                      child: Image.asset(
+                        homeViewModel.efeitos[index].icon,
+                        scale: 9,
+                      ),
+                    ),
+                    Text(
+                      homeViewModel.efeitos[index].title,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: MediaQuery.of(context).size.width *
+                            0.042 /
+                            MediaQuery.of(context).textScaleFactor,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: Text(
+                          homeViewModel.efeitos[index].description,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.03 /
+                                MediaQuery.of(context).textScaleFactor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        )
-      ],
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 14),
+            child: FlatButton(
+              child: Container(),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(80),
+                  topRight: Radius.circular(80),
+                ),
+              ),
+              onPressed: () {
+                homeViewModel.changeItem2(homeViewModel.efeitos[index]);
+                homeViewModel.nulifyCurrentInfo2();
+                homeViewModel
+                    .getInfoE(EFEITO_URL + homeViewModel.currentEffect.url);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EffectInfo(),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }

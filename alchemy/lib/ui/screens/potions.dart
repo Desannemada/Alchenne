@@ -20,7 +20,10 @@ class PotionTab extends StatelessWidget {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        padding: EdgeInsets.symmetric(
+          vertical: MediaQuery.of(context).size.height * 0.028,
+          horizontal: 10,
+        ),
         child: Stack(
           children: <Widget>[
             Row(
@@ -44,11 +47,23 @@ class PotionTab extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Image.asset(
-                        "assets/flask.png",
-                        scale: 1.9,
+                      Expanded(
+                        flex: 5,
+                        child: Image.asset(
+                          "assets/flask.png",
+                        ),
                       ),
-                      Text("Potion Maker")
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "Potion Maker",
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.044 /
+                                MediaQuery.of(context).textScaleFactor,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -109,7 +124,9 @@ class PotionTab extends StatelessWidget {
                             "Results (${homeViewModel.possiblePotions.length})",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.044 /
+                                  MediaQuery.of(context).textScaleFactor,
                             ),
                           ),
                         ),
@@ -128,44 +145,58 @@ class PotionTab extends StatelessWidget {
                                   itemCount:
                                       homeViewModel.possiblePotions.length,
                                   itemBuilder: (BuildContext context, int i) =>
-                                      FlatButton(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          homeViewModel
-                                              .possiblePotions[i][0].title,
-                                          style:
-                                              Theme.of(context).textTheme.body1,
-                                        ),
-                                        Align(
-                                          alignment: Alignment.topRight,
-                                          child: Text(
+                                      SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.055,
+                                    child: FlatButton(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Text(
+                                            homeViewModel
+                                                .possiblePotions[i][0].title,
+                                            style: TextStyle(
+                                              color:
+                                                  Theme.of(context).cursorColor,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.045 /
+                                                  MediaQuery.of(context)
+                                                      .textScaleFactor,
+                                            ),
+                                          ),
+                                          Text(
                                             " " +
                                                 homeViewModel.possiblePotions[i]
                                                     [1],
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 12,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.03 /
+                                                  MediaQuery.of(context)
+                                                      .textScaleFactor,
                                             ),
+                                          )
+                                        ],
+                                      ),
+                                      onPressed: () {
+                                        homeViewModel.changeItem2(homeViewModel
+                                            .possiblePotions[i][0]);
+                                        homeViewModel.nulifyCurrentInfo2();
+                                        homeViewModel.getInfoE(EFEITO_URL +
+                                            homeViewModel.currentEffect.url);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => EffectInfo(),
                                           ),
-                                        )
-                                      ],
+                                        );
+                                      },
                                     ),
-                                    onPressed: () {
-                                      homeViewModel.changeItem2(
-                                          homeViewModel.possiblePotions[i][0]);
-                                      homeViewModel.nulifyCurrentInfo2();
-                                      homeViewModel.getInfoE(EFEITO_URL +
-                                          homeViewModel.currentEffect.url);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => EffectInfo(),
-                                        ),
-                                      );
-                                    },
                                   ),
                                 ),
                               ),
@@ -175,39 +206,10 @@ class PotionTab extends StatelessWidget {
                 ),
               ],
             ),
-            RemoveIngredientButton(slot: 1),
-            RemoveIngredientButton(slot: 2),
-            RemoveIngredientButton(slot: 3),
           ],
         ),
       ),
     );
-  }
-}
-
-class RemoveIngredientButton extends StatelessWidget {
-  final int slot;
-  RemoveIngredientButton({@required this.slot});
-
-  @override
-  Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
-    return homeViewModel.potionIngredients[slot - 1] == null
-        ? Container()
-        : Padding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.297,
-              left: MediaQuery.of(context).size.width *
-                  (slot == 1 ? 0.19 : slot == 2 ? 0.508 : 0.827),
-            ),
-            child: IconButton(
-              icon: Icon(Icons.close),
-              onPressed: () {
-                homeViewModel.updatePotionIngredients(slot, null);
-                homeViewModel.updatePossiblePotions();
-              },
-            ),
-          );
   }
 }
 
@@ -230,19 +232,36 @@ class ChosenIngredientSquare extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Image.asset(
-            "assets/ingredients/${homeViewModel.potionIngredients[slot - 1].title.replaceAll(" ", "")}.png",
-            scale: 2.5,
+          Expanded(
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Image.asset(
+                "assets/ingredients/${homeViewModel.potionIngredients[slot - 1].title.replaceAll(" ", "")}.png",
+              ),
+            ),
           ),
-          Text(
-            slot == 1
-                ? homeViewModel.potionIngredients[0].title
-                : slot == 2
-                    ? homeViewModel.potionIngredients[1].title
-                    : homeViewModel.potionIngredients[2].title,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14 / MediaQuery.of(context).textScaleFactor,
+          SizedBox(height: 3),
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 4),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  slot == 1
+                      ? homeViewModel.potionIngredients[0].title
+                      : slot == 2
+                          ? homeViewModel.potionIngredients[1].title
+                          : homeViewModel.potionIngredients[2].title,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: MediaQuery.of(context).size.width *
+                        0.0312 /
+                        MediaQuery.of(context).textScaleFactor,
+                  ),
+                ),
+              ),
             ),
           ),
         ],
@@ -257,18 +276,39 @@ class ButtonSquare extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Container(
-        height: MediaQuery.of(context).size.width * 0.25,
-        width: MediaQuery.of(context).size.width * 0.179,
-      ),
-      onPressed: () => showSearch(
-        context: context,
-        delegate: PotionSearchScreen(slot: slot),
-      ),
+    final homeViewModel = Provider.of<HomeViewModel>(context);
+    return Stack(
+      alignment: Alignment.topRight,
+      children: <Widget>[
+        FlatButton(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Container(
+            height: MediaQuery.of(context).size.width * 0.25,
+            width: MediaQuery.of(context).size.width * 0.179,
+          ),
+          onPressed: () => showSearch(
+            context: context,
+            delegate: PotionSearchScreen(slot: slot),
+          ),
+        ),
+        homeViewModel.potionIngredients[slot - 1] == null
+            ? Container()
+            : Padding(
+                padding: const EdgeInsets.only(top: 3, right: 4),
+                child: GestureDetector(
+                  onTap: () {
+                    homeViewModel.updatePotionIngredients(slot, null);
+                    homeViewModel.updatePossiblePotions();
+                  },
+                  child: Icon(
+                    Icons.close,
+                    size: MediaQuery.of(context).size.width * 0.06,
+                  ),
+                ),
+              )
+      ],
     );
   }
 }
@@ -294,13 +334,22 @@ class IngredientSquare extends StatelessWidget {
           Text(
             "Choose Ingredient",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16),
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width *
+                  0.042 /
+                  MediaQuery.of(context).textScaleFactor,
+            ),
           ),
           SizedBox(height: 5),
           Text(
             slot == 1 || slot == 2 ? "*required" : "*optional",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12, color: Colors.white),
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width *
+                  0.03 /
+                  MediaQuery.of(context).textScaleFactor,
+              color: Colors.white,
+            ),
           ),
         ],
       ),

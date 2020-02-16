@@ -54,15 +54,19 @@ class InfoScreen extends StatelessWidget {
           style: TextStyle(color: Theme.of(context).textTheme.body1.color),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 10, left: 10, bottom: 10, top: 30),
             child: Text(
               "Developed by",
               textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width *
+                    0.0485 /
+                    MediaQuery.of(context).textScaleFactor,
+              ),
             ),
           ),
           Padding(
@@ -70,41 +74,59 @@ class InfoScreen extends StatelessWidget {
             child: Text(
               "Desannemada\n/\\_/\\\n( o.o )\n> ^ <",
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: MediaQuery.of(context).size.width *
+                    0.0485 /
+                    MediaQuery.of(context).textScaleFactor,
+              ),
             ),
           ),
           Padding(
             padding: EdgeInsets.all(10),
-            child: Text("Alchenne is Powered by"),
+            child: Text(
+              "Alchenne is Powered by",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width *
+                    0.0485 /
+                    MediaQuery.of(context).textScaleFactor,
+              ),
+            ),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: 8,
-            itemBuilder: (BuildContext context, int index) => Padding(
-              padding: index < 3
-                  ? EdgeInsets.all(10)
-                  : EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-              child: MarkdownBody(
-                shrinkWrap: true,
-                data: contentsBy[index] + html2md.convert(urls[index]),
-                onTapLink: (String url) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (BuildContext context) => MyWebView(
-                        title: titles[index],
-                        selectedUrl: url,
+          Padding(
+            padding: EdgeInsets.only(bottom: 30),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 8,
+              itemBuilder: (BuildContext context, int index) => Padding(
+                padding: index < 3
+                    ? EdgeInsets.all(10)
+                    : EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                child: MarkdownBody(
+                  shrinkWrap: true,
+                  data: contentsBy[index] + html2md.convert(urls[index]),
+                  onTapLink: (String url) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => MyWebView(
+                          title: titles[index],
+                          selectedUrl: url,
+                        ),
                       ),
+                    );
+                  },
+                  styleSheet: MarkdownStyleSheet(
+                    textAlign: WrapAlignment.center,
+                    a: TextStyle(
+                      color: Colors.blue,
+                      fontSize: MediaQuery.of(context).size.width *
+                          0.0485 /
+                          MediaQuery.of(context).textScaleFactor,
                     ),
-                  );
-                },
-                styleSheet: MarkdownStyleSheet(
-                  textAlign: WrapAlignment.center,
-                  a: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 20,
-                  ),
-                  p: TextStyle(
-                    color: Theme.of(context).textTheme.body1.color,
+                    p: TextStyle(
+                      color: Theme.of(context).textTheme.body1.color,
+                    ),
                   ),
                 ),
               ),

@@ -37,66 +37,80 @@ class IngredientItem extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    CircleAvatar(
-                      radius: 40,
-                      child: Image.asset(
-                        "assets/ingredients/${homeViewModel.ingredientes[index].title.replaceAll(" ", "")}.png",
-                        fit: BoxFit.contain,
-                        scale: 1.5,
+                    Expanded(
+                      flex: 3,
+                      child: CircleAvatar(
+                        radius: 40,
+                        child: Image.asset(
+                          "assets/ingredients/${homeViewModel.ingredientes[index].title.replaceAll(" ", "")}.png",
+                          fit: BoxFit.contain,
+                        ),
+                        backgroundColor: Colors.transparent,
                       ),
-                      backgroundColor: Colors.transparent,
                     ),
                     SizedBox(height: 5),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Image.asset("assets/quill.webp", scale: 15),
-                              SizedBox(width: 2),
-                              Text(
-                                homeViewModel.ingredientes[index].weight,
-                                style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                          .textTheme
-                                          .body1
-                                          .fontSize /
-                                      MediaQuery.of(context).textScaleFactor,
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Image.asset("assets/quill.webp"),
+                                SizedBox(width: 2),
+                                Text(
+                                  homeViewModel.ingredientes[index].weight,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                        0.045 /
+                                        MediaQuery.of(context).textScaleFactor,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: <Widget>[
-                              Image.asset("assets/coin.png", scale: 9),
-                              SizedBox(width: 5),
-                              Text(
-                                homeViewModel.ingredientes[index].value,
-                                style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                          .textTheme
-                                          .body1
-                                          .fontSize /
-                                      MediaQuery.of(context).textScaleFactor,
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Image.asset(
+                                  "assets/coin.png",
+                                  scale: 10,
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
+                                SizedBox(width: 5),
+                                Text(
+                                  homeViewModel.ingredientes[index].value,
+                                  style: TextStyle(
+                                    fontSize: MediaQuery.of(context)
+                                            .size
+                                            .width *
+                                        0.045 /
+                                        MediaQuery.of(context).textScaleFactor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      homeViewModel.ingredientes[index].title,
-                      style: TextStyle(
-                        fontSize: Theme.of(context).textTheme.body1.fontSize /
-                            MediaQuery.of(context).textScaleFactor,
+                    SizedBox(height: 5),
+                    Expanded(
+                      flex: 2,
+                      child: Center(
+                        child: Text(
+                          homeViewModel.ingredientes[index].title,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.044 /
+                                MediaQuery.of(context).textScaleFactor,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),

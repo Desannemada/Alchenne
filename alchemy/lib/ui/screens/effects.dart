@@ -12,7 +12,6 @@ class EffectsTab extends StatefulWidget {
 
 class _EffectsTabState extends State<EffectsTab> {
   ScrollController controller = new ScrollController();
-  GlobalKey size = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +33,17 @@ class _EffectsTabState extends State<EffectsTab> {
         Row(
           children: <Widget>[
             Container(
-              key: size,
+              padding: EdgeInsets.symmetric(vertical: 2),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 color: Colors.black54,
               ),
               width: MediaQuery.of(context).size.width * 0.04,
-              child: ListView.builder(
-                itemCount: 26,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(
+                  26,
+                  (index) => GestureDetector(
                     onTap: () {
                       homeViewModel.getPosition(index, "efeito", controller);
                     },
@@ -64,8 +64,6 @@ class _EffectsTabState extends State<EffectsTab> {
                       homeViewModel.getPosition(index, "efeito", controller);
                     },
                     child: Container(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height * 0.0028),
                       child: Text(
                         homeViewModel.isLetter(
                                 String.fromCharCode(65 + index), "efeito")
@@ -73,13 +71,14 @@ class _EffectsTabState extends State<EffectsTab> {
                             : "-",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize:
-                                (MediaQuery.of(context).size.height * 0.025) /
-                                    MediaQuery.of(context).textScaleFactor),
+                          fontSize:
+                              (MediaQuery.of(context).size.height * 0.0245) /
+                                  MediaQuery.of(context).textScaleFactor,
+                        ),
                       ),
                     ),
-                  );
-                },
+                  ),
+                ),
               ),
             ),
             Stack(

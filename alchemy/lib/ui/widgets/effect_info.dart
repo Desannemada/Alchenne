@@ -51,7 +51,12 @@ class EffectInfo extends StatelessWidget {
         ),
         title: Text(
           homeViewModel.currentEffect.title,
-          style: TextStyle(color: Theme.of(context).textTheme.body1.color),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.body1.color,
+            fontSize: MediaQuery.of(context).size.width *
+                0.0485 /
+                MediaQuery.of(context).textScaleFactor,
+          ),
         ),
       ),
       body: homeViewModel.currentEInfo == null
@@ -102,10 +107,11 @@ class EffectInfo extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                            bottom: 10,
-                            top: MediaQuery.of(context).size.height * 0.273,
-                            right: 20,
-                            left: 20),
+                          bottom: MediaQuery.of(context).size.height * 0.011,
+                          top: MediaQuery.of(context).size.height * 0.273,
+                          right: 20,
+                          left: 20,
+                        ),
                         child: Center(
                           child: Container(
                             color: Colors.black.withOpacity(0.5),
@@ -115,9 +121,11 @@ class EffectInfo extends StatelessWidget {
                                   homeViewModel.currentEffect.description +
                                   "\"",
                               style: TextStyle(
-                                  fontSize: 14 /
-                                      MediaQuery.of(context).textScaleFactor,
-                                  color: Colors.white),
+                                fontSize: MediaQuery.of(context).size.width *
+                                    0.034 /
+                                    MediaQuery.of(context).textScaleFactor,
+                                color: Colors.white,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -154,11 +162,19 @@ class EffectInfo extends StatelessWidget {
                               },
                               styleSheet: MarkdownStyleSheet(
                                 textAlign: WrapAlignment.center,
-                                a: TextStyle(color: Colors.blue, fontSize: 20),
+                                a: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.0485 /
+                                      MediaQuery.of(context).textScaleFactor,
+                                ),
                                 p: TextStyle(
-                                    color:
-                                        Theme.of(context).textTheme.body1.color,
-                                    fontSize: 20),
+                                  color:
+                                      Theme.of(context).textTheme.body1.color,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.0485 /
+                                      MediaQuery.of(context).textScaleFactor,
+                                ),
                               ),
                             ),
                           ),
@@ -169,7 +185,11 @@ class EffectInfo extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Text(
                           "Type: " + homeViewModel.currentEInfo.type,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.0485 /
+                                MediaQuery.of(context).textScaleFactor,
+                          ),
                         ),
                       ),
                       SizedBox(height: 3),
@@ -208,7 +228,10 @@ class EffectInfo extends StatelessWidget {
                                           softWrap: true,
                                           maxLines: 2,
                                           style: TextStyle(
-                                              fontSize: 16 /
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.039 /
                                                   MediaQuery.of(context)
                                                       .textScaleFactor,
                                               color: Theme.of(context)

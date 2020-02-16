@@ -28,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             "Skyrim: Alchenne",
             style: TextStyle(
               color: Theme.of(context).textTheme.body1.color,
-              fontSize: Theme.of(context).textTheme.body1.fontSize /
+              fontSize: MediaQuery.of(context).size.height *
+                  0.035 /
                   MediaQuery.of(context).textScaleFactor,
             ),
           ),

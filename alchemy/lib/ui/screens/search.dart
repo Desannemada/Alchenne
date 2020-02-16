@@ -56,13 +56,22 @@ class SearchScreen extends SearchDelegate {
       }
     }
     return query == ""
-        ? Center(child: Text("Search for ingredients and effects"))
+        ? Center(
+            child: Text(
+              "Search for ingredients and effects",
+              style: TextStyle(
+                fontSize: MediaQuery.of(context).size.width *
+                    0.05 /
+                    MediaQuery.of(context).textScaleFactor,
+              ),
+            ),
+          )
         : Padding(
             padding: EdgeInsets.all(10),
             child: ListView.separated(
               separatorBuilder: (BuildContext context, int index) => Divider(
                 color: Colors.black,
-                height: 5,
+                height: MediaQuery.of(context).size.height * 0.003,
               ),
               itemCount: results.length + 1,
               itemBuilder: (BuildContext context, int i) => i == 0
@@ -73,6 +82,11 @@ class SearchScreen extends SearchDelegate {
                         child: Text(
                           (results.length - 1).toString() + " results",
                           textAlign: TextAlign.end,
+                          style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width *
+                                0.05 /
+                                MediaQuery.of(context).textScaleFactor,
+                          ),
                         ),
                       ),
                     )
@@ -84,7 +98,9 @@ class SearchScreen extends SearchDelegate {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Theme.of(context).textTheme.body1.color,
-                              fontSize: 18,
+                              fontSize: MediaQuery.of(context).size.width *
+                                  0.05 /
+                                  MediaQuery.of(context).textScaleFactor,
                             ),
                           ),
                           onPressed: () {

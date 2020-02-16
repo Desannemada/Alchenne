@@ -53,7 +53,12 @@ class IngredientInfo extends StatelessWidget {
         ),
         title: Text(
           homeViewModel.currentIngredient.title,
-          style: TextStyle(color: Theme.of(context).textTheme.body1.color),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.body1.color,
+            fontSize: MediaQuery.of(context).size.width *
+                0.0485 /
+                MediaQuery.of(context).textScaleFactor,
+          ),
         ),
       ),
       body: homeViewModel.currentIInfo == null
@@ -141,9 +146,11 @@ class IngredientInfo extends StatelessWidget {
                                     softWrap: true,
                                     maxLines: 2,
                                     style: TextStyle(
-                                        fontSize: 16 /
-                                            MediaQuery.of(context)
-                                                .textScaleFactor,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.039 /
+                                                MediaQuery.of(context)
+                                                    .textScaleFactor,
                                         color: Theme.of(context)
                                             .textTheme
                                             .body1
@@ -204,7 +211,12 @@ class IngredientInfo extends StatelessWidget {
                                           "Background",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            fontSize: 21,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.051 /
+                                                MediaQuery.of(context)
+                                                    .textScaleFactor,
                                             color: Theme.of(context)
                                                 .textTheme
                                                 .body1
@@ -249,7 +261,9 @@ class IngredientInfo extends StatelessWidget {
                                 "Locations",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 21,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.051 /
+                                      MediaQuery.of(context).textScaleFactor,
                                   color:
                                       Theme.of(context).textTheme.body1.color,
                                 ),
@@ -407,11 +421,15 @@ class InfoTexts extends StatelessWidget {
         textAlign: WrapAlignment.spaceBetween,
         a: TextStyle(
           color: Colors.blue,
-          fontSize: 18,
+          fontSize: MediaQuery.of(context).size.width *
+              0.044 /
+              MediaQuery.of(context).textScaleFactor,
         ),
         p: TextStyle(
           color: Theme.of(context).textTheme.body1.color,
-          fontSize: 18,
+          fontSize: MediaQuery.of(context).size.width *
+              0.044 /
+              MediaQuery.of(context).textScaleFactor,
         ),
       ),
     );

@@ -43,6 +43,8 @@ class HomeViewModel extends BaseViewModel {
   bool mostrarLocations;
 
   GlobalKey sizeC = GlobalKey();
+  GlobalKey sizeC2 = GlobalKey();
+
   double heightOfItem;
   bool aux = false;
 
@@ -357,8 +359,8 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  void getSize() {
-    final RenderBox renderBox = sizeC.currentContext.findRenderObject();
+  void getSize(String tab) {
+    final RenderBox renderBox = tab=="ingrediente"? sizeC.currentContext.findRenderObject():sizeC2.currentContext.findRenderObject();
     updateContainerHeight(renderBox.size.height);
     aux = true;
     notifyListeners();
@@ -366,7 +368,7 @@ class HomeViewModel extends BaseViewModel {
 
   void getPosition(int index, String tab, ScrollController c) {
     if (!aux) {
-      getSize();
+      getSize(tab);
     }
     if (tab == "ingrediente") {
       if (String.fromCharCode(65 + index) == "Y") {

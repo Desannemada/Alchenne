@@ -12,7 +12,6 @@ class IngredientsTab extends StatefulWidget {
 
 class _IngredientsTabState extends State<IngredientsTab> {
   ScrollController controller = new ScrollController();
-  final sizeContainer = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -69,63 +68,61 @@ class _IngredientsTabState extends State<IngredientsTab> {
             : Row(
                 children: <Widget>[
                   Container(
-                    key: sizeContainer,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.black54,
-                    ),
-                    height: double.infinity,
-                    width: MediaQuery.of(context).size.width * 0.04,
-                    child: ListView.builder(
-                      itemCount: 26,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () {
-                            homeViewModel.getPosition(
-                                index, "ingrediente", controller);
-                          },
-                          onVerticalDragUpdate: (DragUpdateDetails detail) {
-                            var pos = detail.globalPosition.dy.toInt();
-                            for (var i = 0; i < 26; i++) {
-                              var start = 128 + (i * 23);
-                              var end = start + 23;
-                              if (pos >= start && pos <= end) {
-                                if (homeViewModel
-                                        .currentPositionOnAlphabetScroll !=
-                                    i) {
-                                  homeViewModel.getPosition(
-                                      i, "ingrediente", controller);
+                      padding: EdgeInsets.symmetric(vertical: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Colors.black54,
+                      ),
+                      height: double.infinity,
+                      width: MediaQuery.of(context).size.width * 0.04,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: List.generate(
+                          26,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              homeViewModel.getPosition(
+                                  index, "ingrediente", controller);
+                            },
+                            onVerticalDragUpdate: (DragUpdateDetails detail) {
+                              var pos = detail.globalPosition.dy.toInt();
+                              for (var i = 0; i < 26; i++) {
+                                var start = 128 + (i * 23);
+                                var end = start + 23;
+                                if (pos >= start && pos <= end) {
+                                  if (homeViewModel
+                                          .currentPositionOnAlphabetScroll !=
+                                      i) {
+                                    homeViewModel.getPosition(
+                                        i, "ingrediente", controller);
+                                  }
                                 }
                               }
-                            }
-                          },
-                          onLongPress: () {
-                            homeViewModel.getPosition(
-                                index, "ingrediente", controller);
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              top: MediaQuery.of(context).size.height * 0.0028,
-                            ),
-                            child: Text(
-                              homeViewModel.isLetter(
-                                      String.fromCharCode(65 + index),
-                                      "ingrediente")
-                                  ? String.fromCharCode(65 + index)
-                                  : "-",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
+                            },
+                            onLongPress: () {
+                              homeViewModel.getPosition(
+                                  index, "ingrediente", controller);
+                            },
+                            child: Container(
+                              child: Text(
+                                homeViewModel.isLetter(
+                                        String.fromCharCode(65 + index),
+                                        "ingrediente")
+                                    ? String.fromCharCode(65 + index)
+                                    : "-",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                   fontSize: (MediaQuery.of(context)
                                               .size
                                               .height *
-                                          0.025) /
-                                      MediaQuery.of(context).textScaleFactor),
+                                          0.0245) /
+                                      MediaQuery.of(context).textScaleFactor,
+                                ),
+                              ),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  ),
+                        ),
+                      )),
                   Stack(
                     alignment: Alignment.center,
                     children: <Widget>[
