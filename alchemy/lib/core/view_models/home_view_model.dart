@@ -360,7 +360,9 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void getSize(String tab) {
-    final RenderBox renderBox = tab=="ingrediente"? sizeC.currentContext.findRenderObject():sizeC2.currentContext.findRenderObject();
+    final RenderBox renderBox = tab == "ingrediente"
+        ? sizeC.currentContext.findRenderObject()
+        : sizeC2.currentContext.findRenderObject();
     updateContainerHeight(renderBox.size.height);
     aux = true;
     notifyListeners();

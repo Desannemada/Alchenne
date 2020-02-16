@@ -19,7 +19,15 @@ class MyWebView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Theme.of(context).textTheme.body1.color,
+            fontSize: MediaQuery.of(context).size.width *
+                0.0485 /
+                MediaQuery.of(context).textScaleFactor,
+          ),
+        ),
       ),
       body: WebView(
         initialUrl: selectedUrl,
