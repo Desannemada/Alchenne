@@ -1,5 +1,6 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/effects.dart';
+import 'package:alchemy/ui/screens/favourites.dart';
 import 'package:alchemy/ui/screens/info.dart';
 import 'package:alchemy/ui/screens/ingredients.dart';
 import 'package:alchemy/ui/screens/potions.dart';
@@ -18,8 +19,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
     return DefaultTabController(
-      initialIndex: 1,
-      length: 3,
+      initialIndex: 0,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           iconTheme: Theme.of(context).iconTheme,
@@ -57,6 +58,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           bottom: TabBar(
             indicatorColor: Theme.of(context).textTheme.body1.color,
             tabs: <Widget>[
+              Tab(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 3),
+                child: Image.asset("assets/star.png"),
+              )),
               Tab(child: Image.asset("assets/efeito.webp")),
               Tab(
                   child: Padding(
@@ -74,7 +80,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           physics: homeViewModel.errorResponse == -1
               ? NeverScrollableScrollPhysics()
               : AlwaysScrollableScrollPhysics(),
-          children: <Widget>[EffectsTab(), IngredientsTab(), PotionTab()],
+          children: <Widget>[
+            FavouritesTab(),
+            EffectsTab(),
+            IngredientsTab(),
+            PotionTab()
+          ],
         ),
       ),
     );

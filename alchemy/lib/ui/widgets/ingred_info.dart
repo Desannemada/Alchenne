@@ -79,13 +79,15 @@ class IngredientInfo extends StatelessWidget {
                       Center(
                         child: Container(
                           width: double.infinity,
+                          height: double.infinity,
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Theme.of(context).textTheme.body1.color),
+                              color: Theme.of(context).textTheme.body1.color,
+                            ),
                           ),
                           child: Image.asset(
-                            homeViewModel.currentBackground[0][3],
-                            fit: BoxFit.fitWidth,
+                            homeViewModel.currentBackground[0][4],
+                            fit: BoxFit.fitHeight,
                           ),
                         ),
                       ),

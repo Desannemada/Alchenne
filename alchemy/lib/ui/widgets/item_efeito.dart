@@ -6,25 +6,30 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class EffectItem extends StatelessWidget {
-  const EffectItem({
-    Key key,
+  EffectItem({
     @required this.index,
-  }) : super(key: key);
+    @required this.key,
+  });
 
   final int index;
+  final GlobalKey key;
 
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
     return Container(
-      key: index == 0 ? homeViewModel.sizeC2 : null,
+      // key: !homeViewModel.aux ? key : null,
       child: Stack(
         children: <Widget>[
           SizedBox.expand(
             child: Card(
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.black38, width: 2),
+                side: BorderSide(
+                    color: homeViewModel.favEfeitos.contains(index)
+                        ? Theme.of(context).textTheme.body1.color
+                        : Colors.black38,
+                    width: 2),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(80),
                   topRight: Radius.circular(80),
@@ -87,6 +92,7 @@ class EffectItem extends StatelessWidget {
                   topRight: Radius.circular(80),
                 ),
               ),
+              onLongPress: () => homeViewModel.updateEFavList(index),
               onPressed: () {
                 homeViewModel.changeItem2(homeViewModel.efeitos[index]);
                 homeViewModel.nulifyCurrentInfo2();
@@ -100,7 +106,22 @@ class EffectItem extends StatelessWidget {
                 );
               },
             ),
-          )
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 10),
+          //   child: Align(
+          //     alignment: Alignment.topRight,
+          //     child: GestureDetector(
+          //       onTap: () => homeViewModel.updateEFavList(index),
+          //       child: Icon(
+          //         homeViewModel.favEfeitos.contains(index)
+          //             ? Icons.star
+          //             : Icons.star_border,
+          //         size: 30,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

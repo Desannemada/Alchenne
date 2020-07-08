@@ -14,9 +14,9 @@ class PotionTab extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: homeViewModel.currentBackground[0][2],
+          image: homeViewModel.currentBackground[0][3],
           alignment: Alignment.center,
-          fit: BoxFit.fitWidth,
+          fit: BoxFit.fill,
         ),
       ),
       child: Padding(

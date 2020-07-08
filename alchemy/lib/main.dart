@@ -1,4 +1,5 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
+import 'package:alchemy/information/all_info_json.dart';
 import 'package:flutter/material.dart';
 import 'package:alchemy/ui/screens/home.dart';
 import 'package:alchemy/ui/values/routes.dart' as Routes;
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<HomeViewModel>(
           builder: (context) => HomeViewModel(),
+        ),
+        ChangeNotifierProvider<AllInfo>(
+          builder: (context) => AllInfo(),
         ),
       ],
       child: MaterialApp(

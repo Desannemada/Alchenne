@@ -24,9 +24,10 @@ class _EffectsTabState extends State<EffectsTab> {
           child: Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                  image: homeViewModel.currentBackground[0][0],
-                  alignment: Alignment.centerLeft,
-                  fit: BoxFit.fitWidth),
+                image: homeViewModel.currentBackground[0][1],
+                alignment: Alignment.centerLeft,
+                fit: BoxFit.fill,
+              ),
             ),
           ),
         ),
@@ -97,7 +98,12 @@ class _EffectsTabState extends State<EffectsTab> {
                       crossAxisCount: 2,
                       children: List.generate(homeViewModel.efeitos.length,
                           (int index) {
-                        return EffectItem(index: index);
+                        return EffectItem(
+                          index: index,
+                          key: index == 0 && homeViewModel.aux
+                              ? homeViewModel.sizeC2
+                              : null,
+                        );
                       }),
                     ),
                   ),

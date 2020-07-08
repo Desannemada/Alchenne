@@ -7,6 +7,7 @@ import 'package:alchemy/core/models/ingredientes.dart';
 import 'package:alchemy/core/services/custom_api.dart';
 import 'package:alchemy/core/view_models/base_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeViewModel extends BaseViewModel {
   CustomAPI api = CustomAPI();
@@ -37,6 +38,8 @@ class HomeViewModel extends BaseViewModel {
 
   int currentPositionOnAlphabetScroll = -1;
   int currentPositionOnAlphabetScroll2 = -1;
+  int currentPositionOnAlphabetScroll3 = -1;
+  int currentPositionOnAlphabetScroll4 = -1;
   String alphabetBubble = "";
 
   bool mostrarBackground;
@@ -44,15 +47,33 @@ class HomeViewModel extends BaseViewModel {
 
   GlobalKey sizeC = GlobalKey();
   GlobalKey sizeC2 = GlobalKey();
+  GlobalKey sizeC3 = GlobalKey();
+  GlobalKey sizeC4 = GlobalKey();
 
   double heightOfItem;
   bool aux = false;
+
+  List<int> favIngredientes = [];
+  List<int> favIColors = [];
+  List<Color> colors = [
+    Colors.red,
+    Colors.orange,
+    Colors.yellow,
+    Colors.green,
+    Colors.blue,
+    Colors.blue[900],
+    Colors.purple,
+    Color(0xFFfddfc0),
+  ];
+  List<int> favEfeitos = [];
+  bool currentFav = true;
 
   HomeViewModel() {
     mostrarBackground = false;
     mostrarLocations = false;
     getIngredients();
     getEffects();
+    getFavs();
 
     potionIngredients = [null, null, null];
 
@@ -61,30 +82,35 @@ class HomeViewModel extends BaseViewModel {
         AssetImage("assets/bg/b1_1.jpg"),
         AssetImage("assets/bg/b1_2.jpg"),
         AssetImage("assets/bg/b1_3.jpg"),
+        AssetImage("assets/bg/b1_4.jpg"),
         "assets/bg/background1.jpg"
       ],
       [
         AssetImage("assets/bg/b3_1.jpg"),
         AssetImage("assets/bg/b3_2.jpg"),
         AssetImage("assets/bg/b3_3.jpg"),
+        AssetImage("assets/bg/b3_4.jpg"),
         "assets/bg/background3.jpg"
       ],
       [
         AssetImage("assets/bg/b4_1.jpg"),
         AssetImage("assets/bg/b4_2.jpg"),
         AssetImage("assets/bg/b4_3.jpg"),
+        AssetImage("assets/bg/b4_4.jpg"),
         "assets/bg/background4.jpg"
       ],
       [
         AssetImage("assets/bg/b5_1.jpg"),
         AssetImage("assets/bg/b5_2.jpg"),
         AssetImage("assets/bg/b5_3.jpg"),
+        AssetImage("assets/bg/b5_4.jpg"),
         "assets/bg/background5.jpg"
       ],
       [
         AssetImage("assets/bg/b6_1.jpg"),
         AssetImage("assets/bg/b6_2.jpg"),
         AssetImage("assets/bg/b6_3.jpg"),
+        AssetImage("assets/bg/b6_4.jpg"),
         "assets/bg/background6.jpg"
       ]
     ];
@@ -174,7 +200,7 @@ class HomeViewModel extends BaseViewModel {
   void chooseBackground() {
     var chosen = new Random();
     int c = 1 + chosen.nextInt(5);
-    currentBackground[0] = backgrounds[c - 1];
+    currentBackground[0] = backgrounds[2];
   }
 
   void refresh() {
@@ -224,6 +250,16 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void updatePosition3(int i) {
+    currentPositionOnAlphabetScroll3 = i;
+    notifyListeners();
+  }
+
+  void updatePosition4(int i) {
+    currentPositionOnAlphabetScroll4 = i;
+    notifyListeners();
+  }
+
   void changeBubble(String b) {
     alphabetBubble = b;
     notifyListeners();
@@ -261,6 +297,46 @@ class HomeViewModel extends BaseViewModel {
   void updateContainerHeight(double height) {
     heightOfItem = height;
     notifyListeners();
+  }
+
+  void updateCurrentFav(bool aux) {
+    currentFav = aux;
+    notifyListeners();
+  }
+
+  void updateIFavList(int index, int color) {
+    if (favIngredientes.contains(index)) {
+      favIngredientes.remove(index);
+    } else {
+      favIngredientes.add(index);
+      favIngredientes.sort();
+      for (var i = 0; i < favIngredientes.length; i++) {
+        if (favIngredientes[i] == index) {
+          favIColors.insert(i, color);
+        }
+      }
+    }
+    saveFavs(true);
+    notifyListeners();
+  }
+
+  void updateEFavList(int index) {
+    if (favEfeitos.contains(index)) {
+      favEfeitos.remove(index);
+    } else {
+      favEfeitos.add(index);
+      favEfeitos.sort();
+    }
+    saveFavs(false);
+    notifyListeners();
+  }
+
+  int getColor(int index) {
+    for (var i = 0; i < favIngredientes.length; i++) {
+      if (favIngredientes[i] == index) {
+        return i;
+      }
+    }
   }
 
   void updatePossiblePotions() {
@@ -356,22 +432,46 @@ class HomeViewModel extends BaseViewModel {
         }
       }
       return false;
+    } else if (tab == "favEfeito") {
+      for (var i = 0; i < favEfeitos.length; i++) {
+        if (efeitos[favEfeitos[i]].title[0] == letter) {
+          return true;
+        }
+      }
+      return false;
+    } else if (tab == "favIngrediente") {
+      for (var i = 0; i < favIngredientes.length; i++) {
+        if (ingredientes[favIngredientes[i]].title[0] == letter) {
+          return true;
+        }
+      }
+      return false;
     }
   }
 
-  void getSize(String tab) {
-    final RenderBox renderBox = tab == "ingrediente"
-        ? sizeC.currentContext.findRenderObject()
-        : sizeC2.currentContext.findRenderObject();
-    updateContainerHeight(renderBox.size.height);
-    aux = true;
-    notifyListeners();
-  }
+  // void getSize(String tab) {
+  //   print(tab);
+  //   RenderBox renderBox;
+  //   if (tab == "ingrediente") {
+  //     renderBox = sizeC.currentContext.findRenderObject();
+  //   } else if (tab == "efeito") {
+  //     renderBox = sizeC2.currentContext.findRenderObject();
+  //   } else if (tab == "favEfeito") {
+  //     renderBox = sizeC3.currentContext.findRenderObject();
+  //   } else if (tab == "favIngrediente") {
+  //     renderBox = sizeC4.currentContext.findRenderObject();
+  //   }
+
+  //   updateContainerHeight(renderBox.size.height);
+  //   aux = true;
+  //   notifyListeners();
+  // }
 
   void getPosition(int index, String tab, ScrollController c) {
-    if (!aux) {
-      getSize(tab);
-    }
+    // if (!aux) {
+    //   print("oi");
+    //   getSize(tab);
+    // }
     if (tab == "ingrediente") {
       if (String.fromCharCode(65 + index) == "Y") {
         c.jumpTo(c.position.maxScrollExtent);
@@ -396,6 +496,78 @@ class HomeViewModel extends BaseViewModel {
           break;
         }
       }
+    } else if (tab == "favEfeito") {
+      for (var i = 0; i < favEfeitos.length; i++) {
+        if (efeitos[favEfeitos[i]].title[0] ==
+            String.fromCharCode(65 + index)) {
+          if (((i ~/ 2).toDouble() * (heightOfItem + 20)) >=
+              c.position.maxScrollExtent) {
+            c.jumpTo(c.position.maxScrollExtent);
+          } else {
+            c.jumpTo((i ~/ 2).toDouble() * (heightOfItem + 20));
+          }
+          updatePosition3(index);
+          changeBubble(String.fromCharCode(65 + index));
+          break;
+        }
+      }
+    } else if (tab == "favIngrediente") {
+      for (var i = 0; i < favIngredientes.length; i++) {
+        if (ingredientes[favIngredientes[i]].title[0] ==
+            String.fromCharCode(65 + index)) {
+          if (((i ~/ 2).toDouble() * (heightOfItem + 20)) >=
+              c.position.maxScrollExtent) {
+            c.jumpTo(c.position.maxScrollExtent);
+          } else {
+            c.jumpTo((i ~/ 2).toDouble() * (heightOfItem + 20));
+          }
+          updatePosition4(index);
+          changeBubble(String.fromCharCode(65 + index));
+          break;
+        }
+      }
     }
+  }
+
+  saveFavs(bool choice) async {
+    print("Saving");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (choice) {
+      List<String> favI = [];
+      List<String> favIC = [];
+      for (var i = 0; i < favIngredientes.length; i++) {
+        favI.add(favIngredientes[i].toString());
+        favIC.add(favIColors[i].toString());
+      }
+      prefs.setStringList('favI', favI);
+      prefs.setStringList('favIC', favIC);
+    } else {
+      List<String> favE = [];
+      for (var item in favEfeitos) {
+        favE.add(item.toString());
+      }
+      prefs.setStringList('favE', favE);
+    }
+  }
+
+  getFavs() async {
+    print("Getting info");
+    favIngredientes = [];
+    favIColors = [];
+    favEfeitos = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> favI = prefs.getStringList('favI') ?? [];
+    List<String> favIC = prefs.getStringList('favIC') ?? [];
+    List<String> favE = prefs.getStringList('favE') ?? [];
+
+    for (var i = 0; i < favI.length; i++) {
+      favIngredientes.add(int.parse(favI[i]));
+      favIColors.add(int.parse(favIC[i]));
+    }
+    for (var item in favE) {
+      favEfeitos.add(int.parse(item));
+    }
+
+    notifyListeners();
   }
 }

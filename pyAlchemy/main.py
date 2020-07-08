@@ -2,7 +2,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 from bs4 import BeautifulSoup
 import requests
-import re, os
+import re
+import os
 
 # Configurando servidor
 app = Flask("alchemy")
@@ -18,12 +19,13 @@ baseURL2 = "https://en.uesp.net"
 def getIngredientes():
     dog = BeautifulSoup(requests.get(
         f"{baseURL}/wiki/Ingredients_(Skyrim)").content, "html5lib")
-    dogTable = dog.find("table", attrs={"id": "ingredientsTable", })
+    dogTable = dog.findAll(
+        "table")
+    dogTable = dogTable[1]
     tbody = dogTable.find("tbody")
     dogTable = tbody.findAll("tr")
 
     listaRetorno = []
-
     for i in range(1, len(dogTable)):
         listaDogis = dogTable[i].findAll("td")
 
@@ -107,7 +109,7 @@ def getEffects():
             listaRetorno2[i].update(icon="assets/effects/Illusion2.png")
         else:
             listaRetorno2[i].update(icon="assets/effects/Heal.png")
-        
+
         listaRetorno2[i]["ingredients"].sort()
 
     return jsonify(listaRetorno2)
@@ -158,7 +160,8 @@ def getIngredienteInfo():
                                                           "").replace("DG", "").replace("DR", "")
                             n = re.findall("<li>.+?\n?<.li>", n)
                             for l in range(len(n)):
-                                n[l] = n[l].replace("<li>","").replace("</li>","").replace("<ul>","")
+                                n[l] = n[l].replace("<li>", "").replace(
+                                    "</li>", "").replace("<ul>", "")
                             info["innerLocations"]["inners"].append(n)
                             break
 
@@ -309,6 +312,7 @@ def getIngredienteInfo():
 
     return jsonify(info)
 
+
 @cross_origin()
 @app.route("/efeitoInfo", methods=["POST"])
 def getEfeitoInfo():
@@ -322,18 +326,15 @@ def getEfeitoInfo():
     cowTd2 = cowTrs[2].find("td")
 
     info2 = {
-        "School": str(cowTd1).replace("<td>","").replace("</td>",""),
+        "School": str(cowTd1).replace("<td>", "").replace("</td>", ""),
         "Type": cowTd2.text,
         "Schoolsize": float(len(cowTd1.text))
     }
 
     return jsonify(info2)
-    
-
-    
 
 
 # Inicializando servidor
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT",5000))
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)  # ip da maquina
