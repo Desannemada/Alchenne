@@ -343,8 +343,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void updateContainerHeight(double height) {
-    heightOfItem = height;
-    notifyListeners();
+    if (heightOfItem == null) {
+      heightOfItem = height;
+      notifyListeners();
+    }
   }
 
   void updateCurrentFav(bool aux) {

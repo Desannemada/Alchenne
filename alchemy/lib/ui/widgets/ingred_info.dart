@@ -1,11 +1,11 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/values/strings.dart';
 import 'package:alchemy/ui/widgets/effect_info.dart';
-import 'package:alchemy/ui/widgets/webview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:provider/provider.dart';
 import 'package:html2md/html2md.dart' as html2md;
+import 'package:url_launcher/url_launcher.dart';
 
 class IngredientInfo extends StatelessWidget {
   @override
@@ -419,15 +419,12 @@ class InfoTexts extends StatelessWidget {
     return MarkdownBody(
       shrinkWrap: true,
       data: html2md.convert(info),
-      onTapLink: (String url) {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (BuildContext context) => MyWebView(
-              title: homeViewModel.returnURL(url)[1],
-              selectedUrl: INGREDIENT_URL + homeViewModel.returnURL(url)[0],
-            ),
-          ),
-        );
+      onTapLink: (String url) async {
+        if (await canLaunch(INGREDIENT_URL + homeViewModel.returnURL(url)[0])) {
+          await launch(INGREDIENT_URL + homeViewModel.returnURL(url)[0]);
+        } else {
+          throw 'Could not launch $url';
+        }
       },
       styleSheet: MarkdownStyleSheet(
         textAlign: WrapAlignment.spaceBetween,

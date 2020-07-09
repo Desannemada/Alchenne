@@ -1,8 +1,8 @@
-import 'package:alchemy/ui/widgets/webview.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:html2md/html2md.dart' as html2md;
+import 'package:url_launcher/url_launcher.dart';
 
 class InfoScreen extends StatelessWidget {
   final List<String> urls = [
@@ -110,15 +110,13 @@ class InfoScreen extends StatelessWidget {
                 child: MarkdownBody(
                   shrinkWrap: true,
                   data: contentsBy[index] + html2md.convert(urls[index]),
-                  onTapLink: (String url) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => MyWebView(
-                          title: titles[index],
-                          selectedUrl: url,
-                        ),
-                      ),
-                    );
+                  onTapLink: (String url) async {
+                    print(url);
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
                   },
                   styleSheet: MarkdownStyleSheet(
                     textAlign: WrapAlignment.center,
