@@ -6,26 +6,29 @@ import 'package:html2md/html2md.dart' as html2md;
 
 class InfoScreen extends StatelessWidget {
   final List<String> urls = [
+    '<a href="https://thumbs.gfycat.com/DetailedJauntyCur-mobile.mp4">Diogo Correia</a>',
     '<a href="https://elderscrolls.fandom.com/wiki/Ingredients_(Skyrim)">Skyrim - The Elder Scrolls Wiki - Fandom</a>',
     '<a href="https://en.uesp.net/wiki/Skyrim:Alchemy_Effects">The Unofficial Elder Scrolls Pages (UESP)</a>',
     '<a href="https://skyrim.gamepedia.com/Category:Ingredient_images">Skyrim Wiki - Gamepedia</a>',
-    '<a href="https://wall.alphacoders.com/big.php?i=199646">Wallpaper1</a> by <a href="https://alphacoders.com/users/profile/40898">Shakala</a>',
-    '<a href="https://www.wallpaperup.com/132937/Skyrim_Elder_Scrolls_Landscape_Mountains_Lake.html#post-1576">Wallpaper2</a> by <a href="https://www.wallpaperup.com/member/profile/1115">BelleDeesse</a>',
-    '<a href="https://wallpapersafari.com/w/3L9dYg">Wallpaper3</a> found on <a href="https://wallpapersafari.com/">Wallpaper Safari</a>',
-    '<a href="https://wallpapersafari.com/w/Ih8vNM">Wallpaper4</a> found on <a href="https://wallpapersafari.com/">Wallpaper Safari</a>',
-    '<a href="https://wallpapersafari.com/w/chEAzt">Wallpaper5</a> found on <a href="https://wallpapersafari.com/">Wallpaper Safari</a>',
+    '<a href="https://www.flickr.com/photos/106746736@N06/31136037851">Wallpaper1</a> by <a href="https://www.flickr.com/photos/106746736@N06/">D U B L</a>',
+    '<a href="https://www.flickr.com/photos/106746736@N06/30350009903">Wallpaper2</a> by <a href="https://www.flickr.com/photos/106746736@N06/">D U B L</a>',
+    '<a href="https://www.allwallpaper.in/the-elder-scrolls-v-skyrim-landscapes-multiscreen-panorama-wallpaper-15110.html">Wallpaper3</a> found on <a href="https://www.allwallpaper.in/">All Wallpaper</a>',
+    '<a href="https://wallpapersafari.com/w/RLsk0M">Wallpaper4</a> found on <a href="https://wallpapersafari.com/">Wallpaper Safari</a>',
+    '<a href="https://www.flickr.com/photos/106746736@N06/31561425935">Wallpaper5</a> by <a href="https://www.flickr.com/photos/106746736@N06/">D U B L</a>',
   ];
   final List<String> titles = [
+    "Diogo Correia",
     "The Elder Scrolls Fandom Wiki",
     "The Unofficial Elder Scrolls Pages (UESP)",
     "Skyrim Wiki - Gamepedia",
-    "Wallpaper1 - Shakala",
-    "Wallpaper2 - BelleDeesse",
-    "Wallpaper3 - Wallpaper Safari",
+    "Wallpaper1 - D U B L",
+    "Wallpaper2 - D U B L",
+    "Wallpaper3 - All Wallpaper",
     "Wallpaper4 - Wallpaper Safari",
-    "Wallpaper5 - Wallpaper Safari",
+    "Wallpaper5 - D U B L",
   ];
   final List<String> contentsBy = [
+    "logo by:\n",
     "ingredient's info by:\n",
     "effect's info and images by:\n",
     "ingredient's images by:\n",
@@ -51,7 +54,7 @@ class InfoScreen extends StatelessWidget {
         ),
         title: Text(
           "About",
-          style: TextStyle(color: Theme.of(context).textTheme.body1.color),
+          style: TextStyle(color: Theme.of(context).textTheme.bodyText2.color),
         ),
       ),
       body: ListView(
@@ -97,10 +100,11 @@ class InfoScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 30),
             child: ListView.builder(
+              physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: 8,
+              itemCount: 9,
               itemBuilder: (BuildContext context, int index) => Padding(
-                padding: index < 3
+                padding: index < 4
                     ? EdgeInsets.all(10)
                     : EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                 child: MarkdownBody(
@@ -125,7 +129,7 @@ class InfoScreen extends StatelessWidget {
                           MediaQuery.of(context).textScaleFactor,
                     ),
                     p: TextStyle(
-                      color: Theme.of(context).textTheme.body1.color,
+                      color: Theme.of(context).textTheme.bodyText2.color,
                     ),
                   ),
                 ),

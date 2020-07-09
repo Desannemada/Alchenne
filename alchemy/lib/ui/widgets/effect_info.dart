@@ -12,33 +12,33 @@ class EffectInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
-    if (homeViewModel.errorResponse == -1) {
-      Future.delayed(Duration(seconds: 5), () {
-        showDialog(
-            context: context,
-            builder: (BuildContext bc) => AlertDialog(
-                  elevation: 10,
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Erro de Conexão >.<",
-                        textAlign: TextAlign.center,
-                      ),
-                      FlatButton(
-                        child: Text("Refresh"),
-                        onPressed: () {
-                          homeViewModel.getInfoE(
-                              EFEITO_URL + homeViewModel.currentEffect.url);
-                          Navigator.of(bc).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                ));
-      });
-    }
+    // if (homeViewModel.errorResponse == -1) {
+    //   Future.delayed(Duration(seconds: 5), () {
+    //     showDialog(
+    //         context: context,
+    //         builder: (BuildContext bc) => AlertDialog(
+    //               elevation: 10,
+    //               content: Column(
+    //                 mainAxisSize: MainAxisSize.min,
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: <Widget>[
+    //                   Text(
+    //                     "Erro de Conexão >.<",
+    //                     textAlign: TextAlign.center,
+    //                   ),
+    //                   FlatButton(
+    //                     child: Text("Refresh"),
+    //                     onPressed: () {
+    //                       homeViewModel.getInfoE(
+    //                           EFEITO_URL + homeViewModel.currentEffect.url);
+    //                       Navigator.of(bc).pop();
+    //                     },
+    //                   ),
+    //                 ],
+    //               ),
+    //             ));
+    //   });
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +52,7 @@ class EffectInfo extends StatelessWidget {
         title: Text(
           homeViewModel.currentEffect.title,
           style: TextStyle(
-            color: Theme.of(context).textTheme.body1.color,
+            color: Theme.of(context).textTheme.bodyText2.color,
             fontSize: MediaQuery.of(context).size.width *
                 0.0485 /
                 MediaQuery.of(context).textScaleFactor,
@@ -63,7 +63,7 @@ class EffectInfo extends StatelessWidget {
           ? Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).textTheme.body1.color,
+                  Theme.of(context).textTheme.bodyText2.color,
                 ),
               ),
             )
@@ -79,7 +79,10 @@ class EffectInfo extends StatelessWidget {
                           height: double.infinity,
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Theme.of(context).textTheme.body1.color),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .color),
                           ),
                           child: Image.asset(
                             homeViewModel.currentBackground[0][4],
@@ -93,7 +96,10 @@ class EffectInfo extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.2,
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Theme.of(context).textTheme.body1.color),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .color),
                             borderRadius: BorderRadius.all(Radius.circular(80)),
                           ),
                           child: CircleAvatar(
@@ -170,8 +176,10 @@ class EffectInfo extends StatelessWidget {
                                       MediaQuery.of(context).textScaleFactor,
                                 ),
                                 p: TextStyle(
-                                  color:
-                                      Theme.of(context).textTheme.body1.color,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .color,
                                   fontSize: MediaQuery.of(context).size.width *
                                       0.0485 /
                                       MediaQuery.of(context).textScaleFactor,
@@ -237,7 +245,7 @@ class EffectInfo extends StatelessWidget {
                                                       .textScaleFactor,
                                               color: Theme.of(context)
                                                   .textTheme
-                                                  .body1
+                                                  .bodyText2
                                                   .color),
                                         ),
                                       ),
@@ -258,8 +266,8 @@ class EffectInfo extends StatelessWidget {
                                         .currentEffect.ingredients[index]);
                                     homeViewModel.nulifyCurrentInfo();
                                     homeViewModel.fecharInfos();
-                                    homeViewModel.getInfoI(INGREDIENT_URL +
-                                        homeViewModel.currentIngredient.url);
+                                    homeViewModel.getInfoI(homeViewModel
+                                        .currentEffect.ingredients[index]);
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(

@@ -1,6 +1,5 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/potionSearch.dart';
-import 'package:alchemy/ui/values/strings.dart';
 import 'package:alchemy/ui/widgets/effect_info.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -187,8 +186,9 @@ class PotionTab extends StatelessWidget {
                                         homeViewModel.changeItem2(homeViewModel
                                             .possiblePotions[i][0]);
                                         homeViewModel.nulifyCurrentInfo2();
-                                        homeViewModel.getInfoE(EFEITO_URL +
-                                            homeViewModel.currentEffect.url);
+                                        homeViewModel.getInfoE(homeViewModel
+                                            .possiblePotions[i][0].title);
+
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(

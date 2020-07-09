@@ -1,8 +1,7 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/information/all_info_json.dart';
+import 'package:alchemy/ui/screens/splash.dart';
 import 'package:flutter/material.dart';
-import 'package:alchemy/ui/screens/home.dart';
-import 'package:alchemy/ui/values/routes.dart' as Routes;
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
@@ -32,14 +31,11 @@ class MyApp extends StatelessWidget {
           canvasColor: Color(0xFF262b2f),
           iconTheme: IconThemeData(color: Color(0xFFfddfc0)),
           textTheme: TextTheme(
-            body1: TextStyle(
+            bodyText2: TextStyle(
               color: Color(0xFFfddfc0),
               fontSize: 20,
             ),
-            body2: TextStyle(
-              color: Color(0xFFfdf2de),
-            ),
-            title: TextStyle(color: Color(0xFFfddfc0)),
+            headline6: TextStyle(color: Color(0xFFfddfc0)),
           ),
           inputDecorationTheme: InputDecorationTheme(
             hintStyle: TextStyle(color: Colors.grey[700]),
@@ -52,7 +48,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: HomeScreen(),
+        home: SplashScreen(),
       ),
     );
   }

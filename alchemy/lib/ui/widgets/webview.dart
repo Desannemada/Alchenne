@@ -22,7 +22,7 @@ class MyWebView extends StatelessWidget {
         title: Text(
           title,
           style: TextStyle(
-            color: Theme.of(context).textTheme.body1.color,
+            color: Theme.of(context).textTheme.bodyText2.color,
             fontSize: MediaQuery.of(context).size.width *
                 0.0485 /
                 MediaQuery.of(context).textScaleFactor,

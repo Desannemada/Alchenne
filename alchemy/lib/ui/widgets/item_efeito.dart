@@ -1,5 +1,4 @@
 import 'package:alchemy/core/view_models/home_view_model.dart';
-import 'package:alchemy/ui/values/strings.dart';
 import 'package:alchemy/ui/widgets/effect_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class EffectItem extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 side: BorderSide(
                     color: homeViewModel.favEfeitos.contains(index)
-                        ? Theme.of(context).textTheme.body1.color
+                        ? Theme.of(context).textTheme.bodyText2.color
                         : Colors.black38,
                     width: 2),
                 borderRadius: BorderRadius.only(
@@ -96,8 +95,7 @@ class EffectItem extends StatelessWidget {
               onPressed: () {
                 homeViewModel.changeItem2(homeViewModel.efeitos[index]);
                 homeViewModel.nulifyCurrentInfo2();
-                homeViewModel
-                    .getInfoE(EFEITO_URL + homeViewModel.currentEffect.url);
+                homeViewModel.getInfoE(index);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

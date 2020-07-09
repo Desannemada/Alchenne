@@ -23,6 +23,7 @@ dependencies:
         ref: alignment
   html2md: ^0.5.1
   shared_preferences: ^0.5.7+3
+  splashscreen: ^1.2.0
   
   
 

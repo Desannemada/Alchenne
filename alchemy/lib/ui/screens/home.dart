@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           title: Text(
             "Skyrim: Alchenne",
             style: TextStyle(
-              color: Theme.of(context).textTheme.body1.color,
+              color: Theme.of(context).textTheme.bodyText2.color,
               fontSize: MediaQuery.of(context).size.height *
                   0.035 /
                   MediaQuery.of(context).textScaleFactor,
@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             )
           ],
           bottom: TabBar(
-            indicatorColor: Theme.of(context).textTheme.body1.color,
+            indicatorColor: Theme.of(context).textTheme.bodyText2.color,
             tabs: <Widget>[
               Tab(
                   child: Padding(

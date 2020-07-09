@@ -88,7 +88,8 @@ class _EffectsTabState extends State<EffectsTab> {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.96,
                   child: DraggableScrollbar.arrows(
-                    backgroundColor: Theme.of(context).textTheme.body1.color,
+                    backgroundColor:
+                        Theme.of(context).textTheme.bodyText2.color,
                     controller: controller,
                     child: GridView.count(
                       childAspectRatio: 0.99,

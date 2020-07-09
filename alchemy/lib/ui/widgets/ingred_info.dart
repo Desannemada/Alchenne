@@ -12,33 +12,33 @@ class IngredientInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
-    if (homeViewModel.errorResponse == -1) {
-      Future.delayed(Duration(seconds: 5), () {
-        showDialog(
-            context: context,
-            builder: (BuildContext bc) => AlertDialog(
-                  elevation: 10,
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Erro de Conexão >.<",
-                        textAlign: TextAlign.center,
-                      ),
-                      FlatButton(
-                        child: Text("Refresh"),
-                        onPressed: () {
-                          homeViewModel.getInfoI(INGREDIENT_URL +
-                              homeViewModel.currentIngredient.url);
-                          Navigator.of(bc).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                ));
-      });
-    }
+    // if (homeViewModel.errorResponse == -1) {
+    //   Future.delayed(Duration(seconds: 5), () {
+    //     showDialog(
+    //         context: context,
+    //         builder: (BuildContext bc) => AlertDialog(
+    //               elevation: 10,
+    //               content: Column(
+    //                 mainAxisSize: MainAxisSize.min,
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: <Widget>[
+    //                   Text(
+    //                     "Erro de Conexão >.<",
+    //                     textAlign: TextAlign.center,
+    //                   ),
+    //                   FlatButton(
+    //                     child: Text("Refresh"),
+    //                     onPressed: () {
+    //                       homeViewModel.getInfoI(INGREDIENT_URL +
+    //                           homeViewModel.currentIngredient.url);
+    //                       Navigator.of(bc).pop();
+    //                     },
+    //                   ),
+    //                 ],
+    //               ),
+    //             ));
+    //   });
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +54,7 @@ class IngredientInfo extends StatelessWidget {
         title: Text(
           homeViewModel.currentIngredient.title,
           style: TextStyle(
-            color: Theme.of(context).textTheme.body1.color,
+            color: Theme.of(context).textTheme.bodyText2.color,
             fontSize: MediaQuery.of(context).size.width *
                 0.0485 /
                 MediaQuery.of(context).textScaleFactor,
@@ -65,7 +65,7 @@ class IngredientInfo extends StatelessWidget {
           ? Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(
-                  Theme.of(context).textTheme.body1.color,
+                  Theme.of(context).textTheme.bodyText2.color,
                 ),
               ),
             )
@@ -82,7 +82,8 @@ class IngredientInfo extends StatelessWidget {
                           height: double.infinity,
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2.color,
                             ),
                           ),
                           child: Image.asset(
@@ -97,7 +98,10 @@ class IngredientInfo extends StatelessWidget {
                           height: MediaQuery.of(context).size.height * 0.2,
                           decoration: BoxDecoration(
                             border: Border.all(
-                                color: Theme.of(context).textTheme.body1.color),
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .color),
                             borderRadius: BorderRadius.all(Radius.circular(80)),
                           ),
                           child: CircleAvatar(
@@ -155,7 +159,7 @@ class IngredientInfo extends StatelessWidget {
                                                     .textScaleFactor,
                                         color: Theme.of(context)
                                             .textTheme
-                                            .body1
+                                            .bodyText2
                                             .color),
                                   ),
                                 ),
@@ -176,8 +180,9 @@ class IngredientInfo extends StatelessWidget {
                                   .getIngredientsEffects()[index]
                                   .title);
                               homeViewModel.nulifyCurrentInfo2();
-                              homeViewModel.getInfoE(
-                                  EFEITO_URL + homeViewModel.currentEffect.url);
+                              homeViewModel.getInfoE(homeViewModel
+                                  .getIngredientsEffects()[index]
+                                  .title);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -221,7 +226,7 @@ class IngredientInfo extends StatelessWidget {
                                                     .textScaleFactor,
                                             color: Theme.of(context)
                                                 .textTheme
-                                                .body1
+                                                .bodyText2
                                                 .color,
                                           ),
                                         ),
@@ -231,7 +236,7 @@ class IngredientInfo extends StatelessWidget {
                                               : Icons.keyboard_arrow_left,
                                           color: Theme.of(context)
                                               .textTheme
-                                              .body1
+                                              .bodyText2
                                               .color,
                                         )
                                       ],
@@ -266,15 +271,18 @@ class IngredientInfo extends StatelessWidget {
                                   fontSize: MediaQuery.of(context).size.width *
                                       0.051 /
                                       MediaQuery.of(context).textScaleFactor,
-                                  color:
-                                      Theme.of(context).textTheme.body1.color,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .color,
                                 ),
                               ),
                               Icon(
                                 homeViewModel.mostrarLocations
                                     ? Icons.keyboard_arrow_down
                                     : Icons.keyboard_arrow_left,
-                                color: Theme.of(context).textTheme.body1.color,
+                                color:
+                                    Theme.of(context).textTheme.bodyText2.color,
                               )
                             ],
                           ),
@@ -331,6 +339,8 @@ class IngredientInfo extends StatelessWidget {
                                                     .innerLocations.indexes
                                                     .contains(index)
                                                 ? ListView.separated(
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
                                                     padding: EdgeInsets.only(
                                                         top: 10),
                                                     shrinkWrap: true,
@@ -428,7 +438,7 @@ class InfoTexts extends StatelessWidget {
               MediaQuery.of(context).textScaleFactor,
         ),
         p: TextStyle(
-          color: Theme.of(context).textTheme.body1.color,
+          color: Theme.of(context).textTheme.bodyText2.color,
           fontSize: MediaQuery.of(context).size.width *
               0.044 /
               MediaQuery.of(context).textScaleFactor,

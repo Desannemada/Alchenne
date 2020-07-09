@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:alchemy/core/models/efeitos.dart';
@@ -6,6 +7,7 @@ import 'package:alchemy/core/models/infoI.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
 import 'package:alchemy/core/services/custom_api.dart';
 import 'package:alchemy/core/view_models/base_view_model.dart';
+import 'package:alchemy/information/all_info_json.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,10 +23,14 @@ class HomeViewModel extends BaseViewModel {
 
   List backgrounds = List();
   List currentBackground = [0];
+  bool bgColor = true;
 
   List<Ingredientes> ingredientes = List();
   List<Efeitos> efeitos = List();
   List ingredientsEffects = List();
+
+  List<IngredienteInfo> iInfos = List();
+  List<EfeitoInfo> eInfos = List();
 
   List<Ingredientes> potionIngredients = List();
   List possiblePotions = List();
@@ -118,39 +124,57 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void getIngredients() async {
-    try {
-      var response = await api.getIngredientsFromJson();
-      if (response is List<Ingredientes>) {
-        ingredientes = response;
-        for (var item in ingredientes) {
-          ingredientsEffects.add(item);
-          ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
-        }
-      } else if (response is int) {
-        errorResponse = -1;
-      }
-    } catch (e) {
-      errorResponse = -1;
-      throw e;
+    // try {
+    //   var response = await api.getIngredientsFromJson();
+    //   if (response is List<Ingredientes>) {
+    //     ingredientes = response;
+    //     for (var item in ingredientes) {
+    //       ingredientsEffects.add(item);
+    //       ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
+    //     }
+    //   } else if (response is int) {
+    //     errorResponse = -1;
+    //   }
+    // } catch (e) {
+    //   errorResponse = -1;
+    //   throw e;
+    // }
+    ingredientes = ingredientesFromJson(jsonEncode(AllInfo().ingredientes));
+    for (var item in ingredientes) {
+      ingredientsEffects.add(item);
+      ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
+    }
+    iInfos = [];
+    for (var item in AllInfo().ingredientesInfo) {
+      iInfos.add(ingredienteInfoFromJson(json.encode(item)));
     }
     notifyListeners();
   }
 
   void getEffects() async {
-    try {
-      var response = await api.getEffectsFromJson();
-      if (response is List<Efeitos>) {
-        efeitos = response;
-        for (var item in efeitos) {
-          ingredientsEffects.add(item);
-          ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
-        }
-      } else if (response is int) {
-        errorResponse = -1;
-      }
-    } catch (e) {
-      errorResponse = -1;
-      throw e;
+    // try {
+    //   var response = await api.getEffectsFromJson();
+    //   if (response is List<Efeitos>) {
+    //     efeitos = response;
+    //     for (var item in efeitos) {
+    //       ingredientsEffects.add(item);
+    //       ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
+    //     }
+    //   } else if (response is int) {
+    //     errorResponse = -1;
+    //   }
+    // } catch (e) {
+    //   errorResponse = -1;
+    //   throw e;
+    // }
+    efeitos = efeitosFromJson(jsonEncode(AllInfo().efeitos));
+    eInfos = [];
+    for (var item in AllInfo().efeitosInfo) {
+      eInfos.add(efeitoInfoFromJson(json.encode(item)));
+    }
+    for (var item in efeitos) {
+      ingredientsEffects.add(item);
+      ingredientsEffects.sort((a, b) => a.title.compareTo(b.title));
     }
     notifyListeners();
   }
@@ -165,34 +189,54 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void getInfoI(String url) async {
-    try {
-      var response = await api.getURLFromJson(url);
-      if (response is IngredienteInfo) {
-        currentIInfo = response;
-        errorResponse = 0;
-      } else if (response is int) {
-        errorResponse = -1;
+  void getInfoI(var index) async {
+    // try {
+    //   var response = await api.getURLFromJson(url);
+    //   if (response is IngredienteInfo) {
+    //     currentIInfo = response;
+    //     errorResponse = 0;
+    //   } else if (response is int) {
+    //     errorResponse = -1;
+    //   }
+    // } catch (e) {
+    //   errorResponse = -1;
+    //   throw e;
+    // }
+    if (index is int) {
+      currentIInfo = iInfos[index];
+    } else {
+      for (var i = 0; i < ingredientes.length; i++) {
+        if (ingredientes[i].title == index) {
+          currentIInfo = iInfos[i];
+          break;
+        }
       }
-    } catch (e) {
-      errorResponse = -1;
-      throw e;
     }
     notifyListeners();
   }
 
-  void getInfoE(String url) async {
-    try {
-      var response = await api.getURL2FromJson(url);
-      if (response is EfeitoInfo) {
-        currentEInfo = response;
-        errorResponse = 0;
-      } else if (response is int) {
-        errorResponse = -1;
+  void getInfoE(var index) async {
+    // try {
+    //   var response = await api.getURL2FromJson(url);
+    //   if (response is EfeitoInfo) {
+    //     currentEInfo = response;
+    //     errorResponse = 0;
+    //   } else if (response is int) {
+    //     errorResponse = -1;
+    //   }
+    // } catch (e) {
+    //   errorResponse = -1;
+    //   throw e;
+    // }
+    if (index is int) {
+      currentEInfo = eInfos[index];
+    } else {
+      for (var i = 0; i < efeitos.length; i++) {
+        if (efeitos[i].title == index) {
+          currentEInfo = eInfos[i];
+          break;
+        }
       }
-    } catch (e) {
-      errorResponse = -1;
-      throw e;
     }
     notifyListeners();
   }
@@ -200,7 +244,11 @@ class HomeViewModel extends BaseViewModel {
   void chooseBackground() {
     var chosen = new Random();
     int c = 1 + chosen.nextInt(5);
-    currentBackground[0] = backgrounds[2];
+    currentBackground[0] = backgrounds[c - 1];
+    if (c == 2 || c == 4) {
+      bgColor = false;
+    }
+    notifyListeners();
   }
 
   void refresh() {
@@ -337,6 +385,7 @@ class HomeViewModel extends BaseViewModel {
         return i;
       }
     }
+    return 0;
   }
 
   void updatePossiblePotions() {
@@ -449,29 +498,7 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  // void getSize(String tab) {
-  //   print(tab);
-  //   RenderBox renderBox;
-  //   if (tab == "ingrediente") {
-  //     renderBox = sizeC.currentContext.findRenderObject();
-  //   } else if (tab == "efeito") {
-  //     renderBox = sizeC2.currentContext.findRenderObject();
-  //   } else if (tab == "favEfeito") {
-  //     renderBox = sizeC3.currentContext.findRenderObject();
-  //   } else if (tab == "favIngrediente") {
-  //     renderBox = sizeC4.currentContext.findRenderObject();
-  //   }
-
-  //   updateContainerHeight(renderBox.size.height);
-  //   aux = true;
-  //   notifyListeners();
-  // }
-
   void getPosition(int index, String tab, ScrollController c) {
-    // if (!aux) {
-    //   print("oi");
-    //   getSize(tab);
-    // }
     if (tab == "ingrediente") {
       if (String.fromCharCode(65 + index) == "Y") {
         c.jumpTo(c.position.maxScrollExtent);
@@ -570,4 +597,185 @@ class HomeViewModel extends BaseViewModel {
 
     notifyListeners();
   }
+
+  // void precacheImages(BuildContext context) {
+  //   for (var i = 0; i < images.length; i++) {
+  //     for (var j = 0; j < images[i].length; j++) {
+  //       if (i == 0) {
+  //         precacheImage(AssetImage("assets/${images[i][j]}"), context);
+  //       } else if (i == 1) {
+  //         precacheImage(AssetImage("assets/bg/${images[i][j]}"), context);
+  //       } else if (i == 2) {
+  //         precacheImage(AssetImage("assets/effects/${images[i][j]}"), context);
+  //       } else if (i == 3) {
+  //         precacheImage(
+  //             AssetImage("assets/ingredients/${images[i][j]}"), context);
+  //       }
+  //     }
+  //   }
+  // }
+
+  // List<List<String>> images = [
+  //   [
+  //     "coin.png",
+  //     "efeito.webp",
+  //     "flask.png",
+  //     "ingredient.png",
+  //     "loading.gif",
+  //     "potion.png",
+  //     "quill.webp",
+  //     "star.png",
+  //   ],
+  //   [
+  //     "b1_1.jpg",
+  //     "b1_2.jpg",
+  //     "b1_3.jpg",
+  //     "b1_4.jpg",
+  //     "b3_1.jpg",
+  //     "b3_2.jpg",
+  //     "b3_3.jpg",
+  //     "b3_4.jpg",
+  //     "b4_1.jpg",
+  //     "b4_2.jpg",
+  //     "b4_3.jpg",
+  //     "b4_4.jpg",
+  //     "b5_1.jpg",
+  //     "b5_2.jpg",
+  //     "b5_3.jpg",
+  //     "b5_4.jpg",
+  //     "b6_1.jpg",
+  //     "b6_2.jpg",
+  //     "b6_3.jpg",
+  //     "b6_4.jpg",
+  //     "background1.jpg",
+  //     "background3.jpg",
+  //     "background4.jpg",
+  //     "background5.jpg",
+  //     "background6.jpg",
+  //   ],
+  //   [
+  //     "Alteration.png",
+  //     "Fire.png",
+  //     "Heal.png",
+  //     "Ice.png",
+  //     "Illusion.png",
+  //     "Illusion2.png",
+  //     "Paralyze.png",
+  //     "Restoration.png",
+  //     "Shock.png",
+  //   ],
+  //   [
+  //     "AbeceanLongfin.png",
+  //     "AncestorMothWing.png",
+  //     "AshCreepCluster.png",
+  //     "AshenGrassPod.png",
+  //     "AshHopperJelly.png",
+  //     "BearClaws.png",
+  //     "Bee.png",
+  //     "BeehiveHusk.png",
+  //     "Berit'sAshes.png",
+  //     "BleedingCrown.png",
+  //     "Blisterwort.png",
+  //     "BlueButterflyWing.png",
+  //     "BlueDartwing.png",
+  //     "BlueMountainFlower.png",
+  //     "BoarTusk.png",
+  //     "BoneMeal.png",
+  //     "BriarHeart.png",
+  //     "BurntSprigganWood.png",
+  //     "ButterflyWing.png",
+  //     "CanisRoot.png",
+  //     "CharredSkeeverHide.png",
+  //     "ChaurusEggs.png",
+  //     "ChaurusHunterAntennae.png",
+  //     "Chicken'sEgg.png",
+  //     "CreepCluster.png",
+  //     "CrimsonNirnroot.png",
+  //     "CyrodilicSpadetail.png",
+  //     "DaedraHeart.png",
+  //     "Deathbell.png",
+  //     "Dragon'sTongue.png",
+  //     "DwarvenOil.png",
+  //     "Ectoplasm.png",
+  //     "ElvesEar.png",
+  //     "EmperorParasolMoss.png",
+  //     "EyeofSabreCat.png",
+  //     "FalmerEar.png",
+  //     "FelsaadTernFeathers.png",
+  //     "FireSalts.png",
+  //     "FlyAmanita.png",
+  //     "FrostMirriam.png",
+  //     "FrostSalts.png",
+  //     "Garlic.png",
+  //     "Giant'sToe.png",
+  //     "GiantLichen.png",
+  //     "Gleamblossom.png",
+  //     "GlowDust.png",
+  //     "GlowingMushroom.png",
+  //     "GrassPod.png",
+  //     "HagravenClaw.png",
+  //     "HagravenFeathers.png",
+  //     "HangingMoss.png",
+  //     "Hawk'sEgg.png",
+  //     "HawkBeak.png",
+  //     "HawkFeathers.png",
+  //     "Histcarp.png",
+  //     "Honeycomb.png",
+  //     "HumanFlesh.png",
+  //     "HumanHeart.png",
+  //     "IceWraithTeeth.png",
+  //     "ImpStool.png",
+  //     "JarrinRoot.png",
+  //     "JazbayGrapes.png",
+  //     "JuniperBerries.png",
+  //     "LargeAntlers.png",
+  //     "Lavender.png",
+  //     "LunaMothWing.png",
+  //     "MoonSugar.png",
+  //     "MoraTapinella.png",
+  //     "MudcrabChitin.png",
+  //     "Namira'sRot.png",
+  //     "NetchJelly.png",
+  //     "Nightshade.png",
+  //     "Nirnroot.png",
+  //     "NordicBarnacle.png",
+  //     "OrangeDartwing.png",
+  //     "Pearl.png",
+  //     "PineThrushEgg.png",
+  //     "PoisonBloom.png",
+  //     "PowderedMammothTusk.png",
+  //     "PurpleMountainFlower.png",
+  //     "RedMountainFlower.png",
+  //     "RiverBetty.png",
+  //     "RockWarblerEgg.png",
+  //     "SabreCatTooth.png",
+  //     "SalmonRoe.png",
+  //     "SaltPile.png",
+  //     "ScalyPholiota.png",
+  //     "Scathecraw.png",
+  //     "SilversidePerch.png",
+  //     "SkeeverTail.png",
+  //     "SlaughterfishEgg.png",
+  //     "SlaughterfishScales.png",
+  //     "SmallAntlers.png",
+  //     "SmallPearl.png",
+  //     "Snowberries.png",
+  //     "SpawnAsh.png",
+  //     "SpiderEgg.png",
+  //     "SprigganSap.png",
+  //     "SwampFungalPod.png",
+  //     "Taproot.png",
+  //     "ThistleBranch.png",
+  //     "TorchbugThorax.png",
+  //     "TramaRoot.png",
+  //     "TrollFat.png",
+  //     "TundraCotton.png",
+  //     "VampireDust.png",
+  //     "VoidSalts.png",
+  //     "Wheat.png",
+  //     "WhiteCap.png",
+  //     "WispWrappings.png",
+  //     "YellowMountainFlower.png",
+  //   ],
+  // ];
 }

@@ -1,7 +1,6 @@
 import 'package:alchemy/core/models/efeitos.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
 import 'package:alchemy/core/view_models/home_view_model.dart';
-import 'package:alchemy/ui/values/strings.dart';
 import 'package:alchemy/ui/widgets/effect_info.dart';
 import 'package:alchemy/ui/widgets/ingred_info.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +96,8 @@ class SearchScreen extends SearchDelegate {
                             results[i].title,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: Theme.of(context).textTheme.body1.color,
+                              color:
+                                  Theme.of(context).textTheme.bodyText2.color,
                               fontSize: MediaQuery.of(context).size.width *
                                   0.05 /
                                   MediaQuery.of(context).textScaleFactor,
@@ -108,8 +108,7 @@ class SearchScreen extends SearchDelegate {
                               homeViewModel.changeItem(results[i]);
                               homeViewModel.nulifyCurrentInfo();
                               homeViewModel.fecharInfos();
-                              homeViewModel.getInfoI(INGREDIENT_URL +
-                                  homeViewModel.currentIngredient.url);
+                              homeViewModel.getInfoI(i);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -119,8 +118,7 @@ class SearchScreen extends SearchDelegate {
                             } else if (results[i] is Efeitos) {
                               homeViewModel.changeItem2(results[i]);
                               homeViewModel.nulifyCurrentInfo2();
-                              homeViewModel.getInfoE(
-                                  EFEITO_URL + homeViewModel.currentEffect.url);
+                              homeViewModel.getInfoE(results[i].title);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(

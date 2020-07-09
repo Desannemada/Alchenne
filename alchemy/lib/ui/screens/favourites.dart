@@ -19,34 +19,33 @@ class _FavouritesTabState extends State<FavouritesTab> {
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
-    if (homeViewModel.errorResponse == -1 &&
-        homeViewModel.ingredientes.isEmpty) {
-      Future.delayed(Duration(seconds: 5), () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-                  elevation: 10,
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Erro de Conexão >.<",
-                        textAlign: TextAlign.center,
-                      ),
-                      FlatButton(
-                        child: Text("Refresh"),
-                        onPressed: () {
-                          // print(info.ingredientes);
-                          homeViewModel.refresh();
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  ),
-                ));
-      });
-    }
+    // if (homeViewModel.ingredientes.isEmpty) {
+    //   Future.delayed(Duration(seconds: 5), () {
+    //     showDialog(
+    //         context: context,
+    //         builder: (BuildContext context) => AlertDialog(
+    //               elevation: 10,
+    //               content: Column(
+    //                 mainAxisSize: MainAxisSize.min,
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: <Widget>[
+    //                   Text(
+    //                     "Erro de Conexão >.<",
+    //                     textAlign: TextAlign.center,
+    //                   ),
+    //                   FlatButton(
+    //                     child: Text("Refresh"),
+    //                     onPressed: () {
+    //                       // print(info.ingredientes);
+    //                       homeViewModel.refresh();
+    //                       Navigator.of(context).pop();
+    //                     },
+    //                   ),
+    //                 ],
+    //               ),
+    //             ));
+    //   });
+    // }
 
     return Stack(
       children: <Widget>[
@@ -65,7 +64,7 @@ class _FavouritesTabState extends State<FavouritesTab> {
                 child: Center(
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                        Theme.of(context).textTheme.body1.color),
+                        Theme.of(context).textTheme.bodyText2.color),
                   ),
                 ),
               )
@@ -154,6 +153,14 @@ class _FavouritesTabState extends State<FavouritesTab> {
                                     ? "No favourite ingredients. \nHold to favourite."
                                     : "No favourite effects. \nHold to favourite.",
                                 textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: homeViewModel.bgColor
+                                      ? Theme.of(context)
+                                          .textTheme
+                                          .bodyText2
+                                          .color
+                                      : Theme.of(context).primaryColor,
+                                ),
                               ),
                             )
                           : Container(
@@ -161,7 +168,7 @@ class _FavouritesTabState extends State<FavouritesTab> {
                               width: MediaQuery.of(context).size.width * 0.96,
                               child: DraggableScrollbar.arrows(
                                 backgroundColor:
-                                    Theme.of(context).textTheme.body1.color,
+                                    Theme.of(context).textTheme.bodyText2.color,
                                 controller: homeViewModel.currentFav
                                     ? iController
                                     : eController,
@@ -242,7 +249,7 @@ class _FavouritesTabState extends State<FavouritesTab> {
                                                 index == 0)
                                         ? Theme.of(context)
                                             .textTheme
-                                            .body1
+                                            .bodyText2
                                             .color
                                         : Theme.of(context).primaryColor,
                                     child: FlatButton(
@@ -265,7 +272,7 @@ class _FavouritesTabState extends State<FavouritesTab> {
                                               ? Theme.of(context).primaryColor
                                               : Theme.of(context)
                                                   .textTheme
-                                                  .body1
+                                                  .bodyText2
                                                   .color,
                                           fontSize: 18,
                                         ),

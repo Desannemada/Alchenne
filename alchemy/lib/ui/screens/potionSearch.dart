@@ -84,7 +84,7 @@ class PotionSearchScreen extends SearchDelegate {
                       results[i].title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: Theme.of(context).textTheme.body1.color,
+                        color: Theme.of(context).textTheme.bodyText2.color,
                         fontSize: MediaQuery.of(context).size.width *
                             0.05 /
                             MediaQuery.of(context).textScaleFactor,
