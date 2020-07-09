@@ -1,7 +1,7 @@
 <p align="center"><img src="alchemy/assets/logo.png" width="130"></p>
 <h1 align="center">Skyrim:Alchenne</h1>
 
-> <h5 align="center">Aplicativo de informação sobre Alquimia de The Elder Scrolls 5: Skyrim</h5>
+> <h5 align="center">Aplicativo de informação sobre Alquimia de The Elder Scrolls V: Skyrim</h5>
 
 ## Sobre o Alchenne
 
