@@ -6,7 +6,7 @@
 ## About Alchenne
 
 ### Description:
-|<img src="/readme/bg.jpg" width="600">|
+|<img src="/readme/bg.png">|
 | :---------------------------------: |
 | The Elder Scrolls V: Skyrim is an action role-playing video game developed by Bethesda Game Studios and published by Bethesda Softworks. The game provides multiple skills that the player can develop during gameplay. One of them is Alchemy, a skill that takes time to increase due to the constant search for specific ingredients and their possible effects. This is where Alchenne comes in, an application that serves as a source of information about potions, effects, ingredients and their locations. |
 
