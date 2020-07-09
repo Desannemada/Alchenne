@@ -36,7 +36,10 @@ git clone https://github.com/Desannemada/WeeBooks.git
 flutter run
 ```
 
-## Tecnologias Utilizadas
+## API:
+Inicialmente o Alchenne obtinha suas informações em tempo real por sua <a href="https://github.com/Desannemada/Alchenne/blob/master/pyAlchemy/main.py">API</a>. Desenvolvida em Python e colocada no Heroku, se divide em 4 partes. Dois métodos GET, um para obter todos os ingredientes e outro para os efeitos. E dois métodos POST, um para obter as informações de um efeito específico e o outro para um ingrediente especifíco. Hoje, todas estas informações já veem no próprio aplicativo.
+
+## Tecnologias Utilizadas:
 | <img src="/readme/dart.png" width="150">  | <img src="/readme/flutter.png" width="150">  |
 | :----------------------: | :----------------------: |
 | **Dart**                 | **Flutter**              |
