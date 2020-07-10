@@ -21,10 +21,10 @@
 > <a href="https://xd.adobe.com/view/67caac85-ab91-4460-4a20-c2973122c3d3-11fb/">Alchenne - MF</a>
 
 ## Screens:
-| <img src="/readme/1.jpg" width="220"> | <img src="/readme/2.jpg" width="220"> | <img src="/readme/3.jpg" width="220"> | 
+| <img src="/readme/1.jpg" width="250"> | <img src="/readme/2.jpg" width="250"> | <img src="/readme/3.jpg" width="250"> | 
 | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: |
 | **Favourites**                        | **Effects**                           | **Ingredients**                       |
-| <img src="/readme/4.jpg" width="220"> | <img src="/readme/5.jpg" width="220"> | <img src="/readme/6.jpg" width="220"> |
+| <img src="/readme/4.jpg" width="250"> | <img src="/readme/5.jpg" width="250"> | <img src="/readme/6.jpg" width="250"> |
 | **Potion Maker**                      | **Effect's Info**                     | **Ingredient's Info**                 |
 
 ## Current Version:
