@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context);
     List frases = [
       "Brewing Potions",
       "\"Browse to your heart's content\"",
@@ -39,6 +42,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
     precacheImage(AssetImage("assets/logo.png"), context);
     precacheImage(AssetImage("assets/loading.gif"), context);
+    precacheImage(homeViewModel.currentBackground[0][0], context);
+    precacheImage(homeViewModel.currentBackground[0][1], context);
+    precacheImage(homeViewModel.currentBackground[0][2], context);
+    precacheImage(homeViewModel.currentBackground[0][3], context);
+    precacheImage(AssetImage(homeViewModel.currentBackground[0][4]), context);
 
     return Scaffold(
       body: Stack(
