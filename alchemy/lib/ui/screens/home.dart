@@ -5,6 +5,7 @@ import 'package:alchemy/ui/screens/info.dart';
 import 'package:alchemy/ui/screens/ingredients.dart';
 import 'package:alchemy/ui/screens/potions.dart';
 import 'package:alchemy/ui/screens/search.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

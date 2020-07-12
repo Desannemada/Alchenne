@@ -74,12 +74,16 @@ class HomeViewModel extends BaseViewModel {
   List<int> favEfeitos = [];
   bool currentFav = true;
 
+  List<List> recentes = [];
+
   HomeViewModel() {
     mostrarBackground = false;
     mostrarLocations = false;
     getIngredients();
     getEffects();
     getFavs();
+    // saveRecentes();
+    getRecentes();
 
     potionIngredients = [null, null, null];
 
@@ -580,7 +584,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   getFavs() async {
-    print("Getting info");
+    print("Getting Info");
     favIngredientes = [];
     favIColors = [];
     favEfeitos = [];
@@ -600,184 +604,65 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // void precacheImages(BuildContext context) {
-  //   for (var i = 0; i < images.length; i++) {
-  //     for (var j = 0; j < images[i].length; j++) {
-  //       if (i == 0) {
-  //         precacheImage(AssetImage("assets/${images[i][j]}"), context);
-  //       } else if (i == 1) {
-  //         precacheImage(AssetImage("assets/bg/${images[i][j]}"), context);
-  //       } else if (i == 2) {
-  //         precacheImage(AssetImage("assets/effects/${images[i][j]}"), context);
-  //       } else if (i == 3) {
-  //         precacheImage(
-  //             AssetImage("assets/ingredients/${images[i][j]}"), context);
-  //       }
-  //     }
-  //   }
-  // }
+  void updateRecentes(var item, bool type) {
+    if (item is Ingredientes) {
+      for (var i = 0; i < ingredientes.length; i++) {
+        if (ingredientes[i] == item) {
+          recentes.removeWhere((element) => element[0] == i && element[1] == 0);
+          if (type) {
+            if (recentes.length == 10) {
+              recentes.removeLast();
+            }
+            print(item.title);
+            recentes.insert(0, [i, 0]);
+          }
+          saveRecentes();
+          break;
+        }
+      }
+    } else if (item is Efeitos) {
+      for (var i = 0; i < efeitos.length; i++) {
+        if (efeitos[i] == item) {
+          recentes.removeWhere((element) => element[0] == i && element[1] == 1);
+          if (type) {
+            if (recentes.length == 10) {
+              recentes.removeLast();
+            }
+            recentes.insert(0, [i, 1]);
+          }
+          saveRecentes();
+          break;
+        }
+      }
+    }
 
-  // List<List<String>> images = [
-  //   [
-  //     "coin.png",
-  //     "efeito.webp",
-  //     "flask.png",
-  //     "ingredient.png",
-  //     "loading.gif",
-  //     "potion.png",
-  //     "quill.webp",
-  //     "star.png",
-  //   ],
-  //   [
-  //     "b1_1.jpg",
-  //     "b1_2.jpg",
-  //     "b1_3.jpg",
-  //     "b1_4.jpg",
-  //     "b3_1.jpg",
-  //     "b3_2.jpg",
-  //     "b3_3.jpg",
-  //     "b3_4.jpg",
-  //     "b4_1.jpg",
-  //     "b4_2.jpg",
-  //     "b4_3.jpg",
-  //     "b4_4.jpg",
-  //     "b5_1.jpg",
-  //     "b5_2.jpg",
-  //     "b5_3.jpg",
-  //     "b5_4.jpg",
-  //     "b6_1.jpg",
-  //     "b6_2.jpg",
-  //     "b6_3.jpg",
-  //     "b6_4.jpg",
-  //     "background1.jpg",
-  //     "background3.jpg",
-  //     "background4.jpg",
-  //     "background5.jpg",
-  //     "background6.jpg",
-  //   ],
-  //   [
-  //     "Alteration.png",
-  //     "Fire.png",
-  //     "Heal.png",
-  //     "Ice.png",
-  //     "Illusion.png",
-  //     "Illusion2.png",
-  //     "Paralyze.png",
-  //     "Restoration.png",
-  //     "Shock.png",
-  //   ],
-  //   [
-  //     "AbeceanLongfin.png",
-  //     "AncestorMothWing.png",
-  //     "AshCreepCluster.png",
-  //     "AshenGrassPod.png",
-  //     "AshHopperJelly.png",
-  //     "BearClaws.png",
-  //     "Bee.png",
-  //     "BeehiveHusk.png",
-  //     "Berit'sAshes.png",
-  //     "BleedingCrown.png",
-  //     "Blisterwort.png",
-  //     "BlueButterflyWing.png",
-  //     "BlueDartwing.png",
-  //     "BlueMountainFlower.png",
-  //     "BoarTusk.png",
-  //     "BoneMeal.png",
-  //     "BriarHeart.png",
-  //     "BurntSprigganWood.png",
-  //     "ButterflyWing.png",
-  //     "CanisRoot.png",
-  //     "CharredSkeeverHide.png",
-  //     "ChaurusEggs.png",
-  //     "ChaurusHunterAntennae.png",
-  //     "Chicken'sEgg.png",
-  //     "CreepCluster.png",
-  //     "CrimsonNirnroot.png",
-  //     "CyrodilicSpadetail.png",
-  //     "DaedraHeart.png",
-  //     "Deathbell.png",
-  //     "Dragon'sTongue.png",
-  //     "DwarvenOil.png",
-  //     "Ectoplasm.png",
-  //     "ElvesEar.png",
-  //     "EmperorParasolMoss.png",
-  //     "EyeofSabreCat.png",
-  //     "FalmerEar.png",
-  //     "FelsaadTernFeathers.png",
-  //     "FireSalts.png",
-  //     "FlyAmanita.png",
-  //     "FrostMirriam.png",
-  //     "FrostSalts.png",
-  //     "Garlic.png",
-  //     "Giant'sToe.png",
-  //     "GiantLichen.png",
-  //     "Gleamblossom.png",
-  //     "GlowDust.png",
-  //     "GlowingMushroom.png",
-  //     "GrassPod.png",
-  //     "HagravenClaw.png",
-  //     "HagravenFeathers.png",
-  //     "HangingMoss.png",
-  //     "Hawk'sEgg.png",
-  //     "HawkBeak.png",
-  //     "HawkFeathers.png",
-  //     "Histcarp.png",
-  //     "Honeycomb.png",
-  //     "HumanFlesh.png",
-  //     "HumanHeart.png",
-  //     "IceWraithTeeth.png",
-  //     "ImpStool.png",
-  //     "JarrinRoot.png",
-  //     "JazbayGrapes.png",
-  //     "JuniperBerries.png",
-  //     "LargeAntlers.png",
-  //     "Lavender.png",
-  //     "LunaMothWing.png",
-  //     "MoonSugar.png",
-  //     "MoraTapinella.png",
-  //     "MudcrabChitin.png",
-  //     "Namira'sRot.png",
-  //     "NetchJelly.png",
-  //     "Nightshade.png",
-  //     "Nirnroot.png",
-  //     "NordicBarnacle.png",
-  //     "OrangeDartwing.png",
-  //     "Pearl.png",
-  //     "PineThrushEgg.png",
-  //     "PoisonBloom.png",
-  //     "PowderedMammothTusk.png",
-  //     "PurpleMountainFlower.png",
-  //     "RedMountainFlower.png",
-  //     "RiverBetty.png",
-  //     "RockWarblerEgg.png",
-  //     "SabreCatTooth.png",
-  //     "SalmonRoe.png",
-  //     "SaltPile.png",
-  //     "ScalyPholiota.png",
-  //     "Scathecraw.png",
-  //     "SilversidePerch.png",
-  //     "SkeeverTail.png",
-  //     "SlaughterfishEgg.png",
-  //     "SlaughterfishScales.png",
-  //     "SmallAntlers.png",
-  //     "SmallPearl.png",
-  //     "Snowberries.png",
-  //     "SpawnAsh.png",
-  //     "SpiderEgg.png",
-  //     "SprigganSap.png",
-  //     "SwampFungalPod.png",
-  //     "Taproot.png",
-  //     "ThistleBranch.png",
-  //     "TorchbugThorax.png",
-  //     "TramaRoot.png",
-  //     "TrollFat.png",
-  //     "TundraCotton.png",
-  //     "VampireDust.png",
-  //     "VoidSalts.png",
-  //     "Wheat.png",
-  //     "WhiteCap.png",
-  //     "WispWrappings.png",
-  //     "YellowMountainFlower.png",
-  //   ],
-  // ];
+    notifyListeners();
+  }
+
+  void clearRecentes() {
+    recentes = [];
+    saveRecentes();
+    notifyListeners();
+  }
+
+  saveRecentes() async {
+    print("Saving Recentes");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> rec = [];
+    for (var i = 0; i < recentes.length; i++) {
+      rec.add(recentes[i].toString());
+    }
+    prefs.setStringList('recentes', rec);
+  }
+
+  getRecentes() async {
+    print("Getting Recentes");
+    recentes = [];
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> rec = prefs.getStringList('recentes') ?? [];
+    for (var i = 0; i < rec.length; i++) {
+      recentes.add(jsonDecode(rec[i]));
+    }
+    notifyListeners();
+  }
 }
