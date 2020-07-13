@@ -12,9 +12,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Image logo;
+  Image loading;
+
   @override
   void initState() {
     super.initState();
+    logo = Image.asset("assets/logo.png");
+    loading = Image.asset("assets/loading.gif", scale: 10);
     Timer(
       Duration(seconds: 4),
       () => Navigator.push(
@@ -27,8 +32,14 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(logo.image, context);
+    precacheImage(loading.image, context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context);
     List frases = [
       "Brewing Potions",
       "\"Browse to your heart's content\"",
@@ -39,14 +50,6 @@ class _SplashScreenState extends State<SplashScreen> {
       "\"Need some sort of toxin for a special occasion?\"",
       "\"Alchemy is simple. Unless, of course, you are simple\""
     ];
-
-    precacheImage(AssetImage("assets/logo.png"), context);
-    precacheImage(AssetImage("assets/loading.gif"), context);
-    precacheImage(homeViewModel.currentBackground[0][0], context);
-    precacheImage(homeViewModel.currentBackground[0][1], context);
-    precacheImage(homeViewModel.currentBackground[0][2], context);
-    precacheImage(homeViewModel.currentBackground[0][3], context);
-    precacheImage(AssetImage(homeViewModel.currentBackground[0][4]), context);
 
     return Scaffold(
       body: Stack(
@@ -83,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 55,
-                            child: Image.asset("assets/logo.png"),
+                            child: logo,
                           ),
                         ),
                       ),
@@ -106,10 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      "assets/loading.gif",
-                      scale: 10,
-                    ),
+                    loading,
                     Padding(
                       padding: EdgeInsets.only(top: 20),
                     ),

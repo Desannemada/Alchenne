@@ -19,15 +19,12 @@ class _EffectsTabState extends State<EffectsTab> {
 
     return Stack(
       children: <Widget>[
-        Opacity(
-          opacity: 1.0,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: homeViewModel.currentBackground[0][1],
-                alignment: Alignment.centerLeft,
-                fit: BoxFit.fill,
-              ),
+        Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: homeViewModel.currentBackground[0][1],
+              alignment: Alignment.centerLeft,
+              fit: BoxFit.fill,
             ),
           ),
         ),

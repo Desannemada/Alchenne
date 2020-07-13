@@ -11,41 +11,38 @@ class FavouritesTab extends StatefulWidget {
   _FavouritesTabState createState() => _FavouritesTabState();
 }
 
-class _FavouritesTabState extends State<FavouritesTab> {
+class _FavouritesTabState extends State<FavouritesTab>
+    with AutomaticKeepAliveClientMixin {
+  bool keepAlive = false;
+
+  @override
+  void initState() {
+    super.initState();
+    doAsyncStuff();
+  }
+
+  Future doAsyncStuff() async {
+    keepAlive = true;
+    updateKeepAlive();
+    // Keeping alive...
+
+    await Future.delayed(Duration(seconds: 10));
+
+    keepAlive = false;
+    updateKeepAlive();
+    // Can be disposed whenever now.
+  }
+
+  @override
+  bool get wantKeepAlive => keepAlive;
+
   ScrollController eController = new ScrollController();
   ScrollController iController = new ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final homeViewModel = Provider.of<HomeViewModel>(context);
-
-    // if (homeViewModel.ingredientes.isEmpty) {
-    //   Future.delayed(Duration(seconds: 5), () {
-    //     showDialog(
-    //         context: context,
-    //         builder: (BuildContext context) => AlertDialog(
-    //               elevation: 10,
-    //               content: Column(
-    //                 mainAxisSize: MainAxisSize.min,
-    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                 children: <Widget>[
-    //                   Text(
-    //                     "Erro de Conexão >.<",
-    //                     textAlign: TextAlign.center,
-    //                   ),
-    //                   FlatButton(
-    //                     child: Text("Refresh"),
-    //                     onPressed: () {
-    //                       // print(info.ingredientes);
-    //                       homeViewModel.refresh();
-    //                       Navigator.of(context).pop();
-    //                     },
-    //                   ),
-    //                 ],
-    //               ),
-    //             ));
-    //   });
-    // }
 
     return Stack(
       children: <Widget>[
