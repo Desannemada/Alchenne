@@ -23,18 +23,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   List backgrounds = [
     [
-      AssetImage("assets/bg/b1_1.jpg"),
-      AssetImage("assets/bg/b1_2.jpg"),
-      AssetImage("assets/bg/b1_3.jpg"),
-      AssetImage("assets/bg/b1_4.jpg"),
-      "assets/bg/background1.jpg"
+      AssetImage("assets/bg/b1_1.webp"),
+      AssetImage("assets/bg/b1_2.webp"),
+      AssetImage("assets/bg/b1_3.webp"),
+      AssetImage("assets/bg/b1_4.webp"),
+      "assets/bg/background1.webp"
     ],
     [
-      AssetImage("assets/bg/b3_1.jpg"),
-      AssetImage("assets/bg/b3_2.jpg"),
-      AssetImage("assets/bg/b3_3.jpg"),
-      AssetImage("assets/bg/b3_4.jpg"),
-      "assets/bg/background3.jpg"
+      AssetImage("assets/bg/b3_1.webp"),
+      AssetImage("assets/bg/b3_2.webp"),
+      AssetImage("assets/bg/b3_3.webp"),
+      AssetImage("assets/bg/b3_4.webp"),
+      "assets/bg/background3.webp"
     ],
     [
       AssetImage("assets/bg/b4_1.jpg"),
@@ -51,11 +51,11 @@ class _SplashScreenState extends State<SplashScreen> {
       "assets/bg/background5.jpg"
     ],
     [
-      AssetImage("assets/bg/b6_1.jpg"),
-      AssetImage("assets/bg/b6_2.jpg"),
-      AssetImage("assets/bg/b6_3.jpg"),
-      AssetImage("assets/bg/b6_4.jpg"),
-      "assets/bg/background6.jpg"
+      AssetImage("assets/bg/b6_1.webp"),
+      AssetImage("assets/bg/b6_2.webp"),
+      AssetImage("assets/bg/b6_3.webp"),
+      AssetImage("assets/bg/b6_4.webp"),
+      "assets/bg/background6.webp"
     ]
   ];
 

@@ -234,7 +234,7 @@ class SearchScreen extends SearchDelegate {
                           ),
                           onPressed: () {
                             if (results[i] is Ingredientes) {
-                              print(results[i].title);
+                              // print(results[i].title);
                               homeViewModel.changeItem(results[i]);
                               homeViewModel.updateRecentes(results[i], true);
                               homeViewModel.nulifyCurrentInfo();

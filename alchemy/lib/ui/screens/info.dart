@@ -111,7 +111,7 @@ class InfoScreen extends StatelessWidget {
                   shrinkWrap: true,
                   data: contentsBy[index] + html2md.convert(urls[index]),
                   onTapLink: (String url) async {
-                    print(url);
+                    // print(url);
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
