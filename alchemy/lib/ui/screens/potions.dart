@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class PotionTab extends StatelessWidget {
-  const PotionTab({Key key}) : super(key: key);
+  final List bgs;
+  PotionTab(this.bgs);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class PotionTab extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: homeViewModel.currentBackground[0][3],
+          image: bgs[3],
           alignment: Alignment.center,
           fit: BoxFit.fill,
         ),
@@ -192,7 +193,8 @@ class PotionTab extends StatelessWidget {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EffectInfo(),
+                                            builder: (context) =>
+                                                EffectInfo(bgs),
                                           ),
                                         );
                                       },

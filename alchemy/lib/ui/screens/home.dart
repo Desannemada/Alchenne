@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
+  final List bgs;
+  HomeScreen(this.bgs);
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -51,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               iconSize: MediaQuery.of(context).size.height * 0.04,
               onPressed: () => showSearch(
                 context: context,
-                delegate: SearchScreen(),
+                delegate: SearchScreen(widget.bgs),
               ),
             )
           ],
@@ -81,10 +84,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               ? NeverScrollableScrollPhysics()
               : AlwaysScrollableScrollPhysics(),
           children: <Widget>[
-            FavouritesTab(),
-            EffectsTab(),
-            IngredientsTab(),
-            PotionTab()
+            FavouritesTab(widget.bgs),
+            EffectsTab(widget.bgs),
+            IngredientsTab(widget.bgs),
+            PotionTab(widget.bgs)
           ],
         ),
       ),

@@ -8,37 +8,13 @@ import 'package:html2md/html2md.dart' as html2md;
 import 'package:url_launcher/url_launcher.dart';
 
 class EffectInfo extends StatelessWidget {
+  EffectInfo(this.bgs);
+
+  final List bgs;
+
   @override
   Widget build(BuildContext context) {
     final homeViewModel = Provider.of<HomeViewModel>(context);
-
-    // if (homeViewModel.errorResponse == -1) {
-    //   Future.delayed(Duration(seconds: 5), () {
-    //     showDialog(
-    //         context: context,
-    //         builder: (BuildContext bc) => AlertDialog(
-    //               elevation: 10,
-    //               content: Column(
-    //                 mainAxisSize: MainAxisSize.min,
-    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //                 children: <Widget>[
-    //                   Text(
-    //                     "Erro de Conexão >.<",
-    //                     textAlign: TextAlign.center,
-    //                   ),
-    //                   FlatButton(
-    //                     child: Text("Refresh"),
-    //                     onPressed: () {
-    //                       homeViewModel.getInfoE(
-    //                           EFEITO_URL + homeViewModel.currentEffect.url);
-    //                       Navigator.of(bc).pop();
-    //                     },
-    //                   ),
-    //                 ],
-    //               ),
-    //             ));
-    //   });
-    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -75,20 +51,16 @@ class EffectInfo extends StatelessWidget {
                     children: <Widget>[
                       Center(
                         child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2
-                                    .color),
-                          ),
-                          child: Image.asset(
-                            homeViewModel.currentBackground[0][4],
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
+                            width: double.infinity,
+                            height: double.infinity,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      .color),
+                            ),
+                            child: bgs[4]),
                       ),
                       Center(
                         child: Container(
@@ -266,10 +238,12 @@ class EffectInfo extends StatelessWidget {
                                     homeViewModel.getInfoI(homeViewModel
                                         .currentEffect.ingredients[index]);
                                     Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                IngredientInfo()));
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            IngredientInfo(bgs),
+                                      ),
+                                    );
                                   },
                                 ),
                               ),

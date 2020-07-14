@@ -7,41 +7,20 @@ import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:provider/provider.dart';
 
 class FavouritesTab extends StatefulWidget {
+  final List bgs;
+
+  FavouritesTab(this.bgs);
+
   @override
   _FavouritesTabState createState() => _FavouritesTabState();
 }
 
-class _FavouritesTabState extends State<FavouritesTab>
-    with AutomaticKeepAliveClientMixin {
-  bool keepAlive = false;
-
-  @override
-  void initState() {
-    super.initState();
-    doAsyncStuff();
-  }
-
-  Future doAsyncStuff() async {
-    keepAlive = true;
-    updateKeepAlive();
-    // Keeping alive...
-
-    await Future.delayed(Duration(seconds: 10));
-
-    keepAlive = false;
-    updateKeepAlive();
-    // Can be disposed whenever now.
-  }
-
-  @override
-  bool get wantKeepAlive => keepAlive;
-
+class _FavouritesTabState extends State<FavouritesTab> {
   ScrollController eController = new ScrollController();
   ScrollController iController = new ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     final homeViewModel = Provider.of<HomeViewModel>(context);
 
     return Stack(
@@ -49,7 +28,7 @@ class _FavouritesTabState extends State<FavouritesTab>
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: homeViewModel.currentBackground[0][0],
+              image: widget.bgs[0],
               alignment: Alignment.centerLeft,
               fit: BoxFit.fill,
             ),
@@ -151,7 +130,7 @@ class _FavouritesTabState extends State<FavouritesTab>
                                     : "No favourite effects. \nHold to favourite.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: homeViewModel.bgColor
+                                  color: widget.bgs[5]
                                       ? Theme.of(context)
                                           .textTheme
                                           .bodyText2
@@ -186,16 +165,12 @@ class _FavouritesTabState extends State<FavouritesTab>
                                         ? IngredientItem(
                                             index: homeViewModel
                                                 .favIngredientes[index],
-                                            key: index == 0
-                                                ? homeViewModel.sizeC4
-                                                : null,
+                                            bgs: widget.bgs,
                                           )
                                         : EffectItem(
                                             index:
                                                 homeViewModel.favEfeitos[index],
-                                            key: index == 0
-                                                ? homeViewModel.sizeC3
-                                                : null,
+                                            bgs: widget.bgs,
                                           );
                                   }),
                                 ),

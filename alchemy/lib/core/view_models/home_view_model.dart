@@ -5,25 +5,15 @@ import 'package:alchemy/core/models/efeitos.dart';
 import 'package:alchemy/core/models/infoE.dart';
 import 'package:alchemy/core/models/infoI.dart';
 import 'package:alchemy/core/models/ingredientes.dart';
-import 'package:alchemy/core/services/custom_api.dart';
 import 'package:alchemy/core/view_models/base_view_model.dart';
 import 'package:alchemy/information/all_info_json.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeViewModel extends BaseViewModel {
-  CustomAPI api = CustomAPI();
-  static HomeViewModel homeViewModel;
-  static HomeViewModel instance() {
-    if (homeViewModel == null) {
-      homeViewModel = HomeViewModel();
-    }
-    return homeViewModel;
-  }
-
-  List backgrounds = List();
-  List currentBackground = [0];
-  bool bgColor = true;
+  // List backgrounds = List();
+  // List currentBackground = [0];
+  // bool bgColor = true;
 
   List<Ingredientes> ingredientes = List();
   List<Efeitos> efeitos = List();
@@ -87,44 +77,44 @@ class HomeViewModel extends BaseViewModel {
 
     potionIngredients = [null, null, null];
 
-    backgrounds = [
-      [
-        AssetImage("assets/bg/b1_1.jpg"),
-        AssetImage("assets/bg/b1_2.jpg"),
-        AssetImage("assets/bg/b1_3.jpg"),
-        AssetImage("assets/bg/b1_4.jpg"),
-        "assets/bg/background1.jpg"
-      ],
-      [
-        AssetImage("assets/bg/b3_1.jpg"),
-        AssetImage("assets/bg/b3_2.jpg"),
-        AssetImage("assets/bg/b3_3.jpg"),
-        AssetImage("assets/bg/b3_4.jpg"),
-        "assets/bg/background3.jpg"
-      ],
-      [
-        AssetImage("assets/bg/b4_1.jpg"),
-        AssetImage("assets/bg/b4_2.jpg"),
-        AssetImage("assets/bg/b4_3.jpg"),
-        AssetImage("assets/bg/b4_4.jpg"),
-        "assets/bg/background4.jpg"
-      ],
-      [
-        AssetImage("assets/bg/b5_1.jpg"),
-        AssetImage("assets/bg/b5_2.jpg"),
-        AssetImage("assets/bg/b5_3.jpg"),
-        AssetImage("assets/bg/b5_4.jpg"),
-        "assets/bg/background5.jpg"
-      ],
-      [
-        AssetImage("assets/bg/b6_1.jpg"),
-        AssetImage("assets/bg/b6_2.jpg"),
-        AssetImage("assets/bg/b6_3.jpg"),
-        AssetImage("assets/bg/b6_4.jpg"),
-        "assets/bg/background6.jpg"
-      ]
-    ];
-    chooseBackground();
+    // backgrounds = [
+    //   [
+    //     AssetImage("assets/bg/b1_1.jpg"),
+    //     AssetImage("assets/bg/b1_2.jpg"),
+    //     AssetImage("assets/bg/b1_3.jpg"),
+    //     AssetImage("assets/bg/b1_4.jpg"),
+    //     "assets/bg/background1.jpg"
+    //   ],
+    //   [
+    //     AssetImage("assets/bg/b3_1.jpg"),
+    //     AssetImage("assets/bg/b3_2.jpg"),
+    //     AssetImage("assets/bg/b3_3.jpg"),
+    //     AssetImage("assets/bg/b3_4.jpg"),
+    //     "assets/bg/background3.jpg"
+    //   ],
+    //   [
+    //     AssetImage("assets/bg/b4_1.jpg"),
+    //     AssetImage("assets/bg/b4_2.jpg"),
+    //     AssetImage("assets/bg/b4_3.jpg"),
+    //     AssetImage("assets/bg/b4_4.jpg"),
+    //     "assets/bg/background4.jpg"
+    //   ],
+    //   [
+    //     AssetImage("assets/bg/b5_1.jpg"),
+    //     AssetImage("assets/bg/b5_2.jpg"),
+    //     AssetImage("assets/bg/b5_3.jpg"),
+    //     AssetImage("assets/bg/b5_4.jpg"),
+    //     "assets/bg/background5.jpg"
+    //   ],
+    //   [
+    //     AssetImage("assets/bg/b6_1.jpg"),
+    //     AssetImage("assets/bg/b6_2.jpg"),
+    //     AssetImage("assets/bg/b6_3.jpg"),
+    //     AssetImage("assets/bg/b6_4.jpg"),
+    //     "assets/bg/background6.jpg"
+    //   ]
+    // ];
+    // chooseBackground();
   }
 
   void getIngredients() async {
@@ -245,15 +235,15 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void chooseBackground() {
-    var chosen = new Random();
-    int c = 1 + chosen.nextInt(5);
-    currentBackground[0] = backgrounds[c - 1];
-    if (c == 2 || c == 4) {
-      bgColor = false;
-    }
-    notifyListeners();
-  }
+  // void chooseBackground() {
+  //   var chosen = new Random();
+  //   int c = 1 + chosen.nextInt(5);
+  //   currentBackground[0] = backgrounds[c - 1];
+  //   if (c == 2 || c == 4) {
+  //     bgColor = false;
+  //   }
+  //   notifyListeners();
+  // }
 
   void refresh() {
     errorResponse = 0;
@@ -613,7 +603,7 @@ class HomeViewModel extends BaseViewModel {
             if (recentes.length == 10) {
               recentes.removeLast();
             }
-            print(item.title);
+            // print(item.title);
             recentes.insert(0, [i, 0]);
           }
           saveRecentes();

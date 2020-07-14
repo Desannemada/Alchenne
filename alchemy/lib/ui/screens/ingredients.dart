@@ -6,6 +6,9 @@ import 'package:alchemy/ui/widgets/item_ingredient.dart';
 import 'package:provider/provider.dart';
 
 class IngredientsTab extends StatefulWidget {
+  final List bgs;
+  IngredientsTab(this.bgs);
+
   @override
   _IngredientsTabState createState() => _IngredientsTabState();
 }
@@ -22,7 +25,7 @@ class _IngredientsTabState extends State<IngredientsTab> {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: homeViewModel.currentBackground[0][2],
+              image: widget.bgs[2],
               alignment: Alignment.centerLeft,
               fit: BoxFit.fill,
             ),
@@ -101,8 +104,9 @@ class _IngredientsTabState extends State<IngredientsTab> {
                       children: List.generate(homeViewModel.ingredientes.length,
                           (int index) {
                         return IngredientItem(
-                            index: index,
-                            key: index == 0 ? homeViewModel.sizeC : null);
+                          index: index,
+                          bgs: widget.bgs,
+                        );
                       }),
                     ),
                   ),

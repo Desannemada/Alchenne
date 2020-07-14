@@ -6,6 +6,9 @@ import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:provider/provider.dart';
 
 class EffectsTab extends StatefulWidget {
+  final List bgs;
+  EffectsTab(this.bgs);
+
   @override
   _EffectsTabState createState() => _EffectsTabState();
 }
@@ -22,7 +25,7 @@ class _EffectsTabState extends State<EffectsTab> {
         Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: homeViewModel.currentBackground[0][1],
+              image: widget.bgs[1],
               alignment: Alignment.centerLeft,
               fit: BoxFit.fill,
             ),
@@ -98,9 +101,7 @@ class _EffectsTabState extends State<EffectsTab> {
                           (int index) {
                         return EffectItem(
                           index: index,
-                          key: index == 0 && homeViewModel.aux
-                              ? homeViewModel.sizeC2
-                              : null,
+                          bgs: widget.bgs,
                         );
                       }),
                     ),

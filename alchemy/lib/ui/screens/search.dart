@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends SearchDelegate {
+  final List bgs;
+  SearchScreen(this.bgs);
+
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
@@ -161,7 +164,7 @@ class SearchScreen extends SearchDelegate {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              IngredientInfo(),
+                                              IngredientInfo(bgs),
                                         ),
                                       );
                                     } else if (item is Efeitos) {
@@ -172,7 +175,7 @@ class SearchScreen extends SearchDelegate {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => EffectInfo(),
+                                          builder: (context) => EffectInfo(bgs),
                                         ),
                                       );
                                     }
@@ -240,7 +243,7 @@ class SearchScreen extends SearchDelegate {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => IngredientInfo(),
+                                  builder: (context) => IngredientInfo(bgs),
                                 ),
                               );
                             } else if (results[i] is Efeitos) {
@@ -251,7 +254,7 @@ class SearchScreen extends SearchDelegate {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => EffectInfo(),
+                                  builder: (context) => EffectInfo(bgs),
                                 ),
                               );
                             }

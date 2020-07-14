@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 class IngredientItem extends StatelessWidget {
   IngredientItem({
     @required this.index,
-    @required this.key,
+    @required this.bgs,
   });
 
   final int index;
-  final GlobalKey key;
+  final List bgs;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,6 @@ class IngredientItem extends StatelessWidget {
         homeViewModel.updateContainerHeight(size.height);
       },
       child: Container(
-        // key: !homeViewModel.aux  ? key : null,
         child: Stack(
           children: <Widget>[
             SizedBox.expand(
@@ -175,7 +174,7 @@ class IngredientItem extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => IngredientInfo(),
+                      builder: (context) => IngredientInfo(bgs),
                     ),
                   );
                 },

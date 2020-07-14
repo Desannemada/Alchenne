@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:alchemy/core/view_models/home_view_model.dart';
 import 'package:alchemy/ui/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,18 +12,88 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Image logo;
   Image loading;
+  Image background;
+  AssetImage bg1;
+  AssetImage bg2;
+  AssetImage bg3;
+  AssetImage bg4;
+
+  List currentBackground;
+  bool bgColor = true;
+
+  List backgrounds = [
+    [
+      AssetImage("assets/bg/b1_1.jpg"),
+      AssetImage("assets/bg/b1_2.jpg"),
+      AssetImage("assets/bg/b1_3.jpg"),
+      AssetImage("assets/bg/b1_4.jpg"),
+      "assets/bg/background1.jpg"
+    ],
+    [
+      AssetImage("assets/bg/b3_1.jpg"),
+      AssetImage("assets/bg/b3_2.jpg"),
+      AssetImage("assets/bg/b3_3.jpg"),
+      AssetImage("assets/bg/b3_4.jpg"),
+      "assets/bg/background3.jpg"
+    ],
+    [
+      AssetImage("assets/bg/b4_1.jpg"),
+      AssetImage("assets/bg/b4_2.jpg"),
+      AssetImage("assets/bg/b4_3.jpg"),
+      AssetImage("assets/bg/b4_4.jpg"),
+      "assets/bg/background4.jpg"
+    ],
+    [
+      AssetImage("assets/bg/b5_1.jpg"),
+      AssetImage("assets/bg/b5_2.jpg"),
+      AssetImage("assets/bg/b5_3.jpg"),
+      AssetImage("assets/bg/b5_4.jpg"),
+      "assets/bg/background5.jpg"
+    ],
+    [
+      AssetImage("assets/bg/b6_1.jpg"),
+      AssetImage("assets/bg/b6_2.jpg"),
+      AssetImage("assets/bg/b6_3.jpg"),
+      AssetImage("assets/bg/b6_4.jpg"),
+      "assets/bg/background6.jpg"
+    ]
+  ];
+
+  void chooseBackground() {
+    var chosen = new Random();
+    int c = 1 + chosen.nextInt(5);
+    setState(() {
+      currentBackground = backgrounds[c - 1];
+    });
+
+    if (c == 2 || c == 4) {
+      setState(() {
+        bgColor = false;
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     logo = Image.asset("assets/logo.png");
     loading = Image.asset("assets/loading.gif", scale: 10);
+
+    chooseBackground();
+    background = Image.asset(currentBackground[4], fit: BoxFit.fitHeight);
+    bg1 = currentBackground[0];
+    bg2 = currentBackground[1];
+    bg3 = currentBackground[2];
+    bg4 = currentBackground[3];
+
     Timer(
       Duration(seconds: 4),
       () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) {
+            return HomeScreen([bg1, bg2, bg3, bg4, background, bgColor]);
+          },
         ),
       ),
     );
@@ -36,6 +104,11 @@ class _SplashScreenState extends State<SplashScreen> {
     super.didChangeDependencies();
     precacheImage(logo.image, context);
     precacheImage(loading.image, context);
+    precacheImage(background.image, context);
+    precacheImage(bg1, context);
+    precacheImage(bg2, context);
+    precacheImage(bg3, context);
+    precacheImage(bg4, context);
   }
 
   @override

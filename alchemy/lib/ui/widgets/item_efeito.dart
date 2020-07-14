@@ -8,11 +8,11 @@ import 'package:provider/provider.dart';
 class EffectItem extends StatelessWidget {
   EffectItem({
     @required this.index,
-    @required this.key,
+    @required this.bgs,
   });
 
   final int index;
-  final GlobalKey key;
+  final List bgs;
 
   @override
   Widget build(BuildContext context) {
@@ -105,27 +105,12 @@ class EffectItem extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EffectInfo(),
+                      builder: (context) => EffectInfo(bgs),
                     ),
                   );
                 },
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(right: 10),
-            //   child: Align(
-            //     alignment: Alignment.topRight,
-            //     child: GestureDetector(
-            //       onTap: () => homeViewModel.updateEFavList(index),
-            //       child: Icon(
-            //         homeViewModel.favEfeitos.contains(index)
-            //             ? Icons.star
-            //             : Icons.star_border,
-            //         size: 30,
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
