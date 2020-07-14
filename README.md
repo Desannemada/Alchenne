@@ -28,8 +28,9 @@
 | <img src="/readme/4.jpg" width="250"> | <img src="/readme/5.jpg" width="250"> | <img src="/readme/6.jpg" width="250"> |
 | **Potion Maker**                      | **Effect's Info**                     | **Ingredient's Info**                 |
 
-## Current Version:
-> In development.
+## Releases:
+> <a href="https://github.com/Desannemada/Alchenne/raw/master/releases/alchenne_app-arm64-v8a-release.apk">Skyrim: Alchenne (64-bit)</a>
+> <a href="https://github.com/Desannemada/Alchenne/raw/master/releases/alchenne_app-armeabi-v7a-release.apk">Skyrim: Alchenne (32-bit)</a>
 
 ## Installation:
 #### To run this project, you will need: 
