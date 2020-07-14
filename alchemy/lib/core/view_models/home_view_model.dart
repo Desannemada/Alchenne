@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:alchemy/core/models/efeitos.dart';
 import 'package:alchemy/core/models/infoE.dart';
@@ -72,7 +71,6 @@ class HomeViewModel extends BaseViewModel {
     getIngredients();
     getEffects();
     getFavs();
-    // saveRecentes();
     getRecentes();
 
     potionIngredients = [null, null, null];
@@ -350,6 +348,11 @@ class HomeViewModel extends BaseViewModel {
 
   void updateIFavList(int index, int color) {
     if (favIngredientes.contains(index)) {
+      for (var i = 0; i < favIngredientes.length; i++) {
+        if (favIngredientes[i] == index) {
+          favIColors.removeAt(i);
+        }
+      }
       favIngredientes.remove(index);
     } else {
       favIngredientes.add(index);
