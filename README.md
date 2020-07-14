@@ -33,6 +33,8 @@
 
 > <a href="https://github.com/Desannemada/Alchenne/raw/master/releases/alchenne_app-armeabi-v7a-release.apk">Skyrim: Alchenne (32-bit)</a>
 
+> <a href="https://github.com/Desannemada/Alchenne/raw/master/releases/alchenne_app-x86_64-release.apk">Skyrim: Alchenne (x86 64-bit)</a>
+
 ## Installation:
 #### To run this project, you will need: 
 1. Install the Flutter Framework following this steps: https://flutter.dev/
