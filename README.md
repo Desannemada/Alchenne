@@ -29,6 +29,7 @@
 | **Potion Maker**                      | **Effect's Info**                     | **Ingredient's Info**                 |
 
 ## Releases:
+#### Only available for Android
 > <a href="https://github.com/Desannemada/Alchenne/raw/master/releases/alchenne_app-arm64-v8a-release.apk">Skyrim: Alchenne (64-bit)</a>
 
 > <a href="https://github.com/Desannemada/Alchenne/raw/master/releases/alchenne_app-armeabi-v7a-release.apk">Skyrim: Alchenne (32-bit)</a>
