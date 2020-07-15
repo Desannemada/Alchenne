@@ -41,7 +41,7 @@
 1. Install the Flutter Framework following this steps: https://flutter.dev/
 2. Clone the project to your editor of choice:
 ```sh
-git clone https://github.com/Desannemada/WeeBooks.git
+git clone https://github.com/Desannemada/Alchenne.git
 ```
 3. Connect your android phone or android emulator and run the command:
 ```sh
